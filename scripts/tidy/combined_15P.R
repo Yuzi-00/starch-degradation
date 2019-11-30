@@ -71,7 +71,9 @@ joined_15P <- full_join(data_15P, design) %>%
 
 write_csv(joined_15P, "data/tidydata/joined_15P.csv")
 
-############################################ add the mass into the previous joined dataset ########################################################
+
+#                     ** add the mass into the previous joined dataset **
+
 
 # read in the mass dataset (tidy version)
 
@@ -82,7 +84,8 @@ mass <- read_csv("data/tidydata/mass_15P.csv")
 mass_selected <- select(mass, Mass)
 
 total <-  bind_cols(joined_15P, mass_selected) %>% 
-  select(Plate, Row, ColPair, Column, Sample, WellGroup, WellGroupType, Mass, Time, OD) # ordering the columns
+  select(Plate, Row, ColPair, Column, WellGroup, WellGroupType, Well, Sample, Time, Mass, OD) 
+  # ordering the columns
 
 # add a column to distnguish the sample and the blank
 
@@ -109,11 +112,19 @@ Blank <- add_blk %>%
 
 joined_15P_with_mass <- bind_cols(Sample, Blank)
 
+# ordering the column names 
+
+joined_15P_with_mass <-  joined_15P_with_mass %>% 
+  select(Plate, Row, ColPair, Column, WellGroup, WellGroupType, Well, Sample, Time, Mass_sample,
+         Mass_blk, OD_sample, OD_blk)
+
 # save the dataset
 
 write_csv(joined_15P_with_mass, "data/tidydata/joined_15P_with_mass.csv")
 
-########################################### add the slope into the previous dataset ##############################################################
+
+#                         ** add the slope into the previous dataset **
+
 
 # read in the slope data 
 
@@ -128,9 +139,9 @@ slope_gathered <- slope %>%
 
 mean_slope <- slope_gathered %>% 
   group_by(Plate) %>% 
-  mutate(mean_slope = mean(Slope)) %>% 
+  mutate(Mean_slope = mean(Slope)) %>% 
   arrange(Plate) %>% 
-  select(Plate, mean_slope) %>% 
+  select(Plate, Mean_slope) %>% 
   unique() # remove the duplicated rows
 
 # join the slope with the previous dataset
@@ -141,7 +152,9 @@ joined_15P_with_mass_slope <- left_join(joined_15P_with_mass, mean_slope)
 
 write_csv(joined_15P_with_mass_slope, "data/tidydata/joined_15P_with_mass_slope.csv")
 
-#################################### add the cav number into the previous dataset ###############################################################
+
+#                    ** add the cav number into the previous dataset **
+
 
 # read in the design for the magic population
 
@@ -153,13 +166,14 @@ joined_15P_with_mass_slope_id <- left_join(joined_15P_with_mass_slope, design_na
 
 # reordering the column names
 
-joined_15P_with_mass_slope_id <- select(joined_15P_with_mass_slope_id, Plate, Row, ColPair, Column, Sample, ID, WellGroup, WellGroupType, 
-                        Mass_sample, Time, OD_sample, Mass_blk, OD_blk, mean_slope)
-# ordering the cols
+joined_15P_with_mass_slope_id <- joined_15P_with_mass_slope_id %>% 
+  select(Plate, Row, ColPair, Column, WellGroup, WellGroupType, Well, Sample, ID, Time, Mass_sample, 
+         Mass_blk, OD_sample, OD_blk, Mean_slope)
+
+# save the dataset
 
 write_csv(joined_15P_with_mass_slope_id, "data/tidydata/joined_15P_with_mass_slope_id.csv")
 
-#####################################################################################################
 
 
 
