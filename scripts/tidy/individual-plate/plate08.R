@@ -50,7 +50,7 @@ write_csv(data_plate08, "data/tidydata/plate08.csv")
 # check if there are any missing values
 
 filter(data_plate08,is.na(OD)) %>% 
-  nrow()
+  nrow() # no missing values
 
 
 
