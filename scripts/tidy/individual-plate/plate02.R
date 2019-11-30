@@ -40,4 +40,5 @@ data_plate02 <- select(data_plate02, plate, raw, col, time, OD) %>%
 
 write_csv(data_plate02, "data/tidydata/plate02.csv")
 
-
+filter(data_plate02,is.na(OD)) %>% 
+  nrow() # 0 NAs, which is right
