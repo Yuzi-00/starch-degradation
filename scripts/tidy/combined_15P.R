@@ -1,12 +1,22 @@
+
 library(tidyverse)
 
 library(readxl)
 
-############################################## combine the OD with the design ##################################################################
+
+#                            ** combine the OD with the design ** 
+
 
 # read in the design
 
 design <- read_csv("data/design/design_with_time.csv")
+
+# add a new column called "Well" to distinguish each replicates 
+
+design <-  design %>% 
+  mutate(Well = paste(Plate, Row, Column, sep = "_")) %>% 
+  select(Plate, Row, ColPair, Column, WellGroup, WellGroupType, Well, Sample, Time)
+  # reorder the column names to make it more logical
 
 filename1 <- "C:/Users/WAN333/Documents/Data school/starch-hydrolysis/data/tidydata/plate"
 
@@ -44,7 +54,8 @@ data_15P <- data_15P %>%
 # check the missing values
 
 data_15P %>% 
-  filter(is.na(OD)) # 446 NAs in total, which is correct
+  filter(is.na(OD)) # 702 NAs in total, which is correct
+# recall all the NAs for each plate: 18+18+36+18+306+36+18+18+36+18+36+144 = 702
 
 # save the data of these 15 plates
 
@@ -54,7 +65,7 @@ write_csv(data_15P, "data/tidydata/data_15P.csv")
 # order the columns
 
 joined_15P <- full_join(data_15P, design) %>% 
-  select(Plate, Row, ColPair, Column, Sample, WellGroup, WellGroupType, Time, OD)
+  select(Plate, Row, ColPair, Column, WellGroup, WellGroupType, Well, Sample, Time, OD)
 
 # save the joined data 
 
