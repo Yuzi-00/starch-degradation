@@ -74,3 +74,6 @@ data_15P_cal_HE_outlier_deleted <- data_15P_cal_HE %>%
 # before, there were 6480 observations.
 # now, just 6459 observations. (21 outliers had been deleted)
 
+# save the dataset
+
+write_csv(data_15P_cal_HE_outlier_deleted, "data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
