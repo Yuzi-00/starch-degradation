@@ -2,15 +2,15 @@ library(tidyverse)
 
 # import the dataset
 
-data_15P <- read_csv("data/tidydata/data_15P_outlier_deleted.csv")
+data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
 
 # select the colmuns needed
 
-data_selected <- data_15P %>% 
+data_selected <- data_15P_cal_HE_outlier_deleted %>% 
   filter(Sample != "C+" & Sample != "C-") %>%  # remove the controls
   select(Plate, Row, Column, Time, HE) # select the column needed
 
-# choose a time point and remove the "outlier"
+# plotting for each time point
 
 # 0min
 
@@ -45,6 +45,7 @@ ggsave("figures/heatmap_0min.png",
 
 data_20 <- data_selected %>% 
   filter(Time == 20) 
+
 ### plotting
 
 data_20min <- data_20 %>% 
