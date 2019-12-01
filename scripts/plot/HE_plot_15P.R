@@ -122,29 +122,26 @@ dev.off() # stop sending plot to the pdf file
 
 # import the variation dataset (noted that the outliers had already been removed from this dataset)
 
-total_data <- read_csv("analysis/data_15P_var.csv")
-
-# add a new column to distinguish each replicates 
-
-total_data <-  total_data %>% 
-  mutate(Well = paste(Plate, Row, Column, sep = "_"))
+data_15P_cal_var <- read_csv("analysis/data_15P_cal_var.csv")
 
 # creat the loop
 
-pdf(file = "figures/degradability_individual plot with error bar.pdf") # creating a pdf file and senting all the plot below to this file
-for(i in unique(total_data$Sample)){ # i stands for each item within this dataset
+pdf(file = "figures/degradability_individual plot_error bar.pdf") # creating a pdf file and senting all the plot below to this file
+for(i in unique(data_15P_cal_var$Sample)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
-  digestibility_var <- total_data %>% 
+  digestibility_var <- data_15P_cal_var %>% 
     filter(Sample == i) %>% # pipe this to the first argument on the right side 
     # here, the first argument of ggplot is the data, otherwise, we have to type ggplot(data = .)
     # to let it pipe to this argument
     ggplot() + 
     geom_line(aes(x = Time,
-                  y = mean_HE,
+                  y = Mean_HE,
                   group = Well),
               color = "red",
               size = 0.05) +
-    geom_errorbar(aes(x = Time, ymin=mean_HE - sd_HE, ymax=mean_HE + sd_HE), 
+    geom_errorbar(aes(x = Time, 
+                      ymin = Mean_HE - Sd_HE, 
+                      ymax = Mean_HE + Sd_HE), 
                   width=20,
                   color = "red") +
     geom_point(aes(x = Time, 
