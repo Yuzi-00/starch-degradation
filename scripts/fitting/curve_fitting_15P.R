@@ -1,25 +1,29 @@
 
+
 #                                       **  Using the Weibull function  **  
 
 #           ** using three replicates separately to generate one single h k and Xinf for each sample **
+
 
 library(tidyverse)
 
 library(broom)
 
+
+#                                             ** extrat parameters ** 
+
+
 # read in the dataset
 
-data_15P <- read_csv("data/tidydata/data_15P_outlier_deleted.csv")
-
-###################################### extrat parameters ############################################
+data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
 
 # built the model and put it into the loop
 
-find_paramters <- function(data_15P){ # creat a function called find_parameters
+find_paramters <- function(data_15P_cal_HE_outlier_deleted){ # creat a function called find_parameters
   
   # remove the missing value
   
-  hydro_data <- data_15P %>% 
+  hydro_data <- data_15P_cal_HE_outlier_deleted %>% 
     filter(!is.na(HE)) 
   
     # built the model with some guessing values of the unknown parameters
@@ -32,7 +36,7 @@ find_paramters <- function(data_15P){ # creat a function called find_parameters
   
   # turn the results into a tidy tibble
   
-  result <- tidy(model) %>% 
+  result <- tidy(model) %>% # the tidy function comes from the broom package
     select(term, estimate) %>% # extract the values of these pamameters
     spread(term, estimate) # split into three separate columns
   result # print out the result
@@ -51,7 +55,9 @@ parameters <- hydro_data %>%
 
 class(parameters) # we can see that it's a data frame (a tibble)
 
-################################## add the sample name to the parameter list ####################################################
+
+#                    ** add the sample name to the parameter list ** 
+
 
 # extract the subset
 
