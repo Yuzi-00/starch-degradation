@@ -12,17 +12,10 @@ library(tidyverse)
 
 data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
 
-data_add_status <- data_15P_cal_HE_outlier_deleted %>% 
-  mutate(status = case_when( # number of conditions (left), discription of the results in that condition
-    Sample == "C+" ~ "Positive control", 
-    Sample == "C-" ~ "Negative control",
-    TRUE ~ "Sample"
-  ))
-
-HE_scatter_15P <- ggplot(data = data_add_status, 
+HE_scatter_15P <- ggplot(data = data_15P_cal_HE_outlier_deleted, 
        aes(x = Time, 
            y = HE,
-           color = status)) + # colored by the status (distinguish the control from the other samples)
+           color = WellGroupType)) + # colored by the status (distinguish the control from the other samples)
   geom_point(size = 1, shape = 1) + # add the transparency
   scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
   scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
@@ -54,11 +47,11 @@ ggsave("figures/scatter-plot_15P.png",
 #                                    ** line plot of the HE ** 
 
 
-HE_line_15P <- ggplot(data = data_add_status, 
+HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_deleted, 
                  aes(x = Time, 
                      y = HE,
                      group = Well,
-                     color = status)) + # colored by the status (distinguish the control from the other samples)
+                     color = WellGroupType)) + # colored by the status (distinguish the control from the other samples)
   geom_point(size = 1, shape = 1) + # add the transparency
   geom_line(size = 0.005) +
   scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
