@@ -10,31 +10,32 @@ library(broom)
 
 # read in the dataset
 
-data_15P <- read_csv("data/tidydata/data_15P_outlier_deleted.csv")
+data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
 
-# add a column that distinguish each sample
 
-data_15P <- data_15P %>% 
-  mutate(Well = paste(Plate, Row, Column, sep = "_")) 
+#                                             ** extrat parameters **
 
-###################################### extrat parameters ############################################
 
 # built the model and put it into the loop
 
-find_paramters <- function(data_15P){ # creat a function called find_parameters
+find_paramters <- function(data_15P_cal_HE_outlier_deleted){ # creat a function called find_parameters
   
   # remove the missing value
   
-  hydro_data <- data_15P %>% 
+  hydro_data <- data_15P_cal_HE_outlier_deleted %>% 
     filter(!is.na(HE)) 
   
   # built the model with some guessing values of the unknown parameters
   
   model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**(1-h))), # using the Weibull function 
                data = hydro_data,
+               algorithm = "port",
                start = list(Xinf = 73,
                             k = 0.003,
-                            h = 0.000005))
+                            h = 0.0005),
+               lower = list(Xinf = 0,
+                            k = 0,
+                            h = 0))
   
   # turn the results into a tidy tibble
   
@@ -48,16 +49,14 @@ find_paramters <- function(data_15P){ # creat a function called find_parameters
 
 parameters <- hydro_data %>% 
   split(.$Well) %>% # split the initial dataset into 182 subsets by sample
-  map_df(find_paramters) 
-# the map function transform its input by applying the function find_parameters 
-# and save the outputs all together into a list
-# while the map_df function will do the same but save the outputs all together into a data frame
+  map_df(find_paramters) # error here, can not generate the estimateed parmaters
+# may be not gussing the right values for the k, h and Xinf
 
-# if we want to check the type of the data 
+# not matter we set the constraints or not, the estimate parameters can not be generated 
 
-class(parameters) # we can see that it's a data frame (a tibble)
 
-################################## add the sample name to the parameter list ####################################################
+#                     ** add the sample name to the parameter list **
+
 
 # extract the subset
 
