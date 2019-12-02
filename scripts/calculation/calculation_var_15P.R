@@ -43,3 +43,6 @@ variation %>%
 data_15P_cal_var <- data_15P_cal_var %>% 
   mutate(Se_HE = Sd_HE/sqrt(3)) # sqrt: radical sign
          
+# save the dataset
+
+write_csv(data_15P_cal_var, "analysis/data_15P_cal_var.csv")
