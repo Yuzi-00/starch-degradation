@@ -17,6 +17,62 @@ data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outli
 
 
 # built the model and put it into the loop
+find_paramters <- function(data_15P_cal_HE_outlier_deleted){ # creat a function called find_parameters
+  
+  # remove the missing value
+  
+  hydro_data <- data_15P_cal_HE_outlier_deleted %>% 
+    filter(!is.na(HE)) 
+  
+  # built the model with some guessing values of the unknown parameters
+  
+  model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**(1-h))), # using the Weibull function 
+               data = hydro_data,
+               algorithm = "port",
+               start = list(Xinf = 73,
+                            k = 0.003,
+                            h = 0.0005),
+               # lower = list(Xinf = 0,
+               #       k = 0,
+               #      h = 0),
+               control = list(warnOnly = TRUE))
+  
+  # turn the results into a tidy tibble
+  
+  result <- tidy(model) %>% 
+    select(term, estimate) %>% # extract the values of these pamameters
+    spread(term, estimate) # split into three separate columns
+  result # print out the result
+}
+
+fit_model <- function(data_15P_cal_HE_outlier_deleted){ # creat a function called find_parameters
+  
+  # remove the missing value
+  
+  hydro_data <- data_15P_cal_HE_outlier_deleted %>% 
+    filter(!is.na(HE)) 
+  
+  # built the model with some guessing values of the unknown parameters
+  
+  model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**(1-h))), # using the Weibull function 
+               data = hydro_data,
+               algorithm = "port",
+               start = list(Xinf = 73,
+                            k = 0.003,
+                            h = 0.0005),
+               # lower = list(Xinf = 0,
+                     #       k = 0,
+                      #      h = 0),
+               control = list(warnOnly = TRUE))
+  
+  # turn the results into a tidy tibble
+  
+  result <- tidy(model) %>% 
+    select(term, estimate) %>% # extract the values of these pamameters
+    spread(term, estimate) # split into three separate columns
+  result # print out the result
+}
+
 
 find_paramters <- function(data_15P_cal_HE_outlier_deleted){ # creat a function called find_parameters
   
@@ -33,9 +89,10 @@ find_paramters <- function(data_15P_cal_HE_outlier_deleted){ # creat a function 
                start = list(Xinf = 73,
                             k = 0.003,
                             h = 0.0005),
-               lower = list(Xinf = 0,
-                            k = 0,
-                            h = 0))
+               # lower = list(Xinf = 0,
+               #       k = 0,
+               #      h = 0),
+               control = list(warnOnly = TRUE))
   
   # turn the results into a tidy tibble
   
@@ -45,12 +102,13 @@ find_paramters <- function(data_15P_cal_HE_outlier_deleted){ # creat a function 
   result # print out the result
 }
 
+
 # extract the parameters 
 
 parameters <- hydro_data %>% 
   split(.$Well) %>% # split the initial dataset into 182 subsets by sample
   map_df(find_paramters) # error here, can not generate the estimateed parmaters
-# may be not gussing the right values for the k, h and Xinf
+ # may be not gussing the right values for the k, h and Xinf
 
 # not matter we set the constraints or not, the estimate parameters can not be generated 
 
