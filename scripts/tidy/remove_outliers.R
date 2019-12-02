@@ -56,20 +56,36 @@ dev.off() # stop sending plot to the pdf file
 #       ** noted that the outliers were deleted after going back and checking the raw data, make 
 #                   sure that there's no mistake in the raw spreadsheet **
 
-data_15P_cal_HE_outlier_deleted <- data_15P_cal_HE %>% 
-  filter(!(Sample == 208 & HE > 92)) %>% # remove the highest value of sample 208 (outlier at 20min)
-  filter(!(Time == 20 & Sample == 13 & HE > 29)) %>% # remove the highest value of sample 13 at 20min 
-  filter(!(Time == 20 & Sample == 118 & HE > 16)) %>% # remove the highest value of sample 118 at 20min 
-  filter(!(Time == 20 & Sample == 127 & HE > 11)) %>% # remove the highest value of sample 127 at 20min 
-  filter(!(Time == 120 & Sample == 127 & HE > 29)) %>% # remove sample 127 in plate 13 at 120min
-  filter(!(Time == 0 & Sample == 96 & HE > 9)) %>% # remove the highest value of sample 96 at 0min
-  filter(!(Time == 180 & Sample == 103 & HE >40)) %>% # remove sample 103 in plate 11 at 180min
-  filter(!(Time == 360 & Sample == 134 & HE < 35)) %>% # remove sample 134 in plate 11 at 360min
-  filter(!(Time == 180 & Sample == 165 & HE > 30)) %>%  # remove sample 165 in plate 8 at 180min
-  filter(!(Time == 360 & Sample == 26 & HE < 37)) %>%  # remove sample 26 in plate 10 at 360min
-  filter(!(Time == 180 & Sample == 134 & HE < 23)) %>% # remove sample 134 in plate 11 at 180min
-  filter(!(Time == 180 & Sample == 136 & HE < 19)) %>% # remove sample 136 in plate 13 at 180min
-  filter(!(Plate == 12 & Sample == "113")) # remove sample 113 in plate 12 (for all time points)
+data_15P_cal_HE_outlier_replaced <- data_15P_cal_HE %>% 
+  mutate(HE = if_else(Sample == 208 & HE > 92, NA_real_,HE),
+         HE = if_else(Time == 20 & Sample == 13 & HE > 29, NA_real_,HE),
+         HE = if_else(Time == 20 & Sample == 118 & HE > 16, NA_real_,HE),
+         HE = if_else(Time == 20 & Sample == 127 & HE > 11, NA_real_,HE),
+         HE = if_else(Time == 120 & Sample == 127 & HE > 29, NA_real_,HE), 
+         HE = if_else(Time == 0 & Sample == 96 & HE > 9, NA_real_,HE), 
+         HE = if_else(Time == 180 & Sample == 103 & HE >40, NA_real_,HE), 
+         HE = if_else(Time == 360 & Sample == 134 & HE < 35, NA_real_,HE),
+         HE = if_else(Time == 180 & Sample == 165 & HE > 30, NA_real_,HE),
+         HE = if_else(Time == 360 & Sample == 26 & HE < 37, NA_real_,HE), 
+         HE = if_else(Time == 180 & Sample == 134 & HE < 23, NA_real_,HE),
+         HE = if_else(Time == 180 & Sample == 136 & HE < 19, NA_real_,HE),
+         HE = if_else(Plate == 12 & Sample == "113", NA_real_,HE))
+
+
+# data_15P_cal_HE_outlier_deleted <- data_15P_cal_HE %>% 
+#  filter(!(Sample == 208 & HE > 92)) %>% # remove the highest value of sample 208 (outlier at 20min)
+#  filter(!(Time == 20 & Sample == 13 & HE > 29)) %>% # remove the highest value of sample 13 at 20min 
+#  filter(!(Time == 20 & Sample == 118 & HE > 16)) %>% # remove the highest value of sample 118 at 20min 
+#  filter(!(Time == 20 & Sample == 127 & HE > 11)) %>% # remove the highest value of sample 127 at 20min 
+#  filter(!(Time == 120 & Sample == 127 & HE > 29)) %>% # remove sample 127 in plate 13 at 120min
+#  filter(!(Time == 0 & Sample == 96 & HE > 9)) %>% # remove the highest value of sample 96 at 0min
+#  filter(!(Time == 180 & Sample == 103 & HE >40)) %>% # remove sample 103 in plate 11 at 180min
+#  filter(!(Time == 360 & Sample == 134 & HE < 35)) %>% # remove sample 134 in plate 11 at 360min
+#  filter(!(Time == 180 & Sample == 165 & HE > 30)) %>%  # remove sample 165 in plate 8 at 180min
+#  filter(!(Time == 360 & Sample == 26 & HE < 37)) %>%  # remove sample 26 in plate 10 at 360min
+#  filter(!(Time == 180 & Sample == 134 & HE < 23)) %>% # remove sample 134 in plate 11 at 180min
+#  filter(!(Time == 180 & Sample == 136 & HE < 19)) %>% # remove sample 136 in plate 13 at 180min
+#  filter(!(Plate == 12 & Sample == "113")) # remove sample 113 in plate 12 (for all time points)
  
 # before, there were 6480 observations.
 # now, just 6459 observations. (21 outliers had been deleted)
