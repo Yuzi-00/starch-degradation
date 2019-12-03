@@ -49,11 +49,8 @@ dev.off() # stop sending plot to the pdf file
 
 #                              ** change the outliers into NAs **
 
-#                                       ** How ??? **
 
-#                             ** delect the outliers at the moment **
-
-#       ** noted that the outliers were deleted after going back and checking the raw data, make 
+#       ** noted that the outliers were replaced by NAs after going back and checking the raw data, make 
 #                   sure that there's no mistake in the raw spreadsheet **
 
 data_15P_cal_HE_outlier_replaced <- data_15P_cal_HE %>% 
