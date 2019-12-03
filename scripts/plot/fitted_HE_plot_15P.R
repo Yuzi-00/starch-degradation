@@ -39,7 +39,7 @@ expanded_para <- para[rep(seq_len(nrow(para)), each = 100), ]
 # add the Time and calculate the fitted HE
 
 fitted_HE <- expanded_para %>% 
-  mutate(Time = rep(Time, times = 220)) %>% 
+  mutate(Time = rep(Time, times = 220)) %>% # repeat 220 times cuz 220 groups of parameters
   mutate(fitted_HE = Xinf*(1-exp(-k*Time**(1-h))))
 
 # this new column will help us do the plot
