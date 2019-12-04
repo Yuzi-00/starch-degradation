@@ -27,15 +27,14 @@ fit_model <- function(data_15P_cal_HE_outlier_deleted){ # creat a function calle
   
   # built the model with some guessing values for the unknown parameters
   
-  model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**(1-h))), # using the Weibull function 
+  model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function 
                data = hydro_data,
                algorithm = "port", # add this if setting the constrains 
                start = list(Xinf = 73,
                             k = 0.003,
-                            h = 0.0005),
+                            H = 1-0.0005),
                lower = list(Xinf = 0, # set the lower values fo each parameter
-                            k = 0,
-                            h = -0.5),
+                            k = 0),
                control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
   
 return(model) # give back the model
