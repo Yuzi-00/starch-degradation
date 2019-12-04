@@ -159,7 +159,7 @@ data_15P <- data_15P %>%
 
 
 
-pdf(file = "figures/degradability_individual plot_fitted_ver3.pdf") # creating a pdf file and senting all the plot below to this file
+pdf(file = "figures/degradability_individual plot_fit_replicates.pdf") # creating a pdf file and senting all the plot below to this file
 for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
   
