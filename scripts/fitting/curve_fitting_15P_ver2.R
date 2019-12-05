@@ -10,19 +10,24 @@ library(broom)
 
 # read in the dataset
 
-data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
+data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv")
+
+# remove the control samples
+
+data_control_removed <- data_15P_cal_HE_outlier_replaced %>% 
+  filter(!Sample %in% c("C+", "C-"))
 
 
-#                                             ** extrat parameters **
+#                                             ** modelling without control samples **
 
 
 # let's use two functions to generate the fitted model and the estimated parameters
 
-fit_model <- function(data_15P_cal_HE_outlier_deleted){ # creat a function called fit_model
+fit_model <- function(data_control_removed){ # creat a function called fit_model
   
   # remove the missing value
   
-  hydro_data <- data_15P_cal_HE_outlier_deleted %>% 
+  hydro_data <- data_control_removed %>% 
     filter(!is.na(HE)) 
   
   # built the model with some guessing values for the unknown parameters
@@ -79,6 +84,116 @@ hydro_data %>%
   group_by(Well) # 680 wells here which should give us 680 groups of parameters (which is...what we've got !)
 
 # need to check the 9_F_5 later after putting Well column in 
+
+# check the residuals against the fitted values
+
+plot(model) # noticed that there are 2 points below -5 
+
+# find thes particular points below -5
+
+# add a residual column to the hydro_data data frame
+
+hydro_data$residuals = (residuals(model))
+
+# find the minimum value 
+
+which.min(hydro_data$residuals) # it's the 259
+
+# find the corresponding sample name for 259
+
+hydro_data$Sample[259] # it's the sample 92, let's remove it from the data frame
+
+
+#                                             ** modelling without sample 92 **
+
+
+# remove the sample 92 from the previous dataset
+
+data_92_removed <- data_control_removed %>% 
+  filter(Sample != "92")
+
+# let's use two functions to generate the fitted model and the estimated parameters
+
+fit_model <- function(data_92_removed){ # creat a function called fit_model
+  
+  # remove the missing value
+  
+  hydro_data <- data_92_removed %>% 
+    filter(!is.na(HE)) 
+  
+  # built the model with some guessing values for the unknown parameters
+  
+  model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function 
+               data = hydro_data,
+               algorithm = "port", # add this if setting the constrains 
+               start = list(Xinf = 73,
+                            k = 0.003,
+                            H = 1-0.0005),
+               lower = list(Xinf = 0, # set the lower values fo each parameter
+                            k = 0),
+               control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
+  
+  return(model) # give back the model
+  
+}
+
+
+find_paramters <- function(model){ # creat a function called find_parameters
+  
+  result <- tidy(model) %>% 
+    select(term, estimate) %>% # extract the values of these pamameters
+    spread(term, estimate) # split into three separate columns
+  result # give back the result
+  
+}
+
+
+# create a list of models
+
+model_list <- hydro_data %>% 
+  split(.$Well) %>% # split the initial dataset by Well
+  map(fit_model) # save all the model in a list
+
+# how to show the different items in the model ? (like convInfo for ex)
+
+get_isconv <- function(x)x$convInfo$isConv # create a function to get all the conteng in "isConv"
+
+# sum(map_chr(model_list, class) != "nls", na.rm = TRUE) this is to show how many items in the model_list are not "nls"
+
+isconv <- model_list %>% 
+  map_lgl(.f = get_isconv) # map_lgl: give back a logical vector (lgl stands for logical)
+# this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
+
+names(isconv)[isconv == FALSE] # give us the item that is not converged
+
+parameters <- model_list %>% 
+  map_df(find_paramters) # got 680 observations here 
+
+# check replicates in the working dataset
+
+hydro_data %>% 
+  group_by(Well) # 680 wells here which should give us 680 groups of parameters (which is...what we've got !)
+
+# need to check the 9_F_5 later after putting Well column in 
+
+# check the residuals against the fitted values
+
+plot(model) # noticed that there are 2 points below -5 
+
+# find thes particular points below -5
+
+# add a residual column to the hydro_data data frame
+
+hydro_data$residuals = (residuals(model))
+
+# find the minimum value 
+
+which.min(hydro_data$residuals) # it's the 259
+
+# find the corresponding sample name for 259
+
+hydro_data$Sample[259] # it's the sample 92, let's remove it from the data frame
+
 
 
 #                                                ** add the Well column to the parameter list **
