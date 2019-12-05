@@ -22,7 +22,7 @@ data_cal <- data_15P %>%
 # calculate the mean values of the blank for each plate
 
 data_cal <- data_cal %>% 
-  group_by(Plate) %>% 
+  group_by(Plate, Time) %>% 
   mutate(Mean_blk = mean(C_blk_nor, na.rm = TRUE))
   
 # substrate the blank and calculate the hydrolysis extent
