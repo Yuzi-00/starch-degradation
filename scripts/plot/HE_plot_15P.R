@@ -2,7 +2,7 @@
 library(tidyverse)
 
 
-#                       ** plots are generated using the dataset with outliers deleted **
+#                       ** plots are generated using the dataset with outliers replaced **
 
 
 #                                      ** scatter plot of the HE **
@@ -10,9 +10,16 @@ library(tidyverse)
 
 # import the dataset
 
-data_15P_cal_HE_outlier_deleted <- read_csv("data/tidydata/data_15P_cal_HE_outlier_deleted.csv")
+data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv")
 
-HE_scatter_15P <- ggplot(data = data_15P_cal_HE_outlier_deleted, 
+# remove the unused wells
+
+data_15P_cal_HE_outlier_replaced <- data_15P_cal_HE_outlier_replaced %>% 
+  filter(Sample != "X")
+
+# plotting
+
+HE_scatter_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced, 
        aes(x = Time, 
            y = HE,
            color = WellGroupType)) + # colored by the status (distinguish the control from the other samples)
@@ -33,7 +40,8 @@ HE_scatter_15P <- ggplot(data = data_15P_cal_HE_outlier_deleted,
         axis.text.y = element_text(color="black", size=10)) +
   scale_color_discrete(labels = c("Negative control", "Sample", "Positive control")) +
   theme(legend.key = element_blank(),
-        legend.position = "bottom")
+        legend.position = "bottom") +
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
 
 # save the plot
 
@@ -126,9 +134,9 @@ data_15P_cal_var <- read_csv("analysis/data_15P_cal_var.csv")
 
 # creat the loop
 
-pdf(file = "figures/degradability_individual plot_sd_error.pdf") # creating a pdf file and senting all the plot below to this file
+pdf(file = "figures/degradability_individual plot_sd_error_blk.pdf") # creating a pdf file and senting all the plot below to this file
 for(i in unique(data_15P_cal_var$Sample)){ # i stands for each item within this dataset
-  # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
+  # unique() can show all the Sample names here within the mean_HE_6P dataset 
   digestibility_var <- data_15P_cal_var %>% 
     filter(Sample == i) %>% # pipe this to the first argument on the right side 
     # here, the first argument of ggplot is the data, otherwise, we have to type ggplot(data = .)
