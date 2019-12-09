@@ -13,8 +13,14 @@ amylase <- read_xls("C:/Users/WAN333/Documents/Thesis/Thesis infomation/MAGIC po
 
 amylase <- amylase %>% 
   select(-'...2') %>% 
-  rename(ID = '...1')
+  rename(ID = '...1', CU_mg_flour = 'CU/mg flour', CU_g_flour = 'CU/g flour')
+
+# calculate the mean values of for each ID
+
+amylase_tidy <- amylase %>% 
+  group_by(ID) %>% 
+  summarise(mean_value = mean(CU_g_flour, na.rm = TRUE))
 
 # save the tidy dataset
 
-write_csv(amylase, "data/tidydata/previous_data/amylase_tidy.csv")
+write_csv(amylase_tidy, "data/tidydata/previous_data/amylase_tidy.csv")
