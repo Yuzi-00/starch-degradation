@@ -94,9 +94,9 @@ ggsave("figures/line-plot_15P.png",
 
 
 pdf(file = "figures/degradability_individual plot.pdf") # creating a pdf file and senting all the plot below to this file
-for(i in unique(data_15P_cal_HE_outlier_deleted$Sample)){ # i stands for each item within this dataset
+for(i in unique(data_15P_cal_HE_outlier_replaced$Sample)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
-  digestibility <- data_15P_cal_HE_outlier_deleted %>% 
+  digestibility <- data_15P_cal_HE_outlier_replaced %>% 
     filter(Sample == i) %>% # pipe this to the first argument on the right side 
     # here, the first argument of ggplot is the data, otherwise, we have to type ggplot(data = .)
     # to let it pipe to this argument
@@ -133,9 +133,14 @@ dev.off() # stop sending plot to the pdf file
 
 data_15P_cal_var <- read_csv("analysis/data_15P_cal_var.csv")
 
+# remove the unused wells
+
+data_15P_cal_var <- data_15P_cal_var %>% 
+  filter(Sample != "X")
+
 # creat the loop
 
-pdf(file = "figures/degradability_individual plot_sd_error_blk.pdf") # creating a pdf file and senting all the plot below to this file
+pdf(file = "figures/degradability_individual plot_sd_error.pdf") # creating a pdf file and senting all the plot below to this file
 for(i in unique(data_15P_cal_var$Sample)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here within the mean_HE_6P dataset 
   digestibility_var <- data_15P_cal_var %>% 
