@@ -19,7 +19,7 @@ amylase <- amylase %>%
 
 amylase_tidy <- amylase %>% 
   group_by(ID) %>% 
-  summarise(mean_value = mean(CU_g_flour, na.rm = TRUE))
+  summarise(mean_amylase = mean(CU_g_flour, na.rm = TRUE))
 
 # save the tidy dataset
 
