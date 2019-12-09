@@ -81,3 +81,20 @@ joined_15P_update <- left_join(joined_15P, CLD_data)
 
 write_csv(joined_15P_update, "data/tidydata/joined_15p_update.csv")
 
+
+#                                                ** add alpha-amylase data **
+
+
+# import the amylase dataset
+
+amylase <- read_csv("data/tidydata/previous_data/amylase_tidy.csv")
+
+# combien the amylase data with the previous joined dataset
+
+joined_15P_update <- left_join(joined_15P_update, amylase)
+
+# write out the new joined dataset
+
+write_csv(joined_15P_update, "data/tidydata/joined_15p_update.csv")
+
+
