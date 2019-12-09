@@ -55,7 +55,7 @@ ggsave("figures/scatter-plot_15P.png",
 #                                    ** line plot of the HE ** 
 
 
-HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_deleted, 
+HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced, 
                  aes(x = Time, 
                      y = HE,
                      group = Well,
@@ -78,7 +78,8 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_deleted,
         axis.text.y = element_text(color="black", size=10)) +
   scale_color_discrete(labels = c("Negtive control", "Sample", "Positive control")) +
   theme(legend.key = element_blank(),
-        legend.position = "bottom")
+        legend.position = "bottom")+
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
 
 # save the plot
 
