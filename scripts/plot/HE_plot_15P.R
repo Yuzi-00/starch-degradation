@@ -38,7 +38,6 @@ HE_scatter_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
   labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
   theme(axis.text.x = element_text(color="black", size=10), 
         axis.text.y = element_text(color="black", size=10)) +
-  scale_color_discrete(labels = c("Negative control", "Sample", "Positive control")) +
   theme(legend.key = element_blank(),
         legend.position = "bottom") +
   theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
@@ -76,7 +75,6 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
   labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
   theme(axis.text.x = element_text(color="black", size=10), 
         axis.text.y = element_text(color="black", size=10)) +
-  scale_color_discrete(labels = c("Negtive control", "Sample", "Positive control")) +
   theme(legend.key = element_blank(),
         legend.position = "bottom")+
   theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
