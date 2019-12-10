@@ -87,6 +87,49 @@ ggsave("figures/line-plot_15P.png",
        height = 8, 
        units = "cm") 
 
+# noted that there's one blue line lower than the negative control, let's find it 
+
+low_HE <- data_15P_cal_HE_outlier_replaced %>% 
+  filter(Time == 360) %>% 
+  arrange(HE) # seems that it's the sample 92
+
+# let's plot the sample 92 with the negative control
+
+Neg_92 <- data_15P_cal_HE_outlier_replaced %>% 
+  filter(Sample == "92" | Sample == "C-")
+
+low_HE <- ggplot(data = Neg_92, 
+       aes(x = Time, 
+           y = HE,
+           group = Well,
+           color = WellGroupType)) + # colored by the status (distinguish the control from the other samples)
+  geom_point(size = 1, shape = 1) + # add the transparency
+  geom_line(size = 0.005) +
+  scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
+  scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
+  ylab("Hydrolysis extent (%)") + ## change the label for the y axis
+  xlab("Time (min)") + ## change the name of the x axis
+  theme(legend.title = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_line(colour = "black", size = 0.5)，
+        panel.background = element_rect(fill = "white"),
+        axis.ticks=element_line(
+          colour="black",
+          size=.5)) +
+  labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
+  theme(axis.text.x = element_text(color="black", size=10), 
+        axis.text.y = element_text(color="black", size=10)) +
+  theme(legend.key = element_blank(),
+        legend.position = "bottom")+
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
+
+# save the plot with sample 92 and neg control
+
+ggsave("figures/sample92.png", 
+       plot = low_HE, 
+       width = 10, 
+       height = 8, 
+       units = "cm") 
 
 #                                   ** individual plot (pdf) ** 
 
