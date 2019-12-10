@@ -1,29 +1,36 @@
 
 
-#    ** use the average of the Slope by plate and the average of all the blk within each plate **
-
 #             ** calculate the [reducing sugar] and the hydrolysis extent **
+
+#    ** use the average of the Slope by plate and the average of the blk by plate **
+
+
 
 
 library(tidyverse)
 
-# import the joined dataset
+# import the dataset
 
 data_15P <- read_csv("data/tidydata/joined_15P_with_mass_slope_id.csv")
 
-# calculate the concentration of the reducing sugar for the sample and the blank
+# calculate the concentration (C) of the reducing sugar for the sample and the blank: C = OD/slope
 
 data_cal <- data_15P %>% 
   mutate(C_sample = OD_sample / Mean_slope, # calculate the concentration using the mean slope by plate
          C_blk = OD_blk / Mean_slope,
-         C_spl_nor = 10 * C_sample / Mass_sample, # normalize the concentraion at 10mg
+         
+         # the mass of the sample was weighed between 9.5mg and 10.5 mg, which are all normalized to 10mg while calculating the concentration
+         
+         C_spl_nor = 10 * C_sample / Mass_sample, 
          C_blk_nor = 10 * C_blk / Mass_blk)
 
-# calculate the mean values of the blank for each plate
+# calculate the mean values of the blank for each plate (at each time point)
 
 data_cal <- data_cal %>% 
   group_by(Plate, Time) %>% 
-  mutate(Mean_blk = mean(C_blk_nor, na.rm = TRUE))
+  mutate(Mean_blk = mean(C_blk_nor, 
+                         na.rm = TRUE,
+                         trim = 0.1)) # 10% of the data on both sides will be removed while calculating the means
   
 # substrate the blank and calculate the hydrolysis extent
 
