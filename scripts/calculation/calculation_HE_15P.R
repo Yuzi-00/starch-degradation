@@ -2,7 +2,7 @@
 
 #             ** calculate the [reducing sugar] and the hydrolysis extent **
 
-#    ** use the average of the Slope by plate and the average of the blk by plate and by time**
+#    ** use the average of the Slope by plate and the average of the blk by plate and by time **
 
 
 
@@ -30,7 +30,8 @@ data_cal <- data_cal %>%
   group_by(Plate, Time) %>% 
   mutate(Mean_blk = mean(C_blk_nor, 
                          na.rm = TRUE,
-                         trim = 0.1)) # 10% of the data on both sides will be removed while calculating the means
+                         trim = 0.1)) %>%  # 10% of the data on both sides will be removed while calculating the means
+  ungroup # remove the grouping 
   
 # substrate the blank and calculate the hydrolysis extent
 
