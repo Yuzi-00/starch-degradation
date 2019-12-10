@@ -2,7 +2,7 @@
 
 #             ** calculate the [reducing sugar] and the hydrolysis extent **
 
-#    ** use the average of the Slope by plate and the average of the blk by plate **
+#    ** use the average of the Slope by plate and the average of the blk by plate and by time**
 
 
 
