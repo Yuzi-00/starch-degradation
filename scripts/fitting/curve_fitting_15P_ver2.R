@@ -12,38 +12,34 @@ library(broom)
 
 data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv")
 
+# remove the missing value
 
+hydro_data <- data_15P_cal_HE_outlier_replaced %>% 
+  filter(!is.na(HE)) 
 
-#                                             ** modelling with control samples **
+# creat a function to generate the fitted model
 
-
-# let's use two functions to generate the fitted model and the estimated parameters
-
-fit_model <- function(data_15P_cal_HE_outlier_replaced){ # creat a function called fit_model
+fit_model <- function(dfr){ # a dataframe will be passed through the following things 
   
-  # remove the missing value
-  
-  hydro_data <- data_15P_cal_HE_outlier_replaced %>% 
-    filter(!is.na(HE)) 
-  
-  # built the model with some guessing values for the unknown parameters
+  # built the model
   
   model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function 
-               data = hydro_data,
+               data = dfr,
                algorithm = "port", # add this if setting the constrains 
-               start = list(Xinf = 73,
+               start = list(Xinf = 73, # some guessing values of the parameters
                             k = 0.003,
                             H = 1-0.0005),
-               lower = list(Xinf = 0, # set the lower values fo each parameter
-                            k = 0),
-               control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
+               lower = list(Xinf = 0, # set the constrains for some of the parameters 
+                            k = 0))
+               # control = list(warnOnly = TRUE)) ## change the setting, give us just the waining messages instead of error messages
   
-  return(model) # give back the model
+  return(model) # give back the content of the model
   
 }
 
+# creat a function to generate the estimated parameters
 
-find_paramters_with_control <- function(model){ # creat a function called find_parameters
+find_paramters_with_control <- function(model){ # a model list will be passed through the following things 
   
   result <- tidy(model) %>% 
     select(term, estimate) %>% # extract the values of these pamameters
@@ -52,32 +48,75 @@ find_paramters_with_control <- function(model){ # creat a function called find_p
   
 }
 
-
-# create a list of models
+# fitting the model using the complete hydro_data
 
 model_list <- hydro_data %>% 
-  split(.$Well) %>% # split the initial dataset by Well
-  map(fit_model) # save all the model in a list
+  split(.$Well) %>% # split the initial dataset by Well into a list (680 wells)
+  map(fit_model) # pass each element of the list into the fit_model function and save all the created models in a new list
 
-# how to show the different items in the model ? (like convInfo for ex)
 
-get_isconv <- function(x)x$convInfo$isConv # create a function to get all the conteng in "isConv"
+# if can't fit properly, try the following codes to check where the probelm comes from 
 
-# sum(map_chr(model_list, class) != "nls", na.rm = TRUE) this is to show how many items in the model_list are not "nls"
+# get_isconv <- function(x)x$convInfo$isConv # create a function to get all the conteng in "isConv"
+# 
+# # sum(map_chr(model_list, class) != "nls", na.rm = TRUE) this is to show how many items in the model_list are not "nls"
+# 
+# isconv <- model_list %>% 
+#   map_lgl(.f = get_isconv) # map_lgl: give back a logical vector (lgl stands for logical)
+# # this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
+# 
+# names(isconv)[isconv == FALSE] # give us the item that is not converged
 
-isconv <- model_list %>% 
-  map_lgl(.f = get_isconv) # map_lgl: give back a logical vector (lgl stands for logical)
-# this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
+# get all the residuals from the models
 
-names(isconv)[isconv == FALSE] # give us the item that is not converged
+residual_list <- model_list %>% 
+  map(residuals) # pass each element of the model_list to the residuals function and give back a new list containing all the residuals 
+
+# get all the estimated parameters from the models
 
 parameters_with_control <- model_list %>% 
-  map_df(find_paramters_with_control) # got 680 observations here 
+  map_df(find_paramters_with_control) # 680 observations here (correspond to 680 wells) 
 
-# check replicates in the working dataset
+# convert the residual list into a dataframe
 
-hydro_data %>% 
-  group_by(Well) # 680 wells here which should give us 680 groups of parameters (which is...what we've got !)
+residual <- data.frame(matrix(unlist(residual_list), nrow=length(rr), byrow=T)) # warning message here, need to be checked later 
+
+# add the well names into the residual and estimated parameter dataframe
+  
+# extract the well names 
+
+well <- hydro_data %>% # this is the complete hydro_data
+select(Well) %>% # select just the well column
+unique() %>% # remove the duplicated wells
+arrange(Well) # get the same order as the residual list
+
+# combine the residuals with the well names (by order)
+
+residual_well <- bind_cols(well, residual)
+
+# tidy the residual_well dataframe
+
+residual_well <- residual_well %>% 
+  gather(name, residal, -Well) 
+
+# save the residual data
+
+write_csv(residual_well, "analysis/weibull_residuals.csv")
+
+# combine the estimated parameters with the well names (by order)  
+
+parameter_well <- bind_cols(well, parameters_with_control)
+
+# save the estimated parameters
+
+write_csv(parameter_well, "analysis/fitted_welbull_parameters_for_replicates.csv")
+
+
+###########################################################################################################################################
+
+
+# below are things that need to be tidied/deleted
+
 
 # need to check the 9_F_5 later after putting Well column in 
 
@@ -110,26 +149,28 @@ data_control_removed <- data_15P_cal_HE_outlier_replaced %>%
   filter(!Sample %in% c("C+", "C-"))
 
 
+# remove the missing value
+
+hydro_data <- data_control_removed %>% 
+  filter(!is.na(HE)) 
+
 # let's use two functions to generate the fitted model and the estimated parameters
 
-fit_model <- function(data_control_removed){ # creat a function called fit_model
+fit_model <- function(dfr){ # creat a function called fit_model
   
-  # remove the missing value
-  
-  hydro_data <- data_control_removed %>% 
-    filter(!is.na(HE)) 
+
   
   # built the model with some guessing values for the unknown parameters
   
   model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function 
-               data = hydro_data,
+               data = dfr,
                algorithm = "port", # add this if setting the constrains 
                start = list(Xinf = 73,
                             k = 0.003,
                             H = 1-0.0005),
                lower = list(Xinf = 0, # set the lower values fo each parameter
-                            k = 0),
-               control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
+                            k = 0))
+               # control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
   
 return(model) # give back the model
 
@@ -201,26 +242,27 @@ hydro_data$Sample[259] # it's the sample 92, let's remove it from the data frame
 data_92_removed <- data_control_removed %>% 
   filter(Sample != "92")
 
+# remove the missing value
+
+hydro_data <- data_92_removed %>% 
+  filter(!is.na(HE)) 
+
 # let's use two functions to generate the fitted model and the estimated parameters
 
-fit_model <- function(data_92_removed){ # creat a function called fit_model
+fit_model <- function(dfr){ # creat a function called fit_model
   
-  # remove the missing value
-  
-  hydro_data <- data_92_removed %>% 
-    filter(!is.na(HE)) 
-  
+ 
   # built the model with some guessing values for the unknown parameters
   
   model <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function 
-               data = hydro_data,
+               data = dfr,
                algorithm = "port", # add this if setting the constrains 
                start = list(Xinf = 73,
                             k = 0.003,
                             H = 1-0.0005),
                lower = list(Xinf = 0, # set the lower values fo each parameter
-                            k = 0),
-               control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
+                            k = 0))
+               # control = list(warnOnly = TRUE)) # change the setting, give us just the waining messages instead of error messages
   
   return(model) # give back the model
   
@@ -243,17 +285,14 @@ model_list <- hydro_data %>%
   split(.$Well) %>% # split the initial dataset by Well
   map(fit_model) # save all the model in a list
 
-# how to show the different items in the model ? (like convInfo for ex)
+# if can't fit properly, try the following codes to check where the probelm comes from 
 
-get_isconv <- function(x)x$convInfo$isConv # create a function to get all the conteng in "isConv"
-
+# get_isconv <- function(x)x$convInfo$isConv ## create a function to get all the content in "isConv"
 # sum(map_chr(model_list, class) != "nls", na.rm = TRUE) this is to show how many items in the model_list are not "nls"
-
-isconv <- model_list %>% 
-  map_lgl(.f = get_isconv) # map_lgl: give back a logical vector (lgl stands for logical)
-# this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
-
-names(isconv)[isconv == FALSE] # give us the item that is not converged
+# isconv <- model_list %>% 
+# map_lgl(.f = get_isconv) ## map_lgl: give back a logical vector (lgl stands for logical)
+## this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
+# names(isconv)[isconv == FALSE] ## give us the item that is not converged
 
 parameters <- model_list %>% 
   map_df(find_paramters) # got 680 observations here 
@@ -267,8 +306,9 @@ hydro_data %>%
 
 # check the residuals against the fitted values
 
-plot(model) # noticed that there are 2 points below -5 
+plot(model, ylim = c(-10, 10)) # noticed that there are 2 points below -5 
 
+plot(residuals(model))
 # find thes particular points below -5
 
 # add a residual column to the hydro_data data frame
@@ -283,14 +323,14 @@ which.min(hydro_data$residuals) # it's the 259
 
 hydro_data$Sample[259] # it's the sample 92, let's remove it from the data frame
 
-
+glance(model_list[[1]])
 
 #                                                ** add the Well column to the parameter list **
 
 
 # extract the subset
 
-well <- hydro_data %>% 
+well <- hydro_data %>% # this is the first hydro_data of this script
   select(Well) %>% # select just the sample column
   unique() %>% # remove the duplicated sample names
   arrange(Well) # get the same order as the output of the split(.$Sample) step
@@ -299,40 +339,6 @@ well <- hydro_data %>%
 
 fitted_parameters_with_control <- bind_cols(well, parameters_with_control)
 
-# find the 9_F_5 and check what's going on
-
-para_problem_well <- fitted_parameters %>% 
-  filter(Well == "9_F_5")
-
-# let's try to fit for this single Well
-
-model_problem_well <- nls(formula = HE ~ Xinf*(1-exp(-k*Time**(1-h))), # using the Weibull function 
-             data = problem_well,
-             start = list(Xinf = 73,
-                          k = 0.003,
-                          h = 0.0005),
-             algorithm = "port", # add this if setting the constrains 
-             lower = list(Xinf = 0, # set the lower values fo each parameter
-                          k = 0,
-                          h = -0.5),
-             control = list(warnOnly = TRUE)) # didn't work either
-
-summary(model_problem_well)
-
-problem_well %>% 
-  select(Time, HE) %>% 
-  plot(ylim = c(0, 100)) # set the range of the y axis up to 100
-
-# plot the fitted line
-
-## creat a data frame that contains 100 time points
-
-new.data <- data.frame(Time = seq(min(problem_well$Time), max(problem_well$Time), len = 100))
-
-## draw the new line (fitted line)
-
-lines(new.data$Time, predict(model_problem_well, newdata = new.data), col='red')
-
 # save the fitted parameters into the analysis folder 
 
-write_csv(fitted_parameters_with_control, "analysis/fitted_Weibull_parameters_15P_with_control_ver2.csv")
+write_csv(fitted_parameters_with_control, "analysis/fitted_Weibull_parameters_for_replicates.csv")
