@@ -108,7 +108,7 @@ residual_tidy <- residual_well %>%
 
 # save the residual data
 
-write_csv(residual_well, "analysis/weibull_residuals.csv")
+write_csv(residual_tidy, "analysis/weibull_residuals.csv")
 
 # combine the estimated parameters with the well names (by order)  
 
