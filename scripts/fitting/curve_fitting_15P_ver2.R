@@ -104,6 +104,7 @@ residual_well <- bind_cols(well, residual)
 residual_well <- residual_well %>% 
   gather(name, residal, -Well) %>% 
   mutate(Time = as.numeric(name)) %>% # add a new column by converting the Time points to dbl
+  select(-name)
 
 # save the residual data
 
