@@ -81,6 +81,11 @@ parameters_with_control <- model_list %>%
 
 residual <- data.frame(matrix(unlist(residual_list), nrow=length(residual_list), byrow=T)) # warning message here, need to be checked later 
 
+# change the column names 
+
+residual <- residual %>% 
+  rename("0" = X1, "20" = X2, "60" = X3, "120" = X4, "180" = X5, "240" = X6, "360" = X7, "1440" = X8, "1800" = X9)
+
 # add the well names into the residual and estimated parameter dataframe
   
 # extract the well names 
@@ -97,7 +102,8 @@ residual_well <- bind_cols(well, residual)
 # tidy the residual_well dataframe
 
 residual_well <- residual_well %>% 
-  gather(name, residal, -Well) 
+  gather(name, residal, -Well) %>% 
+  mutate(Time = as.numeric(name)) %>% # add a new column by converting the Time points to dbl
 
 # save the residual data
 
