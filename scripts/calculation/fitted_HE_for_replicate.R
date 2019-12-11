@@ -36,3 +36,7 @@ residual <- read_csv("analysis/weibull_residuals.csv")
 # combination
 
 data_fitted_HE_residual <- left_join(data_with_fitted_HE, residual)
+
+# save the dataset
+
+write_csv(data_fitted_HE_residual, "analysis/data_15P_fitted_HE_residual.csv")
