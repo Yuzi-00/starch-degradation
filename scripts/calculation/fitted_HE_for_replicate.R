@@ -26,3 +26,13 @@ data_with_fitted_HE <- data_with_para %>%
 # save the dataset
 
 write_csv(data_with_fitted_HE, "analysis/data_15P_with_fitted_HE.csv")
+
+# add the residual data to the previous dataset
+
+# import the residuals
+
+residual <- read_csv("analysis/weibull_residuals.csv")
+
+# combination
+
+data_fitted_HE_residual <- left_join(data_with_fitted_HE, residual)
