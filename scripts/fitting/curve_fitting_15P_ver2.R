@@ -79,7 +79,7 @@ parameters_with_control <- model_list %>%
 
 # convert the residual list into a dataframe
 
-residual <- data.frame(matrix(unlist(residual_list), nrow=length(rr), byrow=T)) # warning message here, need to be checked later 
+residual <- data.frame(matrix(unlist(residual_list), nrow=length(residual_list), byrow=T)) # warning message here, need to be checked later 
 
 # add the well names into the residual and estimated parameter dataframe
   
@@ -109,7 +109,7 @@ parameter_well <- bind_cols(well, parameters_with_control)
 
 # save the estimated parameters
 
-write_csv(parameter_well, "analysis/fitted_welbull_parameters_for_replicates.csv")
+write_csv(parameter_well, "analysis/fitted_weibull_parameters_for_replicates.csv")
 
 
 ###########################################################################################################################################
