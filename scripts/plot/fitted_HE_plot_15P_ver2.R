@@ -165,16 +165,15 @@ for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
   
   model_x <- data_15P %>% 
     filter(Well == i) %>% 
-    nls(formula = HE ~ Xinf*(1-exp(-k*Time**(1-h))), # using the Weibull function 
+    nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function 
                  data = . ,
                  algorithm = "port", # add this if setting the constrains 
                  start = list(Xinf = 73,
                               k = 0.003,
-                              h = 0.0005),
+                              H = 1-0.0005),
                  lower = list(Xinf = 0, # set the lower values fo each parameter
-                              k = 0,
-                              h = -0.5),
-                 control = list(warnOnly = TRUE))
+                              k = 0))
+                 # control = list(warnOnly = TRUE)
   
   
   data_15P %>% 
