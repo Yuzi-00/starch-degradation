@@ -118,21 +118,31 @@ ggplot() +
 
 fit <- read_csv("analysis/weibull_residuals.csv")
 
+# import the estimated parameters
+
+para <- read_csv("analysis/fitted_weibull_parameters_for_replicates.csv")
+
+# combine these two datasets above together
+
+total_data <- left_join(fit, para)
+
 pdf(file = "figures/degradability_individual plot_fitted_ver3.pdf") # creating a pdf file and senting all the plot below to this file
-for(i in unique(fit$Well)){ # i stands for each item within this dataset
+for(i in unique(total_data$Well)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
-  digestibility <- fit %>% 
+  digestibility <- total_data %>% 
     filter(Well == i) %>% # pipe this to the first argument on the right side 
     # here, the first argument of ggplot is the data, otherwise, we have to type ggplot(data = .)
     # to let it pipe to this argument
     ggplot() + 
-    geom_line(
-              aes(x = Time, 
+    geom_line(aes(x = Time, 
                   y = .fitted),
               color = "red") +
-    geom_point(
-               aes(x = Time, 
-                   y = HE)) +
+    geom_point(aes(x = Time, 
+                   y = HE),
+               shape = 1) +
+    geom_hline(aes(yintercept = Xinf), 
+               linetype = "dashed",
+               colour = "blue") +
     ggtitle(i) + # set the title for each plot as i 
     scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
     scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
@@ -153,16 +163,19 @@ for(i in unique(fit$Well)){ # i stands for each item within this dataset
 } 
 dev.off() # stop sending plot to the pdf file
 
-
 # try using the plot() function instead of ggplot()
 
 
 data_15P <- data_15P %>%
   filter(!(is.na(HE)))
 
+# import the estimated parameters 
 
+para <- read_csv("analysis/fitted_weibull_parameters_for_replicates.csv")
 
-pdf(file = "figures/degradability_individual plot_fit_replicates.pdf") # creating a pdf file and senting all the plot below to this file
+#
+
+pdf(file = "figures/degradability_individual plot_fit_replicate.pdf") # creating a pdf file and senting all the plot below to this file
 for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
   
