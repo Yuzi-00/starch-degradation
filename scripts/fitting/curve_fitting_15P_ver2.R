@@ -39,14 +39,17 @@ fit_model <- function(dfr){ # a dataframe will be passed through the following t
 
 # creat a function to generate the estimated parameters
 
-find_paramters_with_control <- function(model){ # a model list will be passed through the following things 
-  
-  result <- tidy(model) %>% 
+find_paramters_with_control <- function(model){ # a model list will be passed through the following things
+
+  result <- tidy(model) %>%
     select(term, estimate) %>% # extract the values of these pamameters
     spread(term, estimate) # split into three separate columns
   result # give back the result
-  
+
 }
+
+
+
 
 # fitting the model using the complete hydro_data
 
@@ -69,22 +72,28 @@ model_list <- hydro_data %>%
 
 # get all the residuals from the models
 
-residual_list <- model_list %>% 
-  map(residuals) # pass each element of the model_list to the residuals function and give back a new list containing all the residuals 
+# residual_list <- model_list %>% 
+#   map(residuals) # pass each element of the model_list to the residuals function and give back a new list containing all the residuals 
+
+# extract the residuals into a dataframe 
+
+residual_data <- model_list %>% 
+  map_df(augment, .id = "Well") # will return the raw data, fitted values and residuals from a model into columns in a data frame
+# id = "Well": add a column called ‘Well’ containing all the names of each list within model_list
 
 # get all the estimated parameters from the models
 
-parameters_with_control <- model_list %>% 
-  map_df(find_paramters_with_control) # 680 observations here (correspond to 680 wells) 
+parameters_with_control <- model_list %>%
+  map_df(find_paramters_with_control) # 680 observations here (correspond to 680 wells)
 
 # convert the residual list into a dataframe
 
-residual <- data.frame(matrix(unlist(residual_list), nrow=length(residual_list), byrow=T)) # warning message here, need to be checked later 
-
-# change the column names 
-
-residual <- residual %>% 
-  rename("0" = X1, "20" = X2, "60" = X3, "120" = X4, "180" = X5, "240" = X6, "360" = X7, "1440" = X8, "1800" = X9)
+# residual <- data.frame(matrix(unlist(residual_list), nrow=length(residual_list), byrow=T)) # warning message here, need to be checked later 
+# 
+# # change the column names 
+# 
+# residual <- residual %>% 
+#   rename("0" = X1, "20" = X2, "60" = X3, "120" = X4, "180" = X5, "240" = X6, "360" = X7, "1440" = X8, "1800" = X9)
 
 # add the well names into the residual and estimated parameter dataframe
   
@@ -97,18 +106,18 @@ arrange(Well) # get the same order as the residual list
 
 # combine the residuals with the well names (by order)
 
-residual_well <- bind_cols(well, residual)
-
-# tidy the residual_well dataframe
-
-residual_tidy <- residual_well %>% 
-  gather(name, residual, -Well) %>% 
-  mutate(Time = as.numeric(name)) %>% # add a new column by converting the Time points to dbl
-  select(-name)
+# residual_well <- bind_cols(well, residual)
+# 
+# # tidy the residual_well dataframe
+# 
+# residual_tidy <- residual_well %>% 
+#   gather(name, residual, -Well) %>% 
+#   mutate(Time = as.numeric(name)) %>% # add a new column by converting the Time points to dbl
+#   select(-name)
 
 # save the residual data
 
-write_csv(residual_tidy, "analysis/weibull_residuals.csv")
+write_csv(residual_data, "analysis/weibull_residuals.csv")
 
 # combine the estimated parameters with the well names (by order)  
 
