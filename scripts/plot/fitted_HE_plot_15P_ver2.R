@@ -114,20 +114,23 @@ ggplot() +
 
 #                                   ** individual plot for fitted curves (pdf) ** 
 
+# import the residual dataset
 
-pdf(file = "figures/degradability_individual plot_fitted_ver2.pdf") # creating a pdf file and senting all the plot below to this file
-for(i in data_15P$Well){ # i stands for each item within this dataset
+fit <- read_csv("analysis/weibull_residuals.csv")
+
+pdf(file = "figures/degradability_individual plot_fitted_ver3.pdf") # creating a pdf file and senting all the plot below to this file
+for(i in unique(fit$Well)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
-  digestibility <- data_15P %>% 
+  digestibility <- fit %>% 
     filter(Well == i) %>% # pipe this to the first argument on the right side 
     # here, the first argument of ggplot is the data, otherwise, we have to type ggplot(data = .)
     # to let it pipe to this argument
     ggplot() + 
-    geom_line(data = fitted_HE,
+    geom_line(
               aes(x = Time, 
-                  y = fitted_HE),
+                  y = .fitted),
               color = "red") +
-    geom_point(data = data_15P,
+    geom_point(
                aes(x = Time, 
                    y = HE)) +
     ggtitle(i) + # set the title for each plot as i 
@@ -149,13 +152,13 @@ for(i in data_15P$Well){ # i stands for each item within this dataset
   print(digestibility) # print out the plots
 } 
 dev.off() # stop sending plot to the pdf file
-# failed
+
 
 # try using the plot() function instead of ggplot()
 
 
 data_15P <- data_15P %>%
-  filter(!(is.na(HE))) 
+  filter(!(is.na(HE)))
 
 
 
@@ -190,7 +193,6 @@ for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
   ## draw the new line (fitted line)
   
   lines(new.data$Time, predict(model_x, newdata = new.data), col='red')  
-  
   
 } 
 
