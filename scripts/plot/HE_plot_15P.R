@@ -174,10 +174,6 @@ dev.off() # stop sending plot to the pdf file
 
 data_15P_cal_var <- read_csv("analysis/data_15P_cal_var.csv")
 
-# import the estimated parameters dataset
-
-para <- read_csv("analysis/data_15P_fitted_HE_residual.csv")
-
 # remove the unused wells
 
 data_15P_cal_var <- data_15P_cal_var %>% 
