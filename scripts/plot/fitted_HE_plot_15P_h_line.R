@@ -1,9 +1,30 @@
 
-pdf(file = "figures/degradability_individual plot_fit_replicate_y.pdf") # creating a pdf file and senting all the plot below to this file
-for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
+library(tidyverse)
+
+# read in the dataset
+
+data_15P <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv")
+
+# remove the NAs
+
+data_15P <- data_15P %>%
+  filter(!(is.na(HE)))
+
+# import the estimated parameters
+
+para <- read_csv("analysis/fitted_weibull_parameters_for_replicates.csv")
+
+# combine these two datasets together
+
+total <- left_join(data_15P, para)
+
+# creat a loop to store all the plots into a pdf document
+
+pdf(file = "figures/degradability_individual plot_fit_replicates_h_line.pdf") # creating a pdf file and senting all the plot below to this file
+for(i in unique(total$Well)){ # i stands for each item within this dataset
   # unique() can show all the Sample names here whithin the mean_HE_6P dataset 
 
-  model_x <- data_15P %>%
+  model_x <- total %>%
     filter(Well == i) %>%
     nls(formula = HE ~ Xinf*(1-exp(-k*Time**H)), # using the Weibull function
         data = . ,
@@ -21,14 +42,15 @@ for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
 
   newdata$fitted <- predict(model_x, newdata)
 
-  ggp <- data_15P %>%
+  ggp <- total %>%
     filter(Well == i) %>% # pipe this to the first argument on the right side
     # here, the first argument of ggplot is the data, otherwise, we have to type ggplot(data = .)
     # to let it pipe to this argument
     ggplot() +
     geom_point(aes(x = Time,
                    y = HE),
-               shape = 1) +
+               shape = 1,
+               size = 2) +
     geom_line(data = newdata,
               aes(x = Time,
                   y = fitted),
@@ -37,8 +59,8 @@ for(i in unique(data_15P$Well)){ # i stands for each item within this dataset
                linetype = "dashed",
                colour = "blue") +
     ggtitle(i) + # set the title for each plot as i 
-    scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
-    scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
+    scale_y_continuous(limits = c(0,100)) + ## set the range of the y axis
+    scale_x_continuous(limits = c(0, 2000)) +
     theme( # remove the legend
       panel.grid = element_blank(), # remove the grid 
       axis.line = element_line(colour = "black", size = 0.5), # add the x axis
