@@ -22,12 +22,12 @@ residual_plot <- residual_data %>%
           size=.5)) +
   labs(x = "Fitted values", y = "Residuals") +
   geom_hline(yintercept=0, color = "blue") +
-  scale_y_continuous(limits = c(-10,10), expand = c(0, 0)) +
-  geom_smooth(colour="red")
+  scale_y_continuous(limits = c(-15,15), expand = c(0, 0))
+  # geom_smooth(colour="red")
 
 # save the plot
 
-ggsave("figures/Weibull_residuals.png", 
+ggsave("figures/Weibull_residuals_replicates.png", 
        plot = residual_plot, 
        width = 10, 
        height = 12, 
