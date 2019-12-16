@@ -60,7 +60,7 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
                      group = Well,
                      color = WellGroupType)) + # colored by the status (distinguish the control from the other samples)
   geom_point(size = 1, shape = 1) + # add the transparency
-  geom_line(size = 0.005) +
+  geom_line(size = 0.005, alpha = 0.8) +
   scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
   scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
   ylab("Hydrolysis extent (%)") + ## change the label for the y axis
@@ -83,8 +83,8 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
 
 ggsave("figures/line-plot_15P.png", 
        plot = HE_line_15P, 
-       width = 10, 
-       height = 8, 
+       width = 15, 
+       height = 15, 
        units = "cm") 
 
 # noted that there's one blue line lower than the negative control, let's find it 
