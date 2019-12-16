@@ -3,7 +3,7 @@ library(tidyverse)
 
 # import the dataset
 
-residual_data <- read_csv("analysis/weibull_residuals.csv")
+residual_data <- read_csv("analysis/weibull_residuals_replicates.csv")
 
 # plotting
 
