@@ -22,7 +22,8 @@ residual_plot <- residual_data %>%
           size=.5)) +
   labs(x = "Fitted values", y = "Residuals") +
   geom_hline(yintercept=0, color = "blue") +
-  scale_y_continuous(limits = c(-10,10), expand = c(0, 0))
+  scale_y_continuous(limits = c(-10,10), expand = c(0, 0)) +
+  geom_smooth(colour="red")
 
 # save the plot
 
