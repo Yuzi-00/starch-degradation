@@ -17,6 +17,14 @@ amy <- read_csv("data/tidydata/previous_data/amy_ID_sample.csv")
 data_15P_HE_amy <- left_join(data_15P_HE, amy) %>%
   rename(Hydro_extent = HE, Amylose_content = mean_amy) # change the column name
 
+# replace the NAs for the controls
+
+data_15P_HE_amy <- data_15P_HE_amy %>% 
+  mutate(Amylose_content = ifelse(Sample == "C+", 0, Amylose_content),
+         Amylose_content = ifelse(Sample == "C-", 72.9, Amylose_content))
+
+# save the dataset
+
 write_csv(data_15P_HE_amy, "data/tidydata/HE_amy_15P.csv")
 
 # need to add the Amy% to C+ and C- (replace the NA) !!!!!!!!!!!!!!!!!!!!!!!
@@ -35,9 +43,9 @@ HE_amy_size_15P <- left_join(data_15P_HE_amy, master_size)
 write_csv(HE_amy_size_15P, "data/tidydata/HE_amy_size_15P.csv")
 
 
-#                               ** add fitted parameters (Weibull, fit for each sample) **
+#                                          ** add fitted parameters (Weibull, fit for each replicate) **
 
-parameters <- read_csv("analysis/fitted_Weibull_parameters_15P.csv")
+parameters <- read_csv("analysis/fitted_weibull_parameters_for_replicates.csv")
 
 HE_amy_size_para_15P <- left_join(HE_amy_size_15P, parameters)
 
