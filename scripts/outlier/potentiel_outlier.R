@@ -1,8 +1,90 @@
 
+library(tidyverse)
+
 # read in the dataset
 
-data_15P <- read_csv("data/tidydata/data_15P_outlier_deleted.csv")
+data_15P <- read_csv("analysis/data_15P_cal_var.csv")
 
+# remove the unused wells
+
+data_15P <- data_15P %>% 
+  filter(Sample != "X")
+
+# plot the mean HE
+
+mean_HE <- ggplot(data = data_15P, 
+                      aes(x = Time, 
+                          y = Mean_HE,
+                          group = Sample,
+                          color = WellGroupType)) +
+  geom_point(size = 1, shape = 1) + # add the transparency
+  geom_line(size = 0.005, alpha = 0.9) +
+  scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
+  scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
+  ylab("Hydrolysis extent (%)") + ## change the label for the y axis
+  xlab("Time (min)") + ## change the name of the x axis
+  theme(legend.title = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_line(colour = "black", size = 0.5)，
+        panel.background = element_rect(fill = "white"),
+        axis.ticks=element_line(
+          colour="black",
+          size=.5)) +
+  labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
+  theme(axis.text.x = element_text(color="black", size=10), 
+        axis.text.y = element_text(color="black", size=10)) +
+  theme(legend.key = element_blank(),
+        legend.position = "bottom")+
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
+
+# save the plot
+
+ggsave("figures/mean_HE_plot.png", 
+       plot = mean_HE, 
+       width = 15, 
+       height = 15, 
+       units = "cm") 
+
+# noticed that there are 4 points that are lower than other samples, and one (or probably two) are higher than the others 
+
+# let's find the potential outliers 
+
+# low HE
+
+low_HE <- data_15P %>% 
+  filter(Time == 1800) %>% 
+  select(Sample, Mean_HE) %>% 
+  arrange(Mean_HE) %>% 
+  unique() %>% 
+  head(n = 7) # except for C-, there are: 92, 7, 17, 99, 154 and 195
+
+# high HE
+
+high_HE <- data_15P %>% 
+  filter(Time == 1800) %>% 
+  select(Sample, Mean_HE) %>% 
+  arrange(desc(Mean_HE)) %>% 
+  unique() %>% 
+  head(n = 3) # except for C+, there is: 153
+
+
+
+#########################################################################################################################
+
+# creat a subset for time 1800min
+
+data_1800 <- data_15P %>% 
+  filter(Time == 1800) %>% 
+  select(Sample, Mean_HE) %>% 
+  arrange(desc(Mean_HE)) %>% 
+  unique()
+
+# choose the forst 10 samples 
+
+data1800_head <- data_1800 %>% 
+  head(n = 10)
+
+# 
 
 # create two subsets for the controls 
 
