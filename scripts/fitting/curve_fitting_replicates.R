@@ -118,7 +118,7 @@ arrange(Well) # get the same order as the residual list
 
 # save the residual data
 
-write_csv(residual_data, "analysis/weibull_residuals.csv")
+write_csv(residual_data, "analysis/weibull_residuals_replicates.csv")
 
 # combine the estimated parameters with the well names (by order)  
 
