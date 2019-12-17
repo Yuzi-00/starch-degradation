@@ -19,10 +19,16 @@ total %>%
   geom_boxplot() +
   geom_jitter()
 
-anova <- aov(data = total, Hydro_extent~Sample)
+# subset the potential outliers 
+
+subset <- total %>%
+  filter(Time == 1800) %>% 
+  filter(Sample %in% c("195", "C-"))
+
+anova <- aov(data = subset, Hydro_extent~Sample)
 summary(anova)
 
-x <- TukeyHSD(anova)
+TukeyHSD(anova)
 
 
-
+t.test(data = subset, Hydro_extent~Sample)
