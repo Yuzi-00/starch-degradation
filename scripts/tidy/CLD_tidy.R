@@ -4,9 +4,15 @@ library(tidyverse)
 
 CLD_raw <- read_csv("C:/Users/WAN333/Documents/Thesis/Thesis infomation/MAGIC population/Data_MAGIC Population/CEresults.csv")
 
+# calculate the mean values
+
+CLD_mean <- CLD_raw %>% 
+  group_by(id) %>% 
+  summarise_each(funs = mean)
+
 # get the summary for the low DP (DP 6-12)
 
-low_dp <- CLD_raw %>%
+low_dp <- CLD_mean %>%
   select(id, dp6:dp12) %>% ## select just the id and the dp6 to dp12 columns
   gather(dp, results, -id) %>% ## gather all the dp to one single column
   group_by(id) %>% 
@@ -14,7 +20,7 @@ low_dp <- CLD_raw %>%
 
 # get the summary for the medium DP (DP 13-24)
 
-medium_dp <- CLD_raw %>% 
+medium_dp <- CLD_mean %>% 
   select(id, dp13:dp24) %>% ## select just the id and the dp13 to dp24 columns
   gather(dp, results, -id) %>% ## gather all the dp to one single column
   group_by(id) %>% 
@@ -22,7 +28,7 @@ medium_dp <- CLD_raw %>%
 
 # get the summary for the medium to high DP (DP 25-36)
 
-medium_high_dp <- CLD_raw %>% 
+medium_high_dp <- CLD_mean %>% 
   select(id, dp25:dp36) %>% ## select just the id and the dp13 to dp24 columns
   gather(dp, results, -id) %>% ## gather all the dp to one single column
   group_by(id) %>% 
@@ -30,7 +36,7 @@ medium_high_dp <- CLD_raw %>%
 
 # get the summary for the high DP (DP 37-47)
 
-high_dp <- CLD_raw %>% 
+high_dp <- CLD_mean %>% 
   select(id, dp37:dp47) %>% ## select just the id and the dp13 to dp24 columns
   gather(dp, results, -id) %>% ## gather all the dp to one single column
   group_by(id) %>% 
@@ -46,6 +52,6 @@ CLD_tidy <- full_join(second_join, high_dp) ## join the above joined tibble with
 
 # write out the tidy data of CLD
 
-write_csv(CLD_tidy, "data/tidydata/CLD_tidy.csv")
+write_csv(CLD_tidy, "data/tidydata/previous_data/CLD_tidy.csv")
 
 ## noted that there are some missing values in this dataset
