@@ -10,7 +10,7 @@ data_15P_HE <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv")
 
 # read in the tidy dataset for the amylose content
 
-amy <- read_csv("data/tidydata/previous_data/amy_ID_sample.csv")
+amy <- read_csv("data/tidydata/previous_data/amylose_tidy.csv")
 
 # combine these two datasets
 
