@@ -10,7 +10,7 @@ library(broom)
 
 # fitting with / without the time 0
 
-removeT0 <- FALSE
+removeT0 <- TRUE
 
 # read in the dataset
 
@@ -126,7 +126,8 @@ arrange(Well) # get the same order as the residual list
 
 # save the residual data
 
-write_csv(residual_data, "analysis/weibull_residuals_well_with_T0.csv")
+if(removeT0) write_csv(residual_data, "analysis/weibull_residuals_well_without_T0.csv") else
+  write_csv(residual_data, "analysis/weibull_residuals_well_with_T0.csv")
 
 # combine the estimated parameters with the well names (by order)  
 
@@ -134,7 +135,8 @@ parameter_well <- bind_cols(well, parameters_with_control)
 
 # save the estimated parameters
 
-write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_with_T0.csv")
+if(removeT0) write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_without_T0.csv") else
+  write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_with_T0.csv")
 
 
 ###########################################################################################################################################
