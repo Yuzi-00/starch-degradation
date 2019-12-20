@@ -2,11 +2,15 @@
 
 #                                       **  Using the Weibull function  **  
 
-#           ** using three replicates separately to generate three h k and Xinf (for 3 replicates) for each sample **
+#           ** using three replicates separately to generate three h k and Xinf for each well (replicate) **
 
 library(tidyverse)
 
 library(broom)
+
+# fitting with / without the time 0
+
+removeT0 <- FALSE
 
 # read in the dataset
 
@@ -16,6 +20,10 @@ data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outl
 
 hydro_data <- data_15P_cal_HE_outlier_replaced %>% 
   filter(!is.na(HE)) 
+
+# remove or not remove the time 0
+
+if(removeT0) hydro_data <- filter(hydro_data, Time >0) %>% droplevels()
 
 # creat a function to generate the fitted model
 
@@ -118,7 +126,7 @@ arrange(Well) # get the same order as the residual list
 
 # save the residual data
 
-write_csv(residual_data, "analysis/weibull_residuals_replicates.csv")
+write_csv(residual_data, "analysis/weibull_residuals_well_with_T0.csv")
 
 # combine the estimated parameters with the well names (by order)  
 
@@ -126,7 +134,7 @@ parameter_well <- bind_cols(well, parameters_with_control)
 
 # save the estimated parameters
 
-write_csv(parameter_well, "analysis/fitted_weibull_parameters_for_replicates.csv")
+write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_with_T0.csv")
 
 
 ###########################################################################################################################################
