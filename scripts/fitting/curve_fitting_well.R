@@ -4,6 +4,12 @@
 
 #           ** using three replicates separately to generate three h k and Xinf for each well (replicate) **
 
+
+
+#                                       ** fit the model and extract the parameters **
+
+
+
 library(tidyverse)
 
 library(broom)
@@ -138,6 +144,58 @@ parameter_well <- bind_cols(well, parameters_with_control)
 if(removeT0) write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_without_T0.csv") else
   write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_with_T0.csv")
 
+
+
+
+#                                           ** plot the parameters with/without T0 **
+
+
+
+# import the datasets 
+
+without_T0 <- read_csv("analysis/fitted_weibull_parameters_well_without_T0.csv")
+
+with_T0 <- read_csv("analysis/fitted_weibull_parameters_well_with_T0.csv")
+
+# plot the H
+
+ggplot() +
+  geom_point(data = without_T0,
+             aes(x = reorder(Well, H),
+                 y = H)) +
+  geom_point(data = with_T0,
+             aes(x = reorder(Well, H),
+                 y = H),
+             color = "red",
+             alpha = 0.3)
+
+# plot the k
+
+ggplot() +
+  geom_point(data = without_T0,
+             aes(x = reorder(Well, k),
+                 y = k)) +
+  geom_point(data = with_T0,
+             aes(x = reorder(Well, k),
+                 y = k),
+             color = "red",
+             alpha = 0.3)
+
+# plot the Xinf
+
+ggplot() +
+  geom_point(data = without_T0,
+             aes(x = reorder(Well, Xinf),
+                 y = Xinf)) +
+  geom_point(data = with_T0,
+             aes(x = reorder(Well, Xinf),
+                 y = Xinf),
+             color = "red",
+             alpha = 0.3)
+
+# well, with the results of the plotting the fiited curves with/without T0 in the same figure, we can clearly see that the two curves are overlapping,
+# so that it makes almost no difference fitting with or without T0. The three plots above are just a double check to make sure that the estimated parameters
+# are mostly the same, maybe it's not quite nessesary to do this.
 
 ###########################################################################################################################################
 
