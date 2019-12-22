@@ -10,7 +10,8 @@ library(tidyverse)
 
 # import the dataset
 
-data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv")
+data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv") %>% 
+  mutate(Plate = as.factor(Plate))
 
 # remove the unused wells
 
@@ -67,7 +68,7 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
   xlab("Time (min)") + ## change the name of the x axis
   theme(legend.title = element_blank(),
         panel.grid = element_blank(),
-        axis.line = element_line(colour = "black", size = 0.5)，
+        axis.line = element_line(colour = "black", size = 0.5),
         panel.background = element_rect(fill = "white"),
         axis.ticks=element_line(
           colour="black",
@@ -143,7 +144,8 @@ for(i in unique(data_15P_cal_HE_outlier_replaced$Sample)){ # i stands for each i
     # to let it pipe to this argument
     ggplot(aes(x = Time, 
                y = HE,
-               group = Well)) + 
+               group = Well,
+               color = Plate)) + 
     geom_line() +
     geom_point() +
     ggtitle(i) + # set the title for each plot as i 
