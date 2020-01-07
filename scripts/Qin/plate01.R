@@ -172,20 +172,91 @@ sample_without_enz <- left_join(sample_without_enz, controls_without_enz)
 
 total_df <- bind_rows(sample_with_enz, sample_without_enz)
 
+# save the dataset
+
+write_csv(total_df, "data/Qin/tidydata/combined_data.csv")
+
+
 #                                                      ** calculation **
 
 
 # import the dataset
 
-df <- read_csv("data/Qin/tidydata/DNS_data.csv")
+total_df <- read_csv("data/Qin/tidydata/combined_data.csv") %>% 
+  rename(mean_OD_control = mean_OD)
 
 # calculate the concentration (C) of the reducing sugar for the sample and the blank: C = OD/slope
 
-df_cal <- df %>% 
-  mutate(C_sample = OD_sample / Mean_slope, # calculate the concentration using the mean slope by plate
-         C_blk = OD_blk / Mean_slope,
+df_cal <- total_df %>% 
+  mutate(C_sample = OD / 0.2, # calculate the concentration using the mean slope by plate
+         C_control = mean_OD_control / 0.2,
          
          # the mass of the sample was weighed between 9.5mg and 10.5 mg, which are all normalized to 10mg while calculating the concentration
          
-         C_spl_nor = 10 * C_sample / Mass_sample, 
-         C_blk_nor = 10 * C_blk / Mass_blk)
+         C_spl_nor = 10 * C_sample / Mass)
+
+# substrate the control and calculate the hydrolysis extent
+
+df_cal_HE <- df_cal %>% 
+  mutate(C = C_spl_nor - C_control, 
+         # calculate the final concentration using the mean value of the blank
+         HE = C / (10 / 0.9) * 100) # calculate the hydrolysis extent
+# in theory, the HE should be 10/0.9 = 11 g/L
+
+# calculate the mean HE of the test samples 
+
+mean_HE <- df_cal_HE %>% 
+  group_by(Col,Time) %>% 
+  summarise(mean_HE = mean(HE)) %>% 
+  ungroup()
+
+# add the mean_HE to the df_cal_HE dataset
+
+df_cal_HE_mean <- left_join(df_cal_HE, mean_HE)
+
+# save the dataset
+
+write_csv(df_cal_HE_mean, "analysis/Qin/data_cal_HE_mean.csv")
+
+
+#                                                      ** plot **
+
+
+# import the dataset
+
+df_cal_HE_mean <- read_csv("analysis/Qin/data_cal_HE_mean.csv") %>% 
+  select(Sample, Time, mean_HE) %>% 
+  unique()
+
+HE_line_15P <- ggplot(data = df_cal_HE_mean, 
+                      aes(x = Time, 
+                          y = mean_HE,
+                          group = Sample,
+                          color = Sample)) +
+  geom_point(size = 1, shape = 1) + # add the transparency
+  geom_line(size = 0.005, alpha = 0.8) +
+  scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
+  scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
+  ylab("Hydrolysis extent (%)") + ## change the label for the y axis
+  xlab("Time (min)") + ## change the name of the x axis
+  theme(legend.title = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_line(colour = "black", size = 0.5),
+        panel.background = element_rect(fill = "white"),
+        axis.ticks=element_line(
+          colour="black",
+          size=.5)) +
+  labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
+  theme(axis.text.x = element_text(color="black", size=10), 
+        axis.text.y = element_text(color="black", size=10)) +
+  theme(legend.key = element_blank(),
+        legend.position = "bottom")+
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
+
+# save the plot
+
+ggsave("figures/line-plot_15P.png", 
+       plot = HE_line_15P, 
+       width = 15, 
+       height = 15, 
+       units = "cm") 
