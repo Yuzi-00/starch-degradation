@@ -11,45 +11,56 @@ filename1 <- "C:/Users/WAN333/Documents/Thesis/Experiments/2020-01/20200107_DNS_
 filename2 <- 'min.xlsx'
 # assigning the unchangeable part of the path
 
-filetime <- c('20','60','120','180') 
+filetime <- c('20','60','120','180', '240', '360', '1440', '1800') 
 # assigning the changeable part of the path
 
 df <- read_excel(paste0(filename1,'0',filename2), range = "A15:E19") 
 # read the 1st spreadsheet et and assign it to a new dataframe
 
-df <- mutate(df, time = 0)
+df <- mutate(df, Time = 0)
 # add two columns: plate number and time point for the 1st spreadsheet
 
 for (fltime in filetime) {
   filename_real <- paste0(filename1,fltime,filename2)
   print(filename_real)
   temp_data <- read_excel(filename_real, range = "A15:E19",na = 'NA')
-  temp_data <- mutate(temp_data, time = as.numeric(fltime))
+  temp_data <- mutate(temp_data, Time = as.numeric(fltime))
   df <- bind_rows(df, temp_data)
 }
 # creat a loop to import all the spreadsheet
 # add two columns: plate number and time point from the 2nd spreadsheet on 
 # bind them by raws
 
-df <- rename(df, raw = ...1) 
+df <- rename(df, Row = ...1) 
 # modify the default name for the first col & raw
 
+# divide into two subsets
 
-df <- gather(df, col, OD, -raw, -time) 
+df_sample <- df %>% 
+  filter(Row != "D") %>% 
+  mutate(Rep = case_when( ## creat a new column to count the repetition
+    Row == "A" ~ "1", 
+    Row == "B" ~ "2", 
+    Row == "C" ~ "3"
+  ))
+
+df_control <- df %>% 
+  filter(Row == "D") %>% 
+  select(-"1", -"3") # remove unuseful data
+
 # transfer the data into two columns 
 
-df <- select(df, raw, col, time, OD) %>% 
-  rename(Col = col,
-         Row = raw,
-         Time = time) %>% 
-  arrange(Row)
-# ordering the column names and arrange by the raw
+df_sample_trans <- gather(df_sample, Col, OD, -Row, -Time, -Rep) 
 
-write_csv(df, "data/Qin/tidydata/DNS_data.csv")
+# ordering the column names
+
+df_sample_trans <- select(df_sample_trans, Row, Col, Time, Rep, OD)
+
+write_csv(df_sample_trans, "data/Qin/tidydata/sample_data.csv")
 
 # check the NAs
 
-filter(df,is.na(OD)) %>% 
+filter(df_sample_trans,is.na(OD)) %>% 
   nrow() # 0 NAs
 
 
@@ -77,7 +88,7 @@ mass <- mass %>%
 
 # in order to join this dataset with the other, each row has to repete 5 times 
 
-mass_rep  <- mass[rep(seq_len(nrow(mass)), each = 5), ] # 16*5 = 80 rows
+mass_rep  <- mass[rep(seq_len(nrow(mass)), each = 9), ] # 16*9 = 108 rows
 
 # replace all the 0 by NA
 
@@ -99,124 +110,128 @@ write_csv(mass_rep, "data/Qin/tidydata/mass_tidy.csv")
 
 # read in the tidied mass dataset
 
-mass <- read_csv("data/Qin/tidydata/mass_tidy.csv") 
+mass <- read_csv("data/Qin/tidydata/mass_tidy.csv") %>% 
+  filter(Row != "D")
 
-df <- read_csv("data/Qin/tidydata/DNS_data.csv")
+sample_data <- read_csv("data/Qin/tidydata/sample_data.csv") %>% 
+  arrange(Row)
 
 # select just the Mass column to be merged in the next step
 
 mass_selected <- select(mass, Mass)
 
-df_with_mass <-  bind_cols(df, mass_selected) %>% 
-  select(Row, Col, Time, Mass, OD) 
-# ordering the columns
+df_with_mass <-  bind_cols(sample_data, mass_selected) %>% 
+  select(Row, Col, Time, Rep, Mass, OD) %>%  # ordering the columns
+  rename(OD_sample = OD)
 
-# import the sample name
+# import the layout
 
-sample_name <- read_xlsx("C:/Users/WAN333/Documents/Thesis/Experiments/2020-01/20200107_DNS_Qin/raw_data/sample_name.xlsx", range = "A2:C18")
+layout <- read_xlsx("C:/Users/WAN333/Documents/Thesis/Experiments/2020-01/20200107_DNS_Qin/raw_data/layout.xlsx", range = "A2:C18")
 
 # add the sample name to the previous dataset
 
-df_with_mass_sample <- left_join(df_with_mass, sample_name) %>% 
-  select(Row, Col, Sample, Time, Mass, OD)
+df_with_mass_sample <- left_join(df_with_mass, layout) %>% 
+  select(Row, Col, Time, Sample, Rep, Mass, OD_sample)
 
-# extract the controls
+# transform the control dataset for samples without enzyme
 
-controls_with_enz <- df_with_mass_sample %>% 
-  filter(Row == "D") %>% 
-  filter(Sample == "pos_with_enz" | Sample == "neg_with_enz")
+control_without_enz <- df_control %>% 
+  gather(Col, OD_control, -Row, -Time)
 
-controls_without_enz <- df_with_mass_sample %>% 
-  filter(Row == "D") %>% 
-  filter(Sample == "pos_without_enz" | Sample == "neg_without_enz")
+# calculate the mean value of for the control without enzyme
 
-# calculate the mean value of for each control
-
-with_enz <- controls_with_enz %>% 
+mean_ctl_without_enz <- control_without_enz %>% 
   group_by(Time) %>% 
-  summarise(mean_OD = mean(OD))
+  summarise(mean_OD = mean(OD_control))
 
-controls_with_enz <- left_join(controls_with_enz, with_enz)
+# add it to the previous dataset
 
-without_enz <- controls_without_enz %>% 
-  group_by(Time) %>% 
-  summarise(mean_OD = mean(OD))
+ctl_without_enz <- left_join(control_without_enz, mean_ctl_without_enz) %>% 
+  rename(OD_ctl_without_enz = OD_control, mean_OD_ctl_without_enz = mean_OD) %>% 
+  mutate(C_ctl_for_sample_without_enz = mean_OD_ctl_without_enz / 0.2035) %>% 
+  select(Time, C_ctl_for_sample_without_enz) %>% 
+  unique()
 
-controls_without_enz <- left_join(controls_without_enz, without_enz)
-
-# select the useful columns
-
-controls_with_enz <- controls_with_enz %>% 
-  select(Sample, Time, mean_OD)
-
-controls_without_enz <- controls_without_enz %>% 
-  select(Sample, Time, mean_OD)
-
-# extract the test sample with enzyme
-
-sample_with_enz <- df_with_mass_sample %>% 
-  filter(Sample == "pos_with_enz" | Sample == "neg_with_enz") %>% 
-  filter(Row != "D") # remove the row for control
+# select the subset for sample without enzyme
 
 sample_without_enz <- df_with_mass_sample %>% 
   filter(Sample == "pos_without_enz" | Sample == "neg_without_enz") %>% 
-  filter(Row != "D") # remove the row for control
+  mutate(C_sample = OD_sample / 0.2035,
+         C_sample_nor = 10*C_sample / Mass)
 
-# combine with the control data
+# combine the sample_without_enz with ctl_without_enz
 
-sample_with_enz <- left_join(sample_with_enz, controls_with_enz)
+sample_without_enz_final <- left_join(sample_without_enz, ctl_without_enz) %>% 
+  mutate(C_final = C_sample_nor - C_ctl_for_sample_without_enz) %>% 
+  select(Time, Sample, Rep, C_final) %>% 
+  arrange(Time)
 
-sample_without_enz <- left_join(sample_without_enz, controls_without_enz)
+# select the control subset (which is the neg_without_enz) for neg_with_enz
 
-# combine the previous two datasets together
+control_for_neg_with_enz <- df_with_mass_sample %>% 
+  filter(Sample == "neg_without_enz") %>% 
+  mutate(C_ctl_with_enz = OD_sample/0.2035,
+         C_ctl_with_enz_nor = 10*C_ctl_with_enz/Mass) %>% 
+  group_by(Time) %>% 
+  summarise(C_ctl_for_neg_with_enz = mean(C_ctl_with_enz_nor))
 
-total_df <- bind_rows(sample_with_enz, sample_without_enz)
+# select the subset neg_with_enz
 
-# save the dataset
+neg_with_enz <- df_with_mass_sample %>% 
+  filter(Sample == "neg_with_enz") %>% 
+  mutate(C_sample = OD_sample/0.2035,
+         C_sample_nor = 10*C_sample/Mass)
 
-write_csv(total_df, "data/Qin/tidydata/combined_data.csv")
+# combine the neg_with_enz and its control
+
+neg_with_enz_final <- left_join(neg_with_enz, control_for_neg_with_enz) %>% 
+  mutate(C_final = C_sample_nor - C_ctl_for_neg_with_enz) %>% 
+  select(Time, Sample, Rep, C_final) %>% 
+  arrange(Time)
+
+# select the control subset (which is the pos_without_enz) for pos_with_enz
+
+control_for_pos_with_enz <- df_with_mass_sample %>% 
+  filter(Sample == "pos_without_enz") %>% 
+  mutate(C_ctl_with_enz = OD_sample/0.2035,
+         C_ctl_with_enz_nor = 10*C_ctl_with_enz/Mass) %>% 
+  group_by(Time) %>% 
+  summarise(C_ctl_for_pos_with_enz = mean(C_ctl_with_enz_nor))
+
+# select the subset pos_with_enz
+
+pos_with_enz <- df_with_mass_sample %>% 
+  filter(Sample == "pos_with_enz") %>% 
+  mutate(C_sample = OD_sample/0.2035,
+         C_sample_nor = 10*C_sample/Mass)
+
+# combine the pos_with_enz and its control
+
+pos_with_enz_final <- left_join(pos_with_enz, control_for_pos_with_enz) %>% 
+  mutate(C_final = C_sample_nor - C_ctl_for_pos_with_enz) %>% 
+  select(Time, Sample, Rep, C_final) %>% 
+  arrange(Time)
+
+# combine the three subsets together
+
+half_combine <- bind_rows(pos_with_enz_final, neg_with_enz_final)
+
+full_combine <- bind_rows(half_combine, sample_without_enz_final)
+
+# calculate the hydrolysis extent
+
+cal_HE <- full_combine %>% 
+  mutate(HE = C_final / 11.1 * 100)
 
 
-#                                                      ** calculation **
+cal_var <- cal_HE %>% 
+  group_by(Sample, Time) %>% 
+  mutate(Mean_HE = mean(HE, na.rm = TRUE),
+         Sd_HE = sd(HE, na.rm = TRUE),
+         Cov = Sd_HE / Mean_HE * 100,
+         Se_HE = Sd_HE/sqrt(3))
 
-
-# import the dataset
-
-total_df <- read_csv("data/Qin/tidydata/combined_data.csv") %>% 
-  rename(mean_OD_control = mean_OD)
-
-# calculate the concentration (C) of the reducing sugar for the sample and the blank: C = OD/slope
-
-df_cal <- total_df %>% 
-  mutate(C_sample = OD / 0.2, # calculate the concentration using the mean slope by plate
-         C_control = mean_OD_control / 0.2,
-         
-         # the mass of the sample was weighed between 9.5mg and 10.5 mg, which are all normalized to 10mg while calculating the concentration
-         
-         C_spl_nor = 10 * C_sample / Mass)
-
-# substrate the control and calculate the hydrolysis extent
-
-df_cal_HE <- df_cal %>% 
-  mutate(C = C_spl_nor - C_control, 
-         # calculate the final concentration using the mean value of the blank
-         HE = C / (10 / 0.9) * 100) # calculate the hydrolysis extent
-# in theory, the HE should be 10/0.9 = 11 g/L
-
-# calculate the mean HE of the test samples 
-
-mean_HE <- df_cal_HE %>% 
-  group_by(Col,Time) %>% 
-  summarise(mean_HE = mean(HE)) %>% 
-  ungroup()
-
-# add the mean_HE to the df_cal_HE dataset
-
-df_cal_HE_mean <- left_join(df_cal_HE, mean_HE)
-
-# save the dataset
-
-write_csv(df_cal_HE_mean, "analysis/Qin/data_cal_HE_mean.csv")
+write_csv(cal_var, "analysis/Qin/cal_var.csv")
 
 
 #                                                      ** plot **
@@ -224,17 +239,22 @@ write_csv(df_cal_HE_mean, "analysis/Qin/data_cal_HE_mean.csv")
 
 # import the dataset
 
-df_cal_HE_mean <- read_csv("analysis/Qin/data_cal_HE_mean.csv") %>% 
-  select(Sample, Time, mean_HE) %>% 
+cal_var <- read_csv("analysis/Qin/cal_var.csv") %>% 
+  select(Sample, Time, Mean_HE, Se_HE) %>% 
   unique()
 
-HE_line_15P <- ggplot(data = df_cal_HE_mean, 
+mean_HE_plot <- ggplot(data = cal_var, 
                       aes(x = Time, 
-                          y = mean_HE,
+                          y = Mean_HE,
                           group = Sample,
                           color = Sample)) +
   geom_point(size = 1, shape = 1) + # add the transparency
   geom_line(size = 0.005, alpha = 0.8) +
+  geom_errorbar(aes(x = Time, 
+                    ymin = Mean_HE - Se_HE, 
+                    ymax = Mean_HE + Se_HE), 
+                width=20,
+                color = "red") +
   scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
   scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
   ylab("Hydrolysis extent (%)") + ## change the label for the y axis
@@ -255,8 +275,40 @@ HE_line_15P <- ggplot(data = df_cal_HE_mean,
 
 # save the plot
 
-ggsave("figures/line-plot_15P.png", 
-       plot = HE_line_15P, 
+ggsave("figures/mean_HE_plot.png", 
+       plot = mean_HE_plot, 
        width = 15, 
        height = 15, 
        units = "cm") 
+
+
+#                                                      ** stat **
+
+
+cal_var <- read_csv("analysis/Qin/cal_var.csv") 
+
+# select two subsets
+
+# with enzyme at 1440min
+
+with_enz <- cal_var %>% 
+  filter(Time == 1440) %>% 
+  filter(Sample == "pos_with_enz" | Sample == "neg_with_enz")
+
+# anova test
+
+aov1 <- aov(HE ~ Sample, data = with_enz)
+
+summary(aov1)
+
+# without enzyme at 1800min
+
+without_enz <- cal_var %>% 
+  filter(Time == 1800) %>% 
+  filter(Sample == "pos_without_enz" | Sample == "neg_without_enz")
+
+# anova test
+
+aov2 <- aov(HE ~ Sample, data = without_enz)
+
+summary(aov2)
