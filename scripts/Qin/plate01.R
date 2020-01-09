@@ -136,7 +136,7 @@ sample <- read_csv("data/Qin/tidydata/sample_data.csv") %>%
 
 # select just the Mass column to be merged in the next step
 
-mass_selected <- select(mass, Mass)
+mass_selected <- select(mass_rep, Mass)
 
 df02 <- bind_cols(sample, mass_selected) %>% 
   select(Row, Col, Time, Rep, Mass, OD) %>%  # ordering the columns
@@ -295,7 +295,7 @@ write_csv(cal_var, "analysis/Qin/DNS_result.csv")
 
 # import the dataset
 
-cal_var <- read_csv("analysis/Qin/cal_var.csv") %>% 
+cal_var <- read_csv("analysis/Qin/DNS_result.csv") %>% 
   select(Sample, Time, Mean_C, Se_C) %>% 
   unique()
 
@@ -343,7 +343,7 @@ ggsave("figures/mean_C_plot.png",
 #                                                      ** stat **
 
 
-cal_var <- read_csv("analysis/Qin/cal_var.csv") 
+cal_var <- read_csv("analysis/Qin/DNS_result.csv") 
 
 # select two subsets
 
