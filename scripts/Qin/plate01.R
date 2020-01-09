@@ -347,26 +347,30 @@ cal_var <- read_csv("analysis/Qin/cal_var.csv")
 
 # select two subsets
 
-# with enzyme at 1440min
+# with enzyme at ?min
 
 with_enz <- cal_var %>% 
-  filter(Time == 1440) %>% 
+  filter(Time == 1800) %>% 
   filter(Sample == "pos_with_enz" | Sample == "neg_with_enz")
 
 # anova test
 
-aov1 <- aov(C ~ Sample, data = with_enz)
+aov1 <- aov(C_final ~ Sample, data = with_enz)
 
 summary(aov1)
 
-# without enzyme at 1800min
+# significatnly different at 20, 60, 120, 240, 360, 1440 min
+
+# without enzyme at ?min
 
 without_enz <- cal_var %>% 
-  filter(Time == 1800) %>% 
+  filter(Time == 20) %>% 
   filter(Sample == "pos_without_enz" | Sample == "neg_without_enz")
 
 # anova test
 
-aov2 <- aov(C ~ Sample, data = without_enz)
+aov2 <- aov(C_final ~ Sample, data = without_enz)
 
 summary(aov2)
+
+# significantly different from 180 minutes on
