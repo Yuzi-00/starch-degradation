@@ -49,11 +49,13 @@ total_new <- total_add_HE %>%
   mutate(h = 1 - H) %>% 
   select(-H) # remove the H column
 
-# calculate the mean values by ID
+write_csv(total_new, "analysis/total_new.csv")
 
-total_update <- total_new %>% 
-  group_by(ID) %>% 
-  summarise_each(funs = mean)
+#calculate the mean values by ID (do we need this step?)
+
+#total_update <- total_new %>% 
+  #group_by(ID) %>% 
+  #summarise_each(funs = mean)
 
 # correlation plot
 
@@ -65,7 +67,7 @@ my_subset <- total_update %>%
 
 cor_result <- cor(my_subset, use = "complete.obs")
 
-correlation <- corrplot(cor_result, method = "number",
+correlation <- corrplot(cor_result, method = "number", type = "lower",
                         tl.cex = 0.5, number.cex = 0.5) # tl.cex:change the size of table; number.cex:change the size of number
 
 # save the corrplot
@@ -78,3 +80,74 @@ corrplot(correlation, method = "number", type = "lower", tl.cex = 0.5,
 
 dev.off()
 
+##################
+
+# plot h and k
+
+total_new %>% 
+  ggplot(aes(x = h,
+             y = log(k))) +
+  geom_point() 
+
+# plot SWM and SSA
+
+total_new %>% 
+  ggplot(aes(x = Surface_weighted_mean,
+             y = SSA)) +
+  geom_point() 
+
+# plot D1 and SSA
+
+total_new %>% 
+  ggplot(aes(x = D1,
+             y = SSA)) +
+  geom_point()
+
+# plot D1 and SWM
+
+total_new %>% 
+  ggplot(aes(x = D1,
+             y = Surface_weighted_mean)) +
+  geom_point()
+
+# plot D5 and SSA
+
+total_new %>% 
+  ggplot(aes(x = D5,
+             y = SSA)) +
+  geom_point()
+
+# plot D5 and SWM
+
+total_new %>% 
+  ggplot(aes(x = D5,
+             y = Surface_weighted_mean)) +
+  geom_point()
+
+# plot D1 and D5
+
+total_new %>% 
+  ggplot(aes(x = D1,
+             y = D5)) +
+  geom_point()
+
+# plot k and HE_2h
+
+total_new %>% 
+  ggplot(aes(x = k,
+             y = mean_HE_2h)) +
+  geom_point()
+
+# plot final and trough
+
+total_new %>% 
+  ggplot(aes(x = mean_Final,
+             y = mean_Trough)) +
+  geom_point()
+
+# plot h and k
+
+total_h %>% 
+  ggplot(aes(x = h,
+             y = k)) +
+  geom_point() 
