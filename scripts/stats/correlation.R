@@ -1,6 +1,8 @@
 
 library(tidyverse)
 
+install.packages("corrplot") 
+
 library(corrplot)
 
 # import the dataset
@@ -37,7 +39,7 @@ HE_half <- full_join(HE_2h, HE_6h)
 
 HE_full <- full_join(HE_half, HE_30h)
 
-# add HE_full beack to the total dataset
+# add HE_full back to the total dataset
 
 total_add_HE <- left_join(total, HE_full)
 
@@ -63,6 +65,16 @@ my_subset <- total_update %>%
 
 cor_result <- cor(my_subset, use = "complete.obs")
 
-correlation <- corrplot(cor_result, method = "number")
+correlation <- corrplot(cor_result, method = "number",
+                        tl.cex = 0.5, number.cex = 0.5) # tl.cex:change the size of table; number.cex:change the size of number
 
+# save the corrplot
+
+pdf(file = "corrplot.pdf")
+
+corrplot(correlation, method = "number", type = "lower", tl.cex = 0.5, 
+         title = "relationships", 
+         mar = c(0,0,1,0), number.cex = 0.5, number.digits = 2)
+
+dev.off()
 
