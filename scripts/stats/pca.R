@@ -21,7 +21,8 @@ df <- read_csv("analysis/total_new.csv")
 df_tidy <- df %>%
   select(23:44) %>%
   unique() %>% 
-  na.omit() # remove rows that contain NAs
+  na.omit() %>% # remove rows that contain NAs
+  scale
 
 df_tidy_pca <- prcomp(df_tidy[, ], center = TRUE, scale. = TRUE)
 
@@ -60,6 +61,25 @@ ggbiplot(df_tidy_pca, choices=c(2,4)) # taken PC2 and PC4 as an example
 
 ggbiplot(df_tidy_pca, obs.scale = 1, var.scale = 1)
 
+# PCA of h k and Xinf
+
+# select the related columns
+
+df_sel <- df %>% 
+  select(Well, h, k, Xinf) %>% 
+  na.omit() %>%
+  unique() %>% # remove the same rows
+  column_to_rownames("Well") %>% # remove the column name
+  scale 
+
+# compute PCA
+
+df_sel_pca <- prcomp(df_sel[, ], center = TRUE, scale. = TRUE)
+
+summary(df_sel_pca)
+
+ggbiplot(df_sel_pca)
+
 #################### using factoextra #####################
 
 # install.packages("factoextra")
@@ -75,3 +95,8 @@ res.pca <- prcomp(df_tidy, scale = TRUE)
 fviz_eig(res.pca)
 
 ## it shows the percentage of variances explained by each principal component
+
+
+
+
+
