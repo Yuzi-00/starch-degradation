@@ -66,19 +66,64 @@ ggbiplot(df_tidy_pca, obs.scale = 1, var.scale = 1)
 # select the related columns
 
 df_sel <- df %>% 
-  select(Well, h, k, Xinf) %>% 
+  select(Well, h, k, Xinf, Amylose_content, SSA) %>% 
   na.omit() %>%
   unique() %>% # remove the same rows
-  column_to_rownames("Well") %>% # remove the column name
-  scale 
+  column_to_rownames("Well") 
 
+# extract the amylose column for later uses
+
+df_amy <- df_sel %>%
+  select(Amylose_content) %>%
+  arrange(Amylose_content) %>% 
+  mutate(status = case_when( 
+    Amylose_content < 28 ~ "low_amy", 
+    Amylose_content >= 28 ~ "high_amy"
+  )) 
+
+# extract the SSA column for later uses
+
+df_SSA <- df_sel %>%
+  select(SSA) %>%
+  arrange(SSA) %>% 
+  mutate(status = case_when( 
+    SSA < 1 ~ "low_SSA", 
+    SSA >= 1 ~ "high_SSA"
+  )) 
+
+# scale the rest of the data
+
+df_kin <- df_sel %>% 
+  select(h, k, Xinf) %>%
+  na.omit() %>%
+  unique() %>% # remove the same rows
+  scale
+  
 # compute PCA
 
-df_sel_pca <- prcomp(df_sel[, ], center = TRUE, scale. = TRUE)
+df_kin_pca <- prcomp(df_kin[, ], center = TRUE, scale. = TRUE)
 
-summary(df_sel_pca)
+# add the amylose data into the pca
 
-ggbiplot(df_sel_pca)
+pca_amy <- df_kin_pca$x %>% 
+  as_tibble() %>% 
+  mutate(status = df_amy$status) 
+
+# add the SSA data into the pca
+
+pca_SSA <- df_kin_pca$x %>% 
+  as_tibble() %>% 
+  mutate(status = df_SSA$status) 
+
+# plot
+
+pca_SSA %>% 
+  ggplot(aes(x = PC1, y = PC2,
+             color = status)) +
+  geom_point() +
+  theme(legend.position = "none")
+
+## neither amylose content nor SSA could classify the kinatic data into distinct groups  
 
 #################### using factoextra #####################
 
