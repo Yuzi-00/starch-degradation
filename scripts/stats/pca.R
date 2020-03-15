@@ -1,6 +1,8 @@
 
 library(tidyverse)
 
+#################### using ggbiplot #####################
+
 # install.packages("devtools")
 
 library(devtools)
@@ -57,3 +59,19 @@ ggbiplot(df_tidy_pca, choices=c(2,4)) # taken PC2 and PC4 as an example
 # we can also scale the sample (what for?) by using these two arguments below
 
 ggbiplot(df_tidy_pca, obs.scale = 1, var.scale = 1)
+
+#################### using factoextra #####################
+
+# install.packages("factoextra")
+
+library(factoextra)
+
+# compute PCA
+
+res.pca <- prcomp(df_tidy, scale = TRUE)
+
+# visualize eigenvalues (scree plot)
+
+fviz_eig(res.pca)
+
+## it shows the percentage of variances explained by each principal component
