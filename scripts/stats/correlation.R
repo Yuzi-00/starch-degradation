@@ -1,7 +1,7 @@
 
 library(tidyverse)
 
-install.packages("corrplot") 
+# install.packages("corrplot") 
 
 library(corrplot)
 
@@ -14,28 +14,37 @@ total <- read_csv("data/tidydata/joined_15P_update.csv") %>%
 
 HE_2h <- total %>% 
   filter(Time == 120) %>% 
-  select(ID, Sample, Hydro_extent) %>% 
+  select(Well, Hydro_extent) %>% 
   rename(HE_2h = Hydro_extent) %>% 
-  group_by(Sample) %>% 
+  group_by(Well) %>% 
   summarise(mean_HE_2h = mean(HE_2h))
 
 HE_6h <- total %>% 
   filter(Time == 360) %>% 
-  select(ID, Sample, Hydro_extent) %>% 
+  select(Well, Hydro_extent) %>% 
   rename(HE_6h = Hydro_extent) %>% 
-  group_by(Sample) %>% 
+  group_by(Well) %>% 
   summarise(mean_HE_6h = mean(HE_6h))
+
+HE_24h <- total %>% 
+  filter(Time == 1440) %>% 
+  select(Well, Hydro_extent) %>% 
+  rename(HE_24h = Hydro_extent) %>% 
+  group_by(Well) %>% 
+  summarise(mean_HE_24h = mean(HE_24h))
 
 HE_30h <- total %>% 
   filter(Time == 1800) %>% 
-  select(ID, Sample, Hydro_extent) %>% 
+  select(Well, Hydro_extent) %>% 
   rename(HE_30h = Hydro_extent) %>% 
-  group_by(Sample) %>% 
+  group_by(Well) %>% 
   summarise(mean_HE_30h = mean(HE_30h))
 
 # combine these datasets together
 
 HE_half <- full_join(HE_2h, HE_6h)
+
+HE_half <- full_join(HE_half, HE_24h)
 
 HE_full <- full_join(HE_half, HE_30h)
 
@@ -51,6 +60,18 @@ total_new <- total_add_HE %>%
 
 write_csv(total_new, "analysis/total_new.csv")
 
+# add the fitted CLD data
+
+fitted_CLD <- read_csv("data/tidydata/fitted_CLD_tidy.csv")
+
+# combine the fitted CLD data with the total_new
+
+total_new_fit_CLD <- left_join(total_new, fitted_CLD)
+
+# save the dataset
+
+write_csv(total_new_fit_CLD, "analysis/total_new_fit_CLD.csv")
+
 #calculate the mean values by ID (do we need this step?)
 
 #total_update <- total_new %>% 
@@ -61,7 +82,7 @@ write_csv(total_new, "analysis/total_new.csv")
 
 # choose a subset
 
-my_subset <- total_update %>% 
+my_subset <- total_new_fit_CLD %>% 
   select(-(1:22)) %>% # remove the first 22 columns
   unique()
 
@@ -150,4 +171,11 @@ total_new %>%
 total_h %>% 
   ggplot(aes(x = h,
              y = k)) +
+  geom_point() 
+
+# plot beta and Xinf
+
+total_new_fit_CLD %>% 
+  ggplot(aes(x = beta.ii,
+             y = Amylose_content)) +
   geom_point() 
