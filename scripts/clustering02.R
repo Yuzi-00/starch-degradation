@@ -18,9 +18,7 @@ total_new <- read_csv("analysis/total_new.csv")
 # select the columns 
 
 subdata <- total_new %>% 
-  select(ID, Amylose_content, SSA, Surface_weighted_mean, D1, D5, D9, k, 
-         Xinf, mean_Peak, mean_Trough, mean_Final, mean_PastingTemp, low_dp, 
-         medium_dp, medium_high_dp, high_dp, mean_amylase, h)
+  select(-(1:8), -(10:22), -(40:43))
 
 # remove the NAs
 
@@ -40,8 +38,6 @@ subdata_transpose = t(subdata_num)
 # normalization
 
 subdata_nor <- scale(subdata_transpose)
-
-
 
 ## notice the mean of all the columns is 0 and the standard deviation is 1 
 ## after scaling.
