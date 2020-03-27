@@ -17,7 +17,7 @@ df %>%
           color = ~Category, colors = c('blue', 'red')
 )
 
-# coloring by category
+# coloring by other properties
 
 marker <- list(color = ~SSA, colorscale = c('#FFE1A1', '#683531'), 
                showscale = TRUE)
