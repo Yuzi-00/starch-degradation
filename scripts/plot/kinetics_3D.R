@@ -14,12 +14,13 @@ df <- read_csv("analysis/total_new_convert.csv")
 df %>%
   plot_ly(x = ~k, y = ~h, z = ~Xinf,
           alpha = 0.3,
-          color = ~Category, colors = c('blue', 'red')
+          color = ~Category, colors = c('blue', 'red', 'green', 'orange')
 )
 
 # coloring by other properties
 
 marker <- list(color = ~SSA, colorscale = c('#FFE1A1', '#683531'), 
+               # colored by SSA or other features
                showscale = TRUE)
 
 df %>%
