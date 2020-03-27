@@ -32,8 +32,9 @@ df_conv <- left_join(df_conv, ident)
 
 df_conv <- df_conv %>%
   mutate(Category = case_when(
-    ID == "Baxter" ~ "parent",
-    ID == "Chara" ~ "parent",
+    ID == "Baxter" ~ "parent_Baxter",
+    ID == "Chara" ~ "parent_Chara",
+    ID == "Westonia" ~ "parent_Westonia",
     TRUE ~ "descendant"))
 
 # ordering the columns 
