@@ -93,7 +93,7 @@ ggsave("figures/CM_kinetics_HE.png", CM, width = 8, height = 5)
 # plot kinetics with granule size
 
 df_sel <- df %>%
-  select(SSA:D9 , k:Xinf)
+  select(SSA:D0.9 , k:Xinf)
 
 CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
 
@@ -104,7 +104,7 @@ ggsave("figures/CM_kinetics_HE.png", CM, width = 8, height = 5)
 # plot kinetics with RVA
 
 df_sel <- df %>%
-  select(mean_Peak:mean_PastingTemp, k:Xinf)
+  select(Peak_Vis:Pasting_Temp, k:Xinf)
 
 CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
 
@@ -115,7 +115,7 @@ ggsave("figures/CM_kinetics_HE.png", CM, width = 8, height = 5)
 # plot kinetics with Ap chains
 
 df_sel <- df %>%
-  select(low_dp:high_dp, k:Xinf)
+  select(DP6_12:DP37_47, k:Xinf)
 
 CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
 
@@ -137,7 +137,7 @@ ggsave("figures/CM_kinetics_HE.png", CM, width = 8, height = 5)
 # plot amylose with RVA
 
 df_sel <- df %>%
-  select(Amylose_content, mean_Peak:mean_PastingTemp)
+  select(Amylose_Con, Peak_Vis:Pasting_Temp)
 
 CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
 
