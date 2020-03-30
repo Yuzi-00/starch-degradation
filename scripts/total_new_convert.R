@@ -45,6 +45,12 @@ df_conv <- df_conv %>%
          medium_high_dp, high_dp, mean_amylase, HE_0min, HE_20min, HE_60min, HE_120min,
          HE_180min, HE_240min, HE_360min, HE_1440min, HE_1800min, k, h, Xinf) 
 
+# change the column names
+
+df_conv <- df_conv %>%
+  rename(D0.1 = D1,D0.5 = D5, D0.9 = D9, DP6_12 = low_dp, DP13_24 = medium_dp,
+         DP25_36 = medium_high_dp, DP37_47 = high_dp)
+
 # save the dataset
 
 write_csv(df_conv, "analysis/total_new_convert.csv")
