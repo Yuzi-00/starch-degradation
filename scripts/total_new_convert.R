@@ -48,8 +48,10 @@ df_conv <- df_conv %>%
 # change the column names
 
 df_conv <- df_conv %>%
-  rename(D0.1 = D1,D0.5 = D5, D0.9 = D9, DP6_12 = low_dp, DP13_24 = medium_dp,
-         DP25_36 = medium_high_dp, DP37_47 = high_dp)
+  rename(Amylose_Con = Amylose_content, D0.1 = D1, D0.5 = D5, D0.9 = D9, DP6_12 = low_dp, 
+         DP13_24 = medium_dp, DP25_36 = medium_high_dp, DP37_47 = high_dp, Peak_Vis = mean_Peak,
+         Trough_Vis = mean_Trough, Final_Vis = mean_Final, Pasting_Temp = mean_PastingTemp,
+         Amylase_Act = mean_amylase, SWM = Surface_weighted_mean)
 
 # save the dataset
 
