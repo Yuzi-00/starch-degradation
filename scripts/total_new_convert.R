@@ -3,12 +3,59 @@ library(tidyverse)
 
 df <- read_csv("analysis/total_new.csv")
 
-df_int <- df %>%
-  select(-(1:6), -(11:21)) %>% # remove the unseful columns 
-  mutate(Sample = as.character(Sample)) %>% # change the sample column into charactors
-  group_by(Well, Time) %>%
-  summarise_if(is.numeric, mean) # calculte the average for all columns
+# remove the unused Well
 
+df <- df %>%
+  filter(WellGroupType != "Unused")
+
+# about 82 and 82*. It should be noted that 82* = 81 (we do not have 81 in the design, 
+# all is named 82*). To clarify, 82 are in the Well 1B7, 11A7, and 4A7. 82* are in the Well 14E11,
+# 15E7 and 15H1. As for the Well 5A9 and 7G9, please remove them as the 82 and 82* might be mixed here
+
+df <- df %>%
+  filter(Well != "5_A_9" & Well != "7_G_9") # remove the unclear samples 
+## (not sure if they are 82 or 82*)
+  
+# for the sample 82*, their sample name were recognized as NA in the dataset, let's change them into
+# 82* now
+
+# we firstly make sure that the NAs are all correspond to the sample 82* (14E11, 15E7 and 15H1)
+
+missing <- df %>%
+  filter(is.na(Sample)) # good, everything's all right
+
+# replace the NAs within the Sample column by 82*
+
+df$Sample <- as.character(df$Sample)
+
+df$Sample[is.na(df$Sample)] <- "82*"
+
+# let's have a check
+
+sample82star <- df %>%
+  filter(Sample == "82*") # great !
+
+# continue tidy the dataset
+
+df_int <- df %>%
+  select(-(Plate:WellGroupType), -(Mass_sample:C), -(mean_HE_2h:mean_HE_30h)) %>% # remove the unseful columns 
+  mutate(Sample = as.character(Sample)) # change the sample column into charactors
+  # group_by(Well, Time) %>%
+  # summarise_if(is.numeric, mean) # calculte the average for all columns
+
+# extract the data of the control samples 
+
+dfc <- read_csv("data/tidydata/joined_15p_update.csv")
+
+control <- dfc %>%
+  filter(Sample == "C+" | Sample == "C-") %>%
+  select(Well, Sample, Time, Hydro_extent, H, k, Xinf) %>%
+  mutate(h = 1-H) %>%
+  select(-H)
+
+# combine the control samples with the test samples 
+
+df_int <- full_join(df_int, control)
 
 # split the time column into 9 separate columns (each for one time point)
 
@@ -16,17 +63,7 @@ df_conv <- df_int %>%
   spread(key = Time, value = Hydro_extent) %>% # divide the time into different columns
   rename(HE_0min = "0", HE_20min = "20", HE_60min = "60", HE_120min = "120",
          HE_180min = "180", HE_240min = "240", HE_360min = "360", HE_1440min = "1440",
-         HE_1800min = "1800") # rename the time columns 
-
-# extract the sample names and IDs
-
-ident <- df %>%
-  select(Well, Sample, ID) %>%
-  unique()
-
-# add the sample names and IDs into the converted dataset
-
-df_conv <- left_join(df_conv, ident)
+         HE_1800min = "1800") # rename the time columns
 
 # add a column to distinct parents and descendants
 
@@ -35,6 +72,8 @@ df_conv <- df_conv %>%
     ID == "Baxter" ~ "parent_Baxter",
     ID == "Chara" ~ "parent_Chara",
     ID == "Westonia" ~ "parent_Westonia",
+    Sample == "C+" ~ "pos_control",
+    Sample == "C-" ~ "neg_control",
     TRUE ~ "descendant"))
 
 # ordering the columns 
