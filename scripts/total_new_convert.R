@@ -58,6 +58,17 @@ control <- dfc %>%
 
 df_int <- full_join(df_int, control)
 
+# add a column to distinct parents and descendants
+
+df_int <- df_int %>%
+  mutate(Category = case_when(
+    ID == "Baxter" ~ "parent_Baxter",
+    ID == "Chara" ~ "parent_Chara",
+    ID == "Westonia" ~ "parent_Westonia",
+    Sample == "C+" ~ "pos_control",
+    Sample == "C-" ~ "neg_control",
+    TRUE ~ "descendant"))
+
 # save the dataset before converting 
 
 write_csv(df_int, "analysis/total_new_update.csv")
@@ -69,17 +80,6 @@ df_conv <- df_int %>%
   rename(HE_0min = "0", HE_20min = "20", HE_60min = "60", HE_120min = "120",
          HE_180min = "180", HE_240min = "240", HE_360min = "360", HE_1440min = "1440",
          HE_1800min = "1800") # rename the time columns
-
-# add a column to distinct parents and descendants
-
-df_conv <- df_conv %>%
-  mutate(Category = case_when(
-    ID == "Baxter" ~ "parent_Baxter",
-    ID == "Chara" ~ "parent_Chara",
-    ID == "Westonia" ~ "parent_Westonia",
-    Sample == "C+" ~ "pos_control",
-    Sample == "C-" ~ "neg_control",
-    TRUE ~ "descendant"))
 
 # ordering the columns 
 
