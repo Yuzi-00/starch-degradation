@@ -14,4 +14,3 @@ df %>%
           alpha = 0.6,
           color = ~Category, 
           colors = "Dark2")
-)
