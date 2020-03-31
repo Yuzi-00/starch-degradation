@@ -28,12 +28,13 @@ missing <- df %>%
 
 df$Sample <- as.character(df$Sample)
 
-df$Sample[is.na(df$Sample)] <- "82*"
+df$Sample[is.na(df$Sample)] <- "81" # if changing into 82*, will bring some problem when open this 
+# dataset
 
 # let's have a check
 
 sample82star <- df %>%
-  filter(Sample == "82*") # great !
+  filter(Sample == "81") # great !
 
 # continue tidy the dataset
 
@@ -56,6 +57,10 @@ control <- dfc %>%
 # combine the control samples with the test samples 
 
 df_int <- full_join(df_int, control)
+
+# save the dataset before converting 
+
+write_csv(df_int, "analysis/total_new_update.csv")
 
 # split the time column into 9 separate columns (each for one time point)
 
