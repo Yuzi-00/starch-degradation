@@ -281,7 +281,8 @@ P <- ggplot() +
                         formula = y ~ log(x, base = exp(1)),
                         label.x = 0.01, label.y = 0.15, color="blue") +
   scale_colour_manual(name="Sample type",
-                      values=c(Pos_control="red", Test_sample="black", Neg_control = "blue"))
+                      values=c(Pos_control="red", Test_sample="black", Neg_control = "blue")) +
+  geom_hline(yintercept=0.04, color = "black", linetype = "dashed", size = 0.7)
 
 P
 
