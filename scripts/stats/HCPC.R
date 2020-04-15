@@ -29,14 +29,20 @@ df2 <- df %>%
 # combine and scale
 
 df_new <- full_join(df2, df1) %>%
-  select(-Sample)
+  select(-Sample) %>%
+  scale()
 
 # compute PCA
 
 res.pca <- PCA(df_new, 
+               ncp = 8, 
                scale.unit = TRUE, 
                quanti.sup = 16:18, 
                graph = FALSE)
+
+summary(res.pca)
+
+#### HCPC ####
 
 # Compute hierarchical clustering on principal components
 
@@ -52,7 +58,7 @@ fviz_dend(res.hcpc,
           rect_border = "jco",         
           labels_track_height = 0.8)
 
-## the dentrogram suggest 4 clusters solution
+## the dentrogram suggest 3 clusters solution
 
 # visualize individuals on the principal component map 
 # and to color individuals according to the cluster they belong to (factorial map)
@@ -97,8 +103,146 @@ res.hcpc$desc.ind$para
 
 ## for each cluster, the top 5 closest individuals to the cluster center is shown
 
+# extract the samples that belong to each cluster 
 
+c1 <- res.hcpc$data.clust %>%
+  filter(clust == 1)
 
+write_csv(c1, "analysis/cluster1.csv")
 
+c2 <- res.hcpc$data.clust %>%
+  filter(clust == 2)
+
+write_csv(c2, "analysis/cluster2.csv")
+
+c3 <- res.hcpc$data.clust %>%
+  filter(clust == 3)
+
+write_csv(c3, "analysis/cluster3.csv")
+
+## these subclasses will be used to do the corrplot in the same way as before
+
+# extract the variabilities
+
+var1 <- res.hcpc$desc.var$quanti$`1`
+
+var2 <- res.hcpc$desc.var$quanti$`2` 
+
+var3 <- res.hcpc$desc.var$quanti$`3` 
+
+# convert the above lists into dataframe 
+
+library(reshape2)
+
+var1 <- melt(var1) %>%
+  spread(key = Var2, value = value) %>%
+  rename(var = Var1) %>%
+  mutate(clust = 1)
+
+var2 <- melt(var2) %>%
+  spread(key = Var2, value = value) %>%
+  rename(var = Var1) %>%
+  mutate(clust = 2)
+
+var3 <- melt(var3) %>%
+  spread(key = Var2, value = value) %>%
+  rename(var = Var1) %>%
+  mutate(clust = 3)
+
+var <- bind_rows(var1, var2, var3) %>%
+  rename(mean_in_category = "Mean in category")
+
+# plot for SSA
+
+var %>%
+  filter(var == "SSA") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity') # 对于条形图的y轴就是数据框中原本的数值时，
+                              # 必须将geom_bar()函数中stat(统计转换)参数设置为'identity'，
+                              # 即对原始数据集不作任何统计变换，而该参数的默认值为'count'，
+                              # 即观测数量。
+
+# plot for Pasting Temp (just in cluster 1 and 3)
+
+var %>%
+  filter(var == "Pasting_Temp") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity') 
+
+# plot for D0.9 (cluster 1 and 2)
+
+var %>%
+  filter(var == "D0.9") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity') 
+
+# plot for D0.1 (cluster 1 and 3)
+
+var %>%
+  filter(var == "D0.1") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity')
+
+# plot for SWM 
+
+var %>%
+  filter(var == "SWM") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity')
+
+# plot for D0.5
+
+var %>%
+  filter(var == "D0.5") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity')
+
+# plot for DP6-12 (cluster 2 and 3)
+
+var %>%
+  filter(var == "DP6_12") %>%
+  ggplot(aes(x = clust, y = mean_in_category)) +
+  geom_bar(stat = 'identity')
+
+# take a look at the individuals 
+
+df %>%
+  filter(Sample == 18) %>%
+  ggplot(aes(x = k, y = h)) +
+  geom_point()
+
+df %>%
+  ggplot(aes(x = reorder(Sample, SSA), y = SSA)) +
+  geom_point()
+
+df %>%
+  filter(Sample == 58) %>%
+  ggplot(aes(x = k, y = h)) +
+  geom_point()
+
+df %>%
+  filter(Sample == 173) %>%
+  ggplot(aes(x = k, y = h)) +
+  geom_point()
+
+df %>%
+  filter(Sample == 161) %>%
+  ggplot(aes(x = k, y = h)) +
+  geom_point()
+
+df %>%
+  filter(Sample == 13) %>%
+  ggplot(aes(x = k, y = h)) +
+  geom_point()
+
+#### k-means clustering ####
+
+kc <- kmeans(res.pca$svd$U, 3)
+
+kc
+
+plot(res.pca$svd$U[,1:2],col=factor(kc$cluster))
+
+fviz_cluster(kc, data = res.pca$svd$U)
 
 
