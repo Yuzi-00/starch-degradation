@@ -254,3 +254,15 @@ AOV_Output <- aov(SSA ~ cluster3, data = r_hcpc_all)
 summary(AOV_Output)
 
 TukeyHSD(AOV_Output)
+
+# variability
+
+res.hcpc3$desc.var$quanti
+
+res.hcpc4$desc.var$quanti
+
+res.hcpc7$desc.var$quanti
+
+res.hcpc9$desc.var$quanti
+
+res.hcpc10$desc.var$quanti
