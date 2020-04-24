@@ -22,12 +22,14 @@ df1 <- df %>%
 # select the structural properties
 
 df2 <- df %>%
-  select(2, 5:10, 15:19) %>% # exclude the results of RVA
-  unique()
+  select(2, 5:19) %>% 
+  unique() 
 
 # combine and scale
 
 df_new <- full_join(df2, df1) %>%
+  select(Sample, Amylose_Con, SSA, SWM, D0.1, D0.5, D0.9, DP6_12, DP13_24, DP25_36, DP37_47, Amylase_Act, Peak_Vis, Trough_Vis,
+         Final_Vis, Pasting_Temp, k, h, Xinf) %>%
   remove_rownames() %>%
   column_to_rownames(var = 'Sample') %>%
   scale()
@@ -39,7 +41,7 @@ df_new <- full_join(df2, df1) %>%
 res.pca <- PCA(df_new, 
                ncp = 6,
                scale.unit = TRUE, 
-               quanti.sup = 12:14, 
+               quanti.sup = 12:18, # add RVA and kinetics as supplementary data (illustrative data)
                graph = FALSE)
 
 summary(res.pca)
@@ -1193,3 +1195,45 @@ res.hcpc6$desc.var$quanti
 res.hcpc10$desc.var$quanti
 
 res.hcpc12$desc.var$quanti
+
+#### correlation matrix ####
+
+ncp9 <- read_csv("analysis/hcpc_ncp9.csv")
+
+# select cluster 3 under 11clusters
+
+cluster11_3 <- ncp9 %>%
+  filter(cluster11 == 3)
+
+# select cluster 11 under 11clusters
+
+cluster11_11 <- ncp9 %>%
+  filter(cluster11 == 11)
+
+# correlations 
+
+library("PerformanceAnalytics")
+
+cluster_11_3_s <- cluster11_3 %>%
+  select(2:15)
+
+chart.Correlation(cluster_11_3_s, histogram=TRUE, pch=19)
+
+cluster_11_11_s <- cluster11_11 %>%
+  select(2:15)
+
+# nothing interesting found...
+
+# corrplot
+
+library(corrplot)
+
+cor_result <- cor(cluster_11_3_s, use = "complete.obs") # noted that cluster_11_3_s is with similar amylose content
+
+correlation <- corrplot(cor_result, method = "number", type = "lower",
+                        tl.cex = 0.5, number.cex = 0.5) 
+
+cor_result <- cor(cluster_11_11_s, use = "complete.obs") # noted that cluster_11_3_s is with similar amylose content
+
+correlation <- corrplot(cor_result, method = "number", type = "lower",
+                        tl.cex = 0.5, number.cex = 0.5) 
