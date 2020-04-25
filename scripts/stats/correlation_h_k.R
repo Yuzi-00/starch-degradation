@@ -328,6 +328,20 @@ lm_kinetics <- lm(data = test_sample, h ~ log(k, base = exp(1)))
 
 summary(lm_kinetics) 
 
+## in the summary, we can see the values of the intercept (1.055733) and the slope (0.177971).
+## A good way to test the quality of the fit of the model is to look at the residuals or the 
+## differences between the real values and the predicted values. The idea in here is that the 
+## sum of the residuals is approximately zero or as low as possible. In the R summary of the lm 
+## function, we can see descriptive statistics about the residuals of the model, these values show 
+## us how the residuals are approximately zero.
+
+## notice that there’s two different R², one multiple and one adjusted. One problem with the
+## multiple R² is that it cannot decrease as you add more independent variables to your model, 
+## it will continue increasing as you make the model more complex, even if these variables don’t 
+## add anything to your predictions (like the example of the number of siblings). For this reason, 
+## the adjusted R² is probably better to look at if you are adding more than one variable to the 
+## model, since it only increases if it reduces the overall error of the predictions.
+
 # transform the data into a format that ggplot() can use
 
 fortify(lm_kinetics) # noted that there is a column called .fitted and .resid
