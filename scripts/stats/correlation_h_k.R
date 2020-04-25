@@ -294,4 +294,79 @@ ggsave("figures/hk_abline.png",
        height = 20, 
        units = "cm") 
 
-  
+#### residual plot ####
+
+# A residual plot lets you see if your data appears homoscedastic. Homoscedasticity 
+# means that the residuals, the difference between the observed value and the predicted 
+# value, are equal across all values of your predictor variable. If your data are 
+# homoscedastic then you will see the points randomly scattered around the x axis. If 
+# they are not (e.g. if they form a curve, bowtie, fan etc.) then it suggests that your 
+# data doesn't meet the assumption.
+
+# In order to make valid inferences from your regression, the residuals of the regression 
+# should follow a normal distribution. The residuals are simply the error terms, or the 
+# differences between the observed value of the dependent variable and the predicted value.
+
+# When the residuals are not normally distributed, then the hypothesis that they are a random 
+# dataset, takes the value NO. This means that in that case your (regression) model does not 
+# explain all trends in the dataset. I guess, you don´t want unkown trends to remain in your 
+# dataset. I would feel uncomfortable with that, because this would mean that your model is not 
+# fully explaining the behaviour of your system. Only solution is to find a model that fully 
+# explains the behaviour of your system. That means that you have to find a model, that shows 
+# residuals which are normally distributed.
+
+# linear regression
+
+# remove the NAs
+
+test_sample <- test_sample %>%
+  na.omit() 
+
+# linear regression 
+
+lm_kinetics <- lm(data = test_sample, h ~ log(k, base = exp(1)))
+
+summary(lm_kinetics) 
+
+# transform the data into a format that ggplot() can use
+
+fortify(lm_kinetics) # noted that there is a column called .fitted and .resid
+
+ggplot(data = lm_kinetics,
+       aes(x = .fitted, 
+           y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_y_continuous(limits = c(-0.1,0.1), expand = c(0, 0))  ## set the range of the y axis
+
+# alternative method using plot() function
+
+plot(resid(lm_kinetics))
+
+# other plots that we can generate
+
+qqnorm(resid(lm_kinetics)) # A quantile normal plot - good for checking normality.
+                           # qqnorm(x)用于画出x的常态qq图，用以判断x是否为常态分布
+
+## Normal Q-Q Plot: This is used to assess if your residuals are normally distributed. 
+## Basically what you are looking for here is the data points closely following the 
+## straight line at a 45% angle upwards (left to right). Again what to watch here is 
+## any patterns that deviate from this - particularly anything that looks curvilinear 
+## (bending at either end) or s shaped.
+
+## Q-Q plots let you check that the data meet the assumption of normality. They compare 
+## the distribution of your data to a normal distribution by plotting the quartiles of 
+## your data against the quartiles of a normal distribution. If your data are normally 
+## distributed then they should form an approximately straight line.
+
+## 注：qqnorm为样本与样本期望的正态性对比；qqplot为两样本的正态性对比(即二者的分布
+## 是否一致)
+
+qqline(resid(lm_kinetics))
+
+# so, according to the results, we can see that the points are randomly scattered around the x axis
+# in the residual plot (no pattern here), and form a straight line in the normal qq-plot. So that
+# the residuals are normally distributed.
+
+
+
