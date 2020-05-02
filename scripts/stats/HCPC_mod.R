@@ -4,6 +4,10 @@ library(FactoMineR)
 
 library(factoextra)
 
+# library(plyr)
+# 
+# library(purrr)
+
 df <- read_csv("analysis/total_new_convert.csv")
 
 # select the variables
@@ -60,7 +64,21 @@ res.hcpc2 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 2)
 
-res.hcpc2$desc.var$quanti # contribution of factors  
+hcpc2 <- res.hcpc2$desc.var$quanti # contribution of factors  
+
+# convert the list into a dataframe
+  
+hcpc2 <- do.call(rbind, lapply(hcpc2, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-")
+
+# save the results
+
+write_csv(hcpc2, "analysis/ncp6/hcpc2.csv")
+    
 
 # 3 clusters
 
@@ -68,7 +86,20 @@ res.hcpc3 <- HCPC(res.pca, graph = TRUE,
                  consol = TRUE,
                  nb.clust = 3)
 
-res.hcpc3$desc.var$quanti # contribution of factors  
+hcpc3 <- res.hcpc3$desc.var$quanti# contribution of factors  
+
+# convert the list into a dataframe
+
+hcpc3 <- do.call(rbind, lapply(hcpc3, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-")
+
+# save the results
+
+write_csv(hcpc3, "analysis/ncp6/hcpc3.csv")
 
 # 4 clusters
 
@@ -76,7 +107,22 @@ res.hcpc4 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 4)
 
-res.hcpc4$desc.var$quanti # contribution of factors  
+hcpc4 <- res.hcpc4$desc.var$quanti # contribution of factors 
+
+# convert the list into a dataframe
+
+hcpc4 <- do.call(rbind, lapply(hcpc4, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-")
+
+hcpc4[is.na(hcpc4)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc4, "analysis/ncp6/hcpc4.csv")
 
 # 5 clusters
 
@@ -84,7 +130,22 @@ res.hcpc5 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 5)
 
-res.hcpc5$desc.var$quanti # contribution of factors  
+hcpc5 <- res.hcpc5$desc.var$quanti # contribution of factors  
+
+# convert the list into a dataframe
+
+hcpc5 <- do.call(rbind, lapply(hcpc5, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+hcpc5[is.na(hcpc5)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc5, "analysis/ncp6/hcpc5.csv")
 
 # 6 clusters
 
@@ -92,7 +153,22 @@ res.hcpc6 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 6)
 
-res.hcpc6$desc.var$quanti # contribution of factors 
+hcpc6 <- res.hcpc6$desc.var$quanti # contribution of factors 
+
+# convert the list into a dataframe
+
+hcpc6 <- do.call(rbind, lapply(hcpc6, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+hcpc6[is.na(hcpc6)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc6, "analysis/ncp6/hcpc6.csv")
 
 # 7 clusters
 
@@ -100,7 +176,24 @@ res.hcpc7 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 7)
 
-res.hcpc7$desc.var$quanti # contribution of factors 
+hcpc7 <- res.hcpc7$desc.var$quanti # contribution of factors 
+
+# convert the list into a dataframe
+
+hcpc7 <- do.call(rbind, lapply(hcpc7, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc7[is.na(hcpc7)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc7, "analysis/ncp6/hcpc7.csv")
 
 # 8 clusters
 
@@ -108,7 +201,24 @@ res.hcpc8 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 8)
 
-res.hcpc8$desc.var$quanti # contribution of factors 
+hcpc8 <- res.hcpc8$desc.var$quanti # contribution of factors 
+
+# convert the list into a dataframe
+
+hcpc8 <- do.call(rbind, lapply(hcpc8, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc8[is.na(hcpc8)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc8, "analysis/ncp6/hcpc8.csv")
 
 # 9 clusters
 
@@ -116,7 +226,24 @@ res.hcpc9 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 9)
 
-res.hcpc9$desc.var$quanti # contribution of factors 
+hcpc9 <- res.hcpc9$desc.var$quanti # contribution of factors 
+
+# convert the list into a dataframe
+
+hcpc9 <- do.call(rbind, lapply(hcpc9, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc9[is.na(hcpc9)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc9, "analysis/ncp6/hcpc9.csv")
 
 # 10 clusters
 
@@ -124,7 +251,22 @@ res.hcpc10 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 10)
 
-res.hcpc10$desc.var$quanti # contribution of factors 
+hcpc10 <- res.hcpc10$desc.var$quanti # contribution of factors 
+
+hcpc10 <- do.call(rbind, lapply(hcpc10, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc10[is.na(hcpc10)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc10, "analysis/ncp6/hcpc10.csv")
 
 # 11 clusters
 
@@ -132,7 +274,22 @@ res.hcpc11 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 11)
 
-res.hcpc11$desc.var$quanti # contribution of factors 
+hcpc11 <- res.hcpc11$desc.var$quanti # contribution of factors 
+
+hcpc11 <- do.call(rbind, lapply(hcpc11, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc11[is.na(hcpc11)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc11, "analysis/ncp6/hcpc11.csv")
 
 # 12 clusters
 
@@ -140,7 +297,22 @@ res.hcpc12 <- HCPC(res.pca, graph = TRUE,
                    consol = TRUE,
                    nb.clust = 12)
 
-res.hcpc12$desc.var$quanti # contribution of factors 
+hcpc12 <- res.hcpc12$desc.var$quanti # contribution of factors 
+
+hcpc12 <- do.call(rbind, lapply(hcpc12, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc12[is.na(hcpc12)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc12, "analysis/ncp6/hcpc12.csv")
 
 # 13 clusters
 
@@ -148,7 +320,22 @@ res.hcpc13 <- HCPC(res.pca, graph = TRUE,
                    consol = TRUE,
                    nb.clust = 13)
 
-res.hcpc13$desc.var$quanti # contribution of factors 
+hcpc13 <- res.hcpc13$desc.var$quanti # contribution of factors 
+
+hcpc13 <- do.call(rbind, lapply(hcpc13, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc13[is.na(hcpc13)] = c("Amylase_Act", "D0.9") 
+
+# save the results
+
+write_csv(hcpc13, "analysis/ncp6/hcpc13.csv")
 
 # wait for modification
 
@@ -1600,6 +1787,11 @@ mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
 
 ncp9_c2 <- mean_2c_full %>%
   ggplot(aes(x = cluster2, y = mean)) +
+  geom_errorbar(aes(x = cluster2,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -1681,6 +1873,11 @@ mean_3c_full <- full_join(mean_3c_m, mean_3c_s)
 
 ncp9_c3 <- mean_3c_full %>%
   ggplot(aes(x = cluster3, y = mean)) +
+  geom_errorbar(aes(x = cluster3,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -1762,6 +1959,11 @@ mean_4c_full <- full_join(mean_4c_m, mean_4c_s)
 
 ncp9_c4 <- mean_4c_full %>%
   ggplot(aes(x = cluster4, y = mean)) +
+  geom_errorbar(aes(x = cluster4,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -1843,6 +2045,11 @@ mean_5c_full <- full_join(mean_5c_m, mean_5c_s)
 
 ncp9_c5 <- mean_5c_full %>%
   ggplot(aes(x = cluster5, y = mean)) +
+  geom_errorbar(aes(x = cluster5,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -1924,6 +2131,11 @@ mean_6c_full <- full_join(mean_6c_m, mean_6c_s)
 
 ncp9_c6 <- mean_6c_full %>%
   ggplot(aes(x = cluster6, y = mean)) +
+  geom_errorbar(aes(x = cluster6,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2005,6 +2217,11 @@ mean_7c_full <- full_join(mean_7c_m, mean_7c_s)
 
 ncp9_c7 <- mean_7c_full %>%
   ggplot(aes(x = cluster7, y = mean)) +
+  geom_errorbar(aes(x = cluster7,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2086,6 +2303,11 @@ mean_8c_full <- full_join(mean_8c_m, mean_8c_s)
 
 ncp9_c8 <- mean_8c_full %>%
   ggplot(aes(x = cluster8, y = mean)) +
+  geom_errorbar(aes(x = cluster8,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2167,6 +2389,11 @@ mean_9c_full <- full_join(mean_9c_m, mean_9c_s)
 
 ncp9_c9 <- mean_9c_full %>%
   ggplot(aes(x = cluster9, y = mean)) +
+  geom_errorbar(aes(x = cluster9,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2248,6 +2475,11 @@ mean_10c_full <- full_join(mean_10c_m, mean_10c_s)
 
 ncp9_c10 <- mean_10c_full %>%
   ggplot(aes(x = cluster10, y = mean)) +
+  geom_errorbar(aes(x = cluster10,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2329,6 +2561,11 @@ mean_11c_full <- full_join(mean_11c_m, mean_11c_s)
 
 ncp9_c11 <- mean_11c_full %>%
   ggplot(aes(x = cluster11, y = mean)) +
+  geom_errorbar(aes(x = cluster11,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2410,6 +2647,11 @@ mean_12c_full <- full_join(mean_12c_m, mean_12c_s)
 
 ncp9_c12 <- mean_12c_full %>%
   ggplot(aes(x = cluster12, y = mean)) +
+  geom_errorbar(aes(x = cluster12,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2491,6 +2733,11 @@ mean_13c_full <- full_join(mean_13c_m, mean_13c_s)
 
 ncp9_c13 <- mean_13c_full %>%
   ggplot(aes(x = cluster13, y = mean)) +
+  geom_errorbar(aes(x = cluster13,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
@@ -2572,6 +2819,11 @@ mean_14c_full <- full_join(mean_14c_m, mean_14c_s)
 
 ncp6_c14 <- mean_14c_full %>%
   ggplot(aes(x = cluster14, y = mean)) +
+  geom_errorbar(aes(x = cluster14,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
