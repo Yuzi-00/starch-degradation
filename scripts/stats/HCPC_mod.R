@@ -1431,7 +1431,18 @@ res.hcpc2 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 2)
 
-res.hcpc2$desc.var$quanti # contribution of factors  
+hcpc2 <- res.hcpc2$desc.var$quanti # contribution of factors  
+
+hcpc2 <- do.call(rbind, lapply(hcpc2, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc2, "analysis/ncp9/hcpc2.csv")
 
 # 3 clusters
 
@@ -1439,7 +1450,18 @@ res.hcpc3 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 3)
 
-res.hcpc3$desc.var$quanti # contribution of factors  
+hcpc3 <- res.hcpc3$desc.var$quanti # contribution of factors  
+
+hcpc3 <- do.call(rbind, lapply(hcpc3, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc3, "analysis/ncp9/hcpc3.csv")
 
 # 4 clusters
 
@@ -1447,7 +1469,18 @@ res.hcpc4 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 4)
 
-res.hcpc4$desc.var$quanti # contribution of factors 
+hcpc4 <- res.hcpc4$desc.var$quanti # contribution of factors 
+
+hcpc4 <- do.call(rbind, lapply(hcpc4, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc4, "analysis/ncp9/hcpc4.csv")
 
 # 5 clusters
 
@@ -1455,7 +1488,22 @@ res.hcpc5 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 5)
 
-res.hcpc5$desc.var$quanti # contribution of factors 
+hcpc5 <- res.hcpc5$desc.var$quanti # contribution of factors 
+
+hcpc5 <- do.call(rbind, lapply(hcpc5, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc5[is.na(hcpc5)] = "D0.9" 
+
+# save the results
+
+write_csv(hcpc5, "analysis/ncp9/hcpc5.csv")
 
 # 6 clusters
 
@@ -1463,7 +1511,22 @@ res.hcpc6 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 6)
 
-res.hcpc6$desc.var$quanti # contribution of factors 
+hcpc6 <- res.hcpc6$desc.var$quanti # contribution of factors 
+
+hcpc6 <- do.call(rbind, lapply(hcpc6, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc6[is.na(hcpc6)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc6, "analysis/ncp9/hcpc6.csv")
 
 # 7 clusters
 
@@ -1471,7 +1534,22 @@ res.hcpc7 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 7)
 
-res.hcpc7$desc.var$quanti # contribution of factors 
+hcpc7 <- res.hcpc7$desc.var$quanti # contribution of factors 
+
+hcpc7 <- do.call(rbind, lapply(hcpc7, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc7[is.na(hcpc7)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc7, "analysis/ncp9/hcpc7.csv")
 
 # 8 clusters
 
@@ -1479,14 +1557,45 @@ res.hcpc8 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 8)
 
-res.hcpc8$desc.var$quanti # contribution of factors 
+hcpc8 <- res.hcpc8$desc.var$quanti # contribution of factors 
+
+hcpc8 <- do.call(rbind, lapply(hcpc8, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc8[is.na(hcpc8)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc8, "analysis/ncp9/hcpc8.csv")
 
 # 9 clusters
 
 res.hcpc9 <- HCPC(res.pca, graph = TRUE, 
                   consol = TRUE,
                   nb.clust = 9)
-res.hcpc9$desc.var$quanti # contribution of factors 
+
+hcpc9 <- res.hcpc9$desc.var$quanti # contribution of factors 
+
+hcpc9 <- do.call(rbind, lapply(hcpc9, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc9[is.na(hcpc9)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc9, "analysis/ncp9/hcpc9.csv")
 
 # 10 clusters
 
@@ -1494,7 +1603,22 @@ res.hcpc10 <- HCPC(res.pca, graph = TRUE,
                   consol = TRUE,
                   nb.clust = 10)
 
-res.hcpc10$desc.var$quanti # contribution of factors 
+hcpc10 <- res.hcpc10$desc.var$quanti # contribution of factors 
+
+hcpc10 <- do.call(rbind, lapply(hcpc10, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc10[is.na(hcpc10)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc10, "analysis/ncp9/hcpc10.csv")
 
 # 11 clusters
 
@@ -1502,7 +1626,22 @@ res.hcpc11 <- HCPC(res.pca, graph = TRUE,
                    consol = TRUE,
                    nb.clust = 11)
 
-res.hcpc11$desc.var$quanti # contribution of factors 
+hcpc11 <- res.hcpc11$desc.var$quanti # contribution of factors 
+
+hcpc11 <- do.call(rbind, lapply(hcpc11, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc11[is.na(hcpc11)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc11, "analysis/ncp9/hcpc11.csv")
 
 # 12 clusters
 
@@ -1510,7 +1649,22 @@ res.hcpc12 <- HCPC(res.pca, graph = TRUE,
                    consol = TRUE,
                    nb.clust = 12)
 
-res.hcpc12$desc.var$quanti # contribution of factors 
+hcpc12 <- res.hcpc12$desc.var$quanti # contribution of factors 
+
+hcpc12 <- do.call(rbind, lapply(hcpc12, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc12[is.na(hcpc12)] = "D0.9"
+
+# save the results
+
+write_csv(hcpc12, "analysis/ncp9/hcpc12.csv")
 
 # 13 clusters
 
@@ -1518,7 +1672,22 @@ res.hcpc13 <- HCPC(res.pca, graph = TRUE,
                    consol = TRUE,
                    nb.clust = 13)
 
-res.hcpc13$desc.var$quanti # contribution of factors 
+hcpc13 <- res.hcpc13$desc.var$quanti # contribution of factors 
+
+hcpc13 <- do.call(rbind, lapply(hcpc13, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc13[is.na(hcpc13)] = c("Amylase_Act", "D0.9")
+
+# save the results
+
+write_csv(hcpc13, "analysis/ncp9/hcpc13.csv")
 
 # 14 clusters
 
@@ -1526,7 +1695,22 @@ res.hcpc14 <- HCPC(res.pca, graph = TRUE,
                    consol = TRUE,
                    nb.clust = 14)
 
-res.hcpc14$desc.var$quanti # contribution of factors 
+hcpc14 <- res.hcpc14$desc.var$quanti # contribution of factors 
+
+hcpc14 <- do.call(rbind, lapply(hcpc14, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc14[is.na(hcpc14)] = c("Amylase_Act", "D0.9")
+
+# save the results
+
+write_csv(hcpc14, "analysis/ncp9/hcpc14.csv")
 
 # visualize the dendrogram generated by the hierarchical clustering
 
