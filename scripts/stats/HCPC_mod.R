@@ -20,14 +20,15 @@ df <- df %>%
 
 res <- read_csv("analysis//hkmodel_residuals.csv")
 
-df <- left_join(df, res)
+df <- left_join(df, res) %>%
+  rename(residual = .resid)
 
 # calculate the mean value of the kinetics 
 
 df1 <- df %>%
-  select(2, 29:31) %>%
+  select(2, 29:32) %>%
   group_by(Sample) %>%
-  summarise(k = mean(k), h = mean(h), Xinf = mean(Xinf)) 
+  summarise(k = mean(k), h = mean(h), Xinf = mean(Xinf), residual = mean(residual)) 
 
 # select the structural properties
 
@@ -39,7 +40,7 @@ df2 <- df %>%
 
 df_new <- full_join(df2, df1) %>%
   select(Sample, Amylose_Con, SSA, SWM, D0.1, D0.5, D0.9, DP6_12, DP13_24, DP25_36, DP37_47, Amylase_Act, Peak_Vis, Trough_Vis,
-         Final_Vis, Pasting_Temp, k, h, Xinf) %>%
+         Final_Vis, Pasting_Temp, k, h, Xinf, residual) %>%
   remove_rownames() %>%
   column_to_rownames(var = 'Sample') %>%
   scale()
@@ -51,7 +52,7 @@ df_new <- full_join(df2, df1) %>%
 res.pca <- PCA(df_new, 
                ncp = 6,
                scale.unit = TRUE, 
-               quanti.sup = 12:18, # add RVA and kinetics as supplementary data (illustrative data)
+               quanti.sup = 12:19, # add RVA and kinetics as supplementary data (illustrative data)
                graph = FALSE)
 
 summary(res.pca)
@@ -1424,7 +1425,7 @@ ggsave("figures/HCPC/ncp6/ncp6_c12_scal.png",
 res.pca <- PCA(df_new, 
                ncp = 9,
                scale.unit = TRUE, 
-               quanti.sup = 12:18, 
+               quanti.sup = 12:19, 
                graph = FALSE)
 
 summary(res.pca)
