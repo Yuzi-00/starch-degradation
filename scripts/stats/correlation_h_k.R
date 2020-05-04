@@ -382,5 +382,11 @@ qqline(resid(lm_kinetics))
 # in the residual plot (no pattern here), and form a straight line in the normal qq-plot. So that
 # the residuals are normally distributed.
 
+# save the residuals 
+
+res <- fortify(lm_kinetics) %>%
+  select(h, .resid)
+
+write_csv(res, "analysis/hkmodel_residuals.csv")
 
 
