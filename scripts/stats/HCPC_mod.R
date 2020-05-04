@@ -16,6 +16,12 @@ df <- df %>%
   filter(Sample != "C+" & Sample != "C-") %>%
   na.omit()
 
+# add the residuals of the h k model
+
+res <- read_csv("analysis//hkmodel_residuals.csv")
+
+df <- left_join(df, res)
+
 # calculate the mean value of the kinetics 
 
 df1 <- df %>%
@@ -506,47 +512,47 @@ write_csv(r_hcpc_all, "analysis/hcpc_scaled_ncp6.csv")
 
 #### 2 clusters ####
 
-# original values
-
-mean_2c <- r_hcpc_all %>%
-  group_by(cluster2) %>% # by 2 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_2c_m <- mean_2c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster2) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_2c_s <- mean_2c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster2) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
-
-# histogram (original values)
-
-ncp6_c2 <- mean_2c_full %>%
-  ggplot(aes(x = cluster2, y = mean)) +
-  geom_errorbar(aes(x = cluster2,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp6/ncp6_c2_ori.png", 
-       plot = ncp6_c2, 
-       width = 30, 
-       height = 20,  
-       units = "cm") 
+# # original values
+# 
+# mean_2c <- r_hcpc_all %>%
+#   group_by(cluster2) %>% # by 2 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_2c_m <- mean_2c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster2) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_2c_s <- mean_2c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster2) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
+# 
+# # histogram (original values)
+# 
+# ncp6_c2 <- mean_2c_full %>%
+#   ggplot(aes(x = cluster2, y = mean)) +
+#   geom_errorbar(aes(x = cluster2,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp6/ncp6_c2_ori.png", 
+#        plot = ncp6_c2, 
+#        width = 30, 
+#        height = 20,  
+#        units = "cm") 
 
 # scaled values
 
@@ -575,9 +581,15 @@ mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
 # histogram (scaled values)
 
 ncp6_c2 <- mean_2c_full %>%
-  ggplot(aes(x = cluster2, y = mean)) +
+  ggplot(aes(x = factor, y = mean)) +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  geom_errorbar(aes(x = factor,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                    width=0.2,
+                    color = "red") +
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+  facet_wrap(~cluster2, scales = "free")
 
 ggsave("figures/HCPC/ncp6/ncp6_c2_scal.png", 
        plot = ncp6_c2, 
