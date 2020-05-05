@@ -1996,11 +1996,12 @@ mean_2c_full <- mean_2c_full %>%
 
 ncp9_c2 <- mean_2c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2092,11 +2093,12 @@ mean_3c_full <- mean_3c_full %>%
 
 ncp9_c3 <- mean_3c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2188,11 +2190,12 @@ mean_4c_full <- mean_4c_full %>%
 
 ncp9_c4 <- mean_4c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2284,11 +2287,12 @@ mean_5c_full <- mean_5c_full %>%
 
 ncp9_c5 <- mean_5c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2380,11 +2384,12 @@ mean_6c_full <- mean_6c_full %>%
 
 ncp9_c6 <- mean_6c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2476,11 +2481,12 @@ mean_7c_full <- mean_7c_full %>%
 
 ncp9_c7 <- mean_7c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2572,11 +2578,12 @@ mean_8c_full <- mean_8c_full %>%
 
 ncp9_c8 <- mean_8c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2668,11 +2675,12 @@ mean_9c_full <- mean_9c_full %>%
 
 ncp9_c9 <- mean_9c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2764,11 +2772,12 @@ mean_10c_full <- mean_10c_full %>%
 
 ncp9_c10 <- mean_10c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2860,11 +2869,12 @@ mean_11c_full <- mean_11c_full %>%
 
 ncp9_c11 <- mean_11c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -2956,11 +2966,12 @@ mean_12c_full <- mean_12c_full %>%
 
 ncp9_c12 <- mean_12c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -3052,11 +3063,12 @@ mean_13c_full <- mean_13c_full %>%
 
 ncp9_c13 <- mean_13c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
@@ -3144,23 +3156,16 @@ mean_14c_full <- mean_14c_full %>%
                                         "residual") ~ "supplementary_variable",
                           TRUE ~ "active_variable"))
 
-# add a new column to distinguish the explicative and illustratif factors 
-
-mean_14c_full <- mean_14c_full %>%
-  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
-                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
-                                        "residual") ~ "supplementary_variable",
-                          TRUE ~ "active_variable"))
-
 # histogram (scaled values)
 
 ncp9_c14 <- mean_14c_full %>%
   ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
   geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
-                color = "red") +
+                color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
         legend.position="none") +
