@@ -1,3 +1,6 @@
+
+# **** this script is for the plots of each cluster **** 
+
 library(tidyverse)
 
 library(FactoMineR)
@@ -1956,6 +1959,7 @@ write_csv(r_hcpc_s_all, "analysis/hcpc_scaled_ncp9.csv")
 #        height = 20, 
 #        units = "cm") 
 
+
 # scaled values
 
 mean_2c <- r_hcpc_s_all %>%
@@ -1980,17 +1984,27 @@ mean_2c_s <- mean_2c %>%
 
 mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_2c_full <- mean_2c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c2 <- mean_2c_full %>%
-  ggplot(aes(x = cluster2, y = mean)) +
-  geom_errorbar(aes(x = cluster2,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster2, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c2_scal.png", 
        plot = ncp9_c2, 
@@ -2066,17 +2080,27 @@ mean_3c_s <- mean_3c %>%
 
 mean_3c_full <- full_join(mean_3c_m, mean_3c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_3c_full <- mean_3c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c3 <- mean_3c_full %>%
-  ggplot(aes(x = cluster3, y = mean)) +
-  geom_errorbar(aes(x = cluster3,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster3, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c3_scal.png", 
        plot = ncp9_c3, 
@@ -2152,17 +2176,27 @@ mean_4c_s <- mean_4c %>%
 
 mean_4c_full <- full_join(mean_4c_m, mean_4c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_4c_full <- mean_4c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c4 <- mean_4c_full %>%
-  ggplot(aes(x = cluster4, y = mean)) +
-  geom_errorbar(aes(x = cluster4,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster4, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c4_scal.png", 
        plot = ncp9_c4, 
@@ -2238,17 +2272,27 @@ mean_5c_s <- mean_5c %>%
 
 mean_5c_full <- full_join(mean_5c_m, mean_5c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_5c_full <- mean_5c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c5 <- mean_5c_full %>%
-  ggplot(aes(x = cluster5, y = mean)) +
-  geom_errorbar(aes(x = cluster5,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster5, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c5_scal.png", 
        plot = ncp9_c5, 
@@ -2324,17 +2368,27 @@ mean_6c_s <- mean_6c %>%
 
 mean_6c_full <- full_join(mean_6c_m, mean_6c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_6c_full <- mean_6c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c6 <- mean_6c_full %>%
-  ggplot(aes(x = cluster6, y = mean)) +
-  geom_errorbar(aes(x = cluster6,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster6, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c6_scal.png", 
        plot = ncp9_c6, 
@@ -2410,17 +2464,27 @@ mean_7c_s <- mean_7c %>%
 
 mean_7c_full <- full_join(mean_7c_m, mean_7c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_7c_full <- mean_7c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c7 <- mean_7c_full %>%
-  ggplot(aes(x = cluster7, y = mean)) +
-  geom_errorbar(aes(x = cluster7,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster7, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c7_scal.png", 
        plot = ncp9_c7, 
@@ -2496,17 +2560,27 @@ mean_8c_s <- mean_8c %>%
 
 mean_8c_full <- full_join(mean_8c_m, mean_8c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_8c_full <- mean_8c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c8 <- mean_8c_full %>%
-  ggplot(aes(x = cluster8, y = mean)) +
-  geom_errorbar(aes(x = cluster8,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster8, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c8_scal.png", 
        plot = ncp9_c8, 
@@ -2582,17 +2656,27 @@ mean_9c_s <- mean_9c %>%
 
 mean_9c_full <- full_join(mean_9c_m, mean_9c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_9c_full <- mean_9c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c9 <- mean_9c_full %>%
-  ggplot(aes(x = cluster9, y = mean)) +
-  geom_errorbar(aes(x = cluster9,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster9, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c9_scal.png", 
        plot = ncp9_c9, 
@@ -2668,17 +2752,27 @@ mean_10c_s <- mean_10c %>%
 
 mean_10c_full <- full_join(mean_10c_m, mean_10c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_10c_full <- mean_10c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c10 <- mean_10c_full %>%
-  ggplot(aes(x = cluster10, y = mean)) +
-  geom_errorbar(aes(x = cluster10,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster10, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c10_scal.png", 
        plot = ncp9_c10, 
@@ -2754,17 +2848,27 @@ mean_11c_s <- mean_11c %>%
 
 mean_11c_full <- full_join(mean_11c_m, mean_11c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_11c_full <- mean_11c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c11 <- mean_11c_full %>%
-  ggplot(aes(x = cluster11, y = mean)) +
-  geom_errorbar(aes(x = cluster11,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster11, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c11_scal.png", 
        plot = ncp9_c11, 
@@ -2840,17 +2944,27 @@ mean_12c_s <- mean_12c %>%
 
 mean_12c_full <- full_join(mean_12c_m, mean_12c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_12c_full <- mean_12c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c12 <- mean_12c_full %>%
-  ggplot(aes(x = cluster12, y = mean)) +
-  geom_errorbar(aes(x = cluster12,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster12, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c12_scal.png", 
        plot = ncp9_c12, 
@@ -2926,17 +3040,27 @@ mean_13c_s <- mean_13c %>%
 
 mean_13c_full <- full_join(mean_13c_m, mean_13c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_13c_full <- mean_13c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
 ncp9_c13 <- mean_13c_full %>%
-  ggplot(aes(x = cluster13, y = mean)) +
-  geom_errorbar(aes(x = cluster13,
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster13, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c13_scal.png", 
        plot = ncp9_c13, 
@@ -3012,17 +3136,35 @@ mean_14c_s <- mean_14c %>%
 
 mean_14c_full <- full_join(mean_14c_m, mean_14c_s)
 
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_14c_full <- mean_14c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_14c_full <- mean_14c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
 # histogram (scaled values)
 
-ncp6_c14 <- mean_14c_full %>%
-  ggplot(aes(x = cluster14, y = mean)) +
-  geom_errorbar(aes(x = cluster14,
+ncp9_c14 <- mean_14c_full %>%
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  geom_errorbar(aes(x = factor,
                     ymin = mean - se,
                     ymax = mean + se),
                 width=0.2,
                 color = "red") +
   geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="none") +
+  facet_wrap(~cluster14, scales = "free")
 
 ggsave("figures/HCPC/ncp9/ncp9_c14_scal.png", 
        plot = ncp9_c14, 
