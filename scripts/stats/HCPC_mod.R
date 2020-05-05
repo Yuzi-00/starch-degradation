@@ -1914,47 +1914,47 @@ write_csv(r_hcpc_s_all, "analysis/hcpc_scaled_ncp9.csv")
 
 #### 2 clusters ####
 
-# original values
-
-mean_2c <- r_hcpc_all %>%
-  group_by(cluster2) %>% # by 2 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_2c_m <- mean_2c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster2) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_2c_s <- mean_2c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster2) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
-
-# histogram (original values)
-
-ncp9_c2 <- mean_2c_full %>%
-  ggplot(aes(x = cluster2, y = mean)) +
-  geom_errorbar(aes(x = cluster2,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c2_ori.png", 
-       plot = ncp9_c2, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_2c <- r_hcpc_all %>%
+#   group_by(cluster2) %>% # by 2 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_2c_m <- mean_2c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster2) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_2c_s <- mean_2c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster2) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_2c_full <- full_join(mean_2c_m, mean_2c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c2 <- mean_2c_full %>%
+#   ggplot(aes(x = cluster2, y = mean)) +
+#   geom_errorbar(aes(x = cluster2,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c2_ori.png", 
+#        plot = ncp9_c2, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -1967,12 +1967,12 @@ mean_2c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_2c_m <- mean_2c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster2) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_2c_s <- mean_2c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster2) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2000,47 +2000,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c2_scal.png",
 
 #### 3 clusters ####
 
-# original values
-
-mean_3c <- r_hcpc_all %>%
-  group_by(cluster3) %>% # by 3 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_3c_m <- mean_3c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster3) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_3c_s <- mean_3c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster3) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_3c_full <- full_join(mean_3c_m, mean_3c_s)
-
-# histogram (original values)
-
-ncp9_c3 <- mean_3c_full %>%
-  ggplot(aes(x = cluster3, y = mean)) +
-  geom_errorbar(aes(x = cluster3,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c3_ori.png", 
-       plot = ncp9_c3, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_3c <- r_hcpc_all %>%
+#   group_by(cluster3) %>% # by 3 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_3c_m <- mean_3c %>%
+#   select(1:20) %>%
+#   gather("factor", "mean", -cluster3) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_3c_s <- mean_3c %>%
+#   select(1, 40:58) %>%
+#   gather("factor", "se", -cluster3) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_3c_full <- full_join(mean_3c_m, mean_3c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c3 <- mean_3c_full %>%
+#   ggplot(aes(x = cluster3, y = mean)) +
+#   geom_errorbar(aes(x = cluster3,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c3_ori.png", 
+#        plot = ncp9_c3, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2053,12 +2053,12 @@ mean_3c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_3c_m <- mean_3c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster3) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_3c_s <- mean_3c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster3) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2086,47 +2086,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c3_scal.png",
 
 #### 4 clusters ####
 
-# original values
-
-mean_4c <- r_hcpc_all %>%
-  group_by(cluster4) %>% # by 4 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_4c_m <- mean_4c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster4) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_4c_s <- mean_4c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster4) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_4c_full <- full_join(mean_4c_m, mean_4c_s)
-
-# histogram (original values)
-
-ncp9_c4 <- mean_4c_full %>%
-  ggplot(aes(x = cluster4, y = mean)) +
-  geom_errorbar(aes(x = cluster4,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c4_ori.png", 
-       plot = ncp9_c4, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_4c <- r_hcpc_all %>%
+#   group_by(cluster4) %>% # by 4 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_4c_m <- mean_4c %>%
+#   select(1:20) %>%
+#   gather("factor", "mean", -cluster4) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_4c_s <- mean_4c %>%
+#   select(1, 40:58) %>%
+#   gather("factor", "se", -cluster4) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_4c_full <- full_join(mean_4c_m, mean_4c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c4 <- mean_4c_full %>%
+#   ggplot(aes(x = cluster4, y = mean)) +
+#   geom_errorbar(aes(x = cluster4,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c4_ori.png", 
+#        plot = ncp9_c4, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2139,12 +2139,12 @@ mean_4c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_4c_m <- mean_4c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster4) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_4c_s <- mean_4c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster4) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2172,47 +2172,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c4_scal.png",
 
 #### 5 clusters ####
 
-# original values
-
-mean_5c <- r_hcpc_all %>%
-  group_by(cluster5) %>% # by 5 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_5c_m <- mean_5c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster5) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_5c_s <- mean_5c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster5) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_5c_full <- full_join(mean_5c_m, mean_5c_s)
-
-# histogram (original values)
-
-ncp9_c5 <- mean_5c_full %>%
-  ggplot(aes(x = cluster5, y = mean)) +
-  geom_errorbar(aes(x = cluster5,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c5_ori.png", 
-       plot = ncp9_c5, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_5c <- r_hcpc_all %>%
+#   group_by(cluster5) %>% # by 5 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_5c_m <- mean_5c %>%
+#   select(1:20) %>%
+#   gather("factor", "mean", -cluster5) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_5c_s <- mean_5c %>%
+#   select(1, 40:58) %>%
+#   gather("factor", "se", -cluster5) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_5c_full <- full_join(mean_5c_m, mean_5c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c5 <- mean_5c_full %>%
+#   ggplot(aes(x = cluster5, y = mean)) +
+#   geom_errorbar(aes(x = cluster5,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c5_ori.png", 
+#        plot = ncp9_c5, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2225,12 +2225,12 @@ mean_5c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_5c_m <- mean_5c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster5) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_5c_s <- mean_5c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster5) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2258,47 +2258,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c5_scal.png",
 
 #### 6 clusters ####
 
-# original values
-
-mean_6c <- r_hcpc_all %>%
-  group_by(cluster6) %>% # by 6 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_6c_m <- mean_6c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster6) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_6c_s <- mean_6c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster6) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_6c_full <- full_join(mean_6c_m, mean_6c_s)
-
-# histogram (original values)
-
-ncp9_c6 <- mean_6c_full %>%
-  ggplot(aes(x = cluster6, y = mean)) +
-  geom_errorbar(aes(x = cluster6,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c6_ori.png", 
-       plot = ncp9_c6, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_6c <- r_hcpc_all %>%
+#   group_by(cluster6) %>% # by 6 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_6c_m <- mean_6c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster6) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_6c_s <- mean_6c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster6) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_6c_full <- full_join(mean_6c_m, mean_6c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c6 <- mean_6c_full %>%
+#   ggplot(aes(x = cluster6, y = mean)) +
+#   geom_errorbar(aes(x = cluster6,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c6_ori.png", 
+#        plot = ncp9_c6, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2311,12 +2311,12 @@ mean_6c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_6c_m <- mean_6c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster6) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_6c_s <- mean_6c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster6) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2344,47 +2344,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c6_scal.png",
 
 #### 7 clusters ####
 
-# original values
-
-mean_7c <- r_hcpc_all %>%
-  group_by(cluster7) %>% # by 7 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_7c_m <- mean_7c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster7) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_7c_s <- mean_7c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster7) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_7c_full <- full_join(mean_7c_m, mean_7c_s)
-
-# histogram (original values)
-
-ncp9_c7 <- mean_7c_full %>%
-  ggplot(aes(x = cluster7, y = mean)) +
-  geom_errorbar(aes(x = cluster7,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c7_ori.png", 
-       plot = ncp9_c7, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_7c <- r_hcpc_all %>%
+#   group_by(cluster7) %>% # by 7 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_7c_m <- mean_7c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster7) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_7c_s <- mean_7c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster7) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_7c_full <- full_join(mean_7c_m, mean_7c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c7 <- mean_7c_full %>%
+#   ggplot(aes(x = cluster7, y = mean)) +
+#   geom_errorbar(aes(x = cluster7,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c7_ori.png", 
+#        plot = ncp9_c7, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2397,12 +2397,12 @@ mean_7c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_7c_m <- mean_7c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster7) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_7c_s <- mean_7c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster7) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2430,47 +2430,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c7_scal.png",
 
 #### 8 clusters ####
 
-# original values
-
-mean_8c <- r_hcpc_all %>%
-  group_by(cluster8) %>% # by 8 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_8c_m <- mean_8c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster8) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_8c_s <- mean_8c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster8) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_8c_full <- full_join(mean_8c_m, mean_8c_s)
-
-# histogram (original values)
-
-ncp9_c8 <- mean_8c_full %>%
-  ggplot(aes(x = cluster8, y = mean)) +
-  geom_errorbar(aes(x = cluster8,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c8_ori.png", 
-       plot = ncp9_c8, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_8c <- r_hcpc_all %>%
+#   group_by(cluster8) %>% # by 8 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_8c_m <- mean_8c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster8) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_8c_s <- mean_8c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster8) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_8c_full <- full_join(mean_8c_m, mean_8c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c8 <- mean_8c_full %>%
+#   ggplot(aes(x = cluster8, y = mean)) +
+#   geom_errorbar(aes(x = cluster8,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c8_ori.png", 
+#        plot = ncp9_c8, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2483,12 +2483,12 @@ mean_8c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_8c_m <- mean_8c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster8) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_8c_s <- mean_8c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster8) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2518,45 +2518,45 @@ ggsave("figures/HCPC/ncp9/ncp9_c8_scal.png",
 
 # original values
 
-mean_9c <- r_hcpc_all %>%
-  group_by(cluster9) %>% # by 9 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_9c_m <- mean_9c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster9) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_9c_s <- mean_9c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster9) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_9c_full <- full_join(mean_9c_m, mean_9c_s)
-
-# histogram (original values)
-
-ncp9_c9 <- mean_9c_full %>%
-  ggplot(aes(x = cluster9, y = mean)) +
-  geom_errorbar(aes(x = cluster9,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c9_ori.png", 
-       plot = ncp9_c9, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# mean_9c <- r_hcpc_all %>%
+#   group_by(cluster9) %>% # by 9 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_9c_m <- mean_9c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster9) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_9c_s <- mean_9c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster9) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_9c_full <- full_join(mean_9c_m, mean_9c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c9 <- mean_9c_full %>%
+#   ggplot(aes(x = cluster9, y = mean)) +
+#   geom_errorbar(aes(x = cluster9,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c9_ori.png", 
+#        plot = ncp9_c9, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2569,12 +2569,12 @@ mean_9c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_9c_m <- mean_9c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster9) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_9c_s <- mean_9c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster9) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2602,47 +2602,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c9_scal.png",
 
 #### 10 clusters ####
 
-# original values
-
-mean_10c <- r_hcpc_all %>%
-  group_by(cluster10) %>% # by 10 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_10c_m <- mean_10c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster10) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_10c_s <- mean_10c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster10) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_10c_full <- full_join(mean_10c_m, mean_10c_s)
-
-# histogram (original values)
-
-ncp9_c10 <- mean_10c_full %>%
-  ggplot(aes(x = cluster10, y = mean)) +
-  geom_errorbar(aes(x = cluster10,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c10_ori.png", 
-       plot = ncp9_c10, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_10c <- r_hcpc_all %>%
+#   group_by(cluster10) %>% # by 10 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_10c_m <- mean_10c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster10) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_10c_s <- mean_10c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster10) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_10c_full <- full_join(mean_10c_m, mean_10c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c10 <- mean_10c_full %>%
+#   ggplot(aes(x = cluster10, y = mean)) +
+#   geom_errorbar(aes(x = cluster10,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c10_ori.png", 
+#        plot = ncp9_c10, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2655,12 +2655,12 @@ mean_10c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_10c_m <- mean_10c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster10) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_10c_s <- mean_10c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster10) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2688,47 +2688,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c10_scal.png",
 
 #### 11 clusters ####
 
-# original values
-
-mean_11c <- r_hcpc_all %>%
-  group_by(cluster11) %>% # by 11 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_11c_m <- mean_11c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster11) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_11c_s <- mean_11c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster11) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_11c_full <- full_join(mean_11c_m, mean_11c_s)
-
-# histogram (original values)
-
-ncp9_c11 <- mean_11c_full %>%
-  ggplot(aes(x = cluster11, y = mean)) +
-  geom_errorbar(aes(x = cluster11,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c11_ori.png", 
-       plot = ncp9_c11, 
-       width = 30, 
-       height = 20,  
-       units = "cm") 
+# # original values
+# 
+# mean_11c <- r_hcpc_all %>%
+#   group_by(cluster11) %>% # by 11 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_11c_m <- mean_11c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster11) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_11c_s <- mean_11c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster11) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_11c_full <- full_join(mean_11c_m, mean_11c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c11 <- mean_11c_full %>%
+#   ggplot(aes(x = cluster11, y = mean)) +
+#   geom_errorbar(aes(x = cluster11,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c11_ori.png", 
+#        plot = ncp9_c11, 
+#        width = 30, 
+#        height = 20,  
+#        units = "cm") 
 
 # scaled values
 
@@ -2741,12 +2741,12 @@ mean_11c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_11c_m <- mean_11c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster11) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_11c_s <- mean_11c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster11) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2774,47 +2774,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c11_scal.png",
 
 #### 12 clusters ####
 
-# original values
-
-mean_12c <- r_hcpc_all %>%
-  group_by(cluster12) %>% # by 12 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_12c_m <- mean_12c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster12) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_12c_s <- mean_12c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster12) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_12c_full <- full_join(mean_12c_m, mean_12c_s)
-
-# histogram (original values)
-
-ncp9_c12 <- mean_12c_full %>%
-  ggplot(aes(x = cluster12, y = mean)) +
-  geom_errorbar(aes(x = cluster12,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c12_ori.png", 
-       plot = ncp9_c12, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_12c <- r_hcpc_all %>%
+#   group_by(cluster12) %>% # by 12 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_12c_m <- mean_12c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster12) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_12c_s <- mean_12c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster12) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_12c_full <- full_join(mean_12c_m, mean_12c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c12 <- mean_12c_full %>%
+#   ggplot(aes(x = cluster12, y = mean)) +
+#   geom_errorbar(aes(x = cluster12,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c12_ori.png", 
+#        plot = ncp9_c12, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2827,12 +2827,12 @@ mean_12c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_12c_m <- mean_12c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster12) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_12c_s <- mean_12c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster12) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2860,47 +2860,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c12_scal.png",
 
 #### 13 clusters ####
 
-# original values
-
-mean_13c <- r_hcpc_all %>%
-  group_by(cluster13) %>% # by 13 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_13c_m <- mean_13c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster13) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_13c_s <- mean_13c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster13) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_13c_full <- full_join(mean_13c_m, mean_13c_s)
-
-# histogram (original values)
-
-ncp9_c13 <- mean_13c_full %>%
-  ggplot(aes(x = cluster13, y = mean)) +
-  geom_errorbar(aes(x = cluster13,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c13_ori.png", 
-       plot = ncp9_c13, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_13c <- r_hcpc_all %>%
+#   group_by(cluster13) %>% # by 13 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_13c_m <- mean_13c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster13) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_13c_s <- mean_13c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster13) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_13c_full <- full_join(mean_13c_m, mean_13c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c13 <- mean_13c_full %>%
+#   ggplot(aes(x = cluster13, y = mean)) +
+#   geom_errorbar(aes(x = cluster13,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c13_ori.png", 
+#        plot = ncp9_c13, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2913,12 +2913,12 @@ mean_13c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_13c_m <- mean_13c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster13) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_13c_s <- mean_13c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster13) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2946,47 +2946,47 @@ ggsave("figures/HCPC/ncp9/ncp9_c13_scal.png",
 
 #### 14 clusters ####
 
-# original values
-
-mean_14c <- r_hcpc_all %>%
-  group_by(cluster14) %>% # by 14 clusters
-  # summarise_if(is.numeric, mean, na.rm = TRUE) 
-  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
-# for the numerical column, calculate the mean, standard deviation and standard error
-
-# creat two subsets for means and std errors
-
-mean_14c_m <- mean_14c %>%
-  select(1:19) %>%
-  gather("factor", "mean", -cluster14) %>%
-  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
-
-mean_14c_s <- mean_14c %>%
-  select(1, 38:55) %>%
-  gather("factor", "se", -cluster14) %>%
-  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
-
-# combine the above two datasets together
-
-mean_14c_full <- full_join(mean_14c_m, mean_14c_s)
-
-# histogram (original values)
-
-ncp9_c14 <- mean_14c_full %>%
-  ggplot(aes(x = cluster14, y = mean)) +
-  geom_errorbar(aes(x = cluster14,
-                    ymin = mean - se,
-                    ymax = mean + se),
-                width=0.2,
-                color = "red") +
-  geom_bar(stat = 'identity', width = 0.3) +
-  facet_wrap(~factor, scales = "free")
-
-ggsave("figures/HCPC/ncp9/ncp9_c14_ori.png", 
-       plot = ncp9_c14, 
-       width = 30, 
-       height = 20, 
-       units = "cm") 
+# # original values
+# 
+# mean_14c <- r_hcpc_all %>%
+#   group_by(cluster14) %>% # by 14 clusters
+#   # summarise_if(is.numeric, mean, na.rm = TRUE) 
+#   summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# # for the numerical column, calculate the mean, standard deviation and standard error
+# 
+# # creat two subsets for means and std errors
+# 
+# mean_14c_m <- mean_14c %>%
+#   select(1:19) %>%
+#   gather("factor", "mean", -cluster14) %>%
+#   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+# 
+# mean_14c_s <- mean_14c %>%
+#   select(1, 38:55) %>%
+#   gather("factor", "se", -cluster14) %>%
+#   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+# 
+# # combine the above two datasets together
+# 
+# mean_14c_full <- full_join(mean_14c_m, mean_14c_s)
+# 
+# # histogram (original values)
+# 
+# ncp9_c14 <- mean_14c_full %>%
+#   ggplot(aes(x = cluster14, y = mean)) +
+#   geom_errorbar(aes(x = cluster14,
+#                     ymin = mean - se,
+#                     ymax = mean + se),
+#                 width=0.2,
+#                 color = "red") +
+#   geom_bar(stat = 'identity', width = 0.3) +
+#   facet_wrap(~factor, scales = "free")
+# 
+# ggsave("figures/HCPC/ncp9/ncp9_c14_ori.png", 
+#        plot = ncp9_c14, 
+#        width = 30, 
+#        height = 20, 
+#        units = "cm") 
 
 # scaled values
 
@@ -2999,12 +2999,12 @@ mean_14c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_14c_m <- mean_14c %>%
-  select(1:19) %>%
+  select(1:20) %>%
   gather("factor", "mean", -cluster14) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_14c_s <- mean_14c %>%
-  select(1, 38:55) %>%
+  select(1, 40:58) %>%
   gather("factor", "se", -cluster14) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
