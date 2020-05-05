@@ -1995,7 +1995,7 @@ ncp9_c2 <- mean_2c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c2_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c2_scal_by_factor.png", 
        plot = ncp9_c2, 
        width = 30, 
        height = 20,  
@@ -2081,7 +2081,7 @@ ncp9_c3 <- mean_3c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c3_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c3_scal_by_factor.png", 
        plot = ncp9_c3, 
        width = 30, 
        height = 20, 
@@ -2167,7 +2167,7 @@ ncp9_c4 <- mean_4c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c4_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c4_scal_by_factor.png", 
        plot = ncp9_c4, 
        width = 30, 
        height = 20,  
@@ -2253,7 +2253,7 @@ ncp9_c5 <- mean_5c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c5_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c5_scal_by_factor.png", 
        plot = ncp9_c5, 
        width = 30, 
        height = 20,  
@@ -2339,7 +2339,7 @@ ncp9_c6 <- mean_6c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c6_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c6_scal_by_factor.png", 
        plot = ncp9_c6, 
        width = 30, 
        height = 20, 
@@ -2425,7 +2425,7 @@ ncp9_c7 <- mean_7c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c7_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c7_scal_by_factor.png", 
        plot = ncp9_c7, 
        width = 30, 
        height = 20,  
@@ -2511,7 +2511,7 @@ ncp9_c8 <- mean_8c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c8_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c8_scal_by_factor.png", 
        plot = ncp9_c8, 
        width = 30, 
        height = 20,  
@@ -2597,7 +2597,7 @@ ncp9_c9 <- mean_9c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c9_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c9_scal_by_factor.png", 
        plot = ncp9_c9, 
        width = 30, 
        height = 20,  
@@ -2683,7 +2683,7 @@ ncp9_c10 <- mean_10c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c10_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c10_scal_by_factor.png", 
        plot = ncp9_c10, 
        width = 30, 
        height = 20, 
@@ -2769,7 +2769,7 @@ ncp9_c11 <- mean_11c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c11_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c11_scal_by_factor.png", 
        plot = ncp9_c11, 
        width = 30, 
        height = 20, 
@@ -2855,7 +2855,7 @@ ncp9_c12 <- mean_12c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c12_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c12_scal_by_factor.png", 
        plot = ncp9_c12, 
        width = 30, 
        height = 20, 
@@ -2941,7 +2941,7 @@ ncp9_c13 <- mean_13c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c13_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c13_scal_by_factor.png", 
        plot = ncp9_c13, 
        width = 30, 
        height = 20, 
@@ -3017,7 +3017,7 @@ mean_14c_full <- full_join(mean_14c_m, mean_14c_s)
 
 # histogram (scaled values)
 
-ncp6_c14 <- mean_14c_full %>%
+ncp9_c14 <- mean_14c_full %>%
   ggplot(aes(x = cluster14, y = mean)) +
   geom_errorbar(aes(x = cluster14,
                     ymin = mean - se,
@@ -3027,7 +3027,7 @@ ncp6_c14 <- mean_14c_full %>%
   geom_bar(stat = 'identity', width = 0.3) +
   facet_wrap(~factor, scales = "free")
 
-ggsave("figures/HCPC/ncp9/ncp9_c14_scal.png", 
+ggsave("figures/HCPC/ncp9/ncp9_c14_scal_by_factor.png", 
        plot = ncp9_c14, 
        width = 30, 
        height = 20, 
