@@ -3177,6 +3177,21 @@ ggsave("figures/HCPC/ncp9/ncp9_c14_scal.png",
        height = 20, 
        units = "cm") 
 
+# count for the number of samples in each cluster
+
+ c14_4 <- r_hcpc_all %>% # change the number of clusters
+  filter(cluster14 == 4) # change the number of clusters
+ 
+ # select and save interesting clusters
+ 
+ ## Xinf+ with Amylose_con-
+ 
+ c14_4 <- r_hcpc_all %>%
+   filter(cluster14 == 4)
+  
+ write_csv(c14_4, "analysis/ncp9/Xinf+AC-.csv")
+  
+
 #### the following scripts wait for moidifying ####
 
 #### ncp=7 #### 
