@@ -1427,7 +1427,7 @@ ggsave("figures/HCPC/ncp6/ncp6_c12_scal.png",
 # compute PCA
 
 res.pca <- PCA(df_new, 
-               ncp = 9,
+               ncp = 9, # explain 99.009% of the variability 
                scale.unit = TRUE, 
                quanti.sup = 16:23, # 8 supplementary variables; 15 active variables 
                graph = FALSE)
