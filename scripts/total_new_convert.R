@@ -84,7 +84,7 @@ df_conv <- df_int %>%
 # ordering the columns 
 
 df_conv <- df_conv %>%
-  select(Well, Sample, ID, Category, Amylose_content, SSA, Surface_weighted_mean, D1, D5, D9,
+  select(Well, Sample, ID, Category, Amylose_content, SSA, VWM, SWM, D1, D5, D9, B_granule, A_granule, AB_ratio,
          mean_Peak, mean_Trough, mean_Final, mean_PastingTemp, low_dp, medium_dp, 
          medium_high_dp, high_dp, mean_amylase, HE_0min, HE_20min, HE_60min, HE_120min,
          HE_180min, HE_240min, HE_360min, HE_1440min, HE_1800min, k, h, Xinf) 
@@ -95,7 +95,7 @@ df_conv <- df_conv %>%
   rename(Amylose_Con = Amylose_content, D0.1 = D1, D0.5 = D5, D0.9 = D9, DP6_12 = low_dp, 
          DP13_24 = medium_dp, DP25_36 = medium_high_dp, DP37_47 = high_dp, Peak_Vis = mean_Peak,
          Trough_Vis = mean_Trough, Final_Vis = mean_Final, Pasting_Temp = mean_PastingTemp,
-         Amylase_Act = mean_amylase, SWM = Surface_weighted_mean)
+         Amylase_Act = mean_amylase)
 
 # save the dataset
 
