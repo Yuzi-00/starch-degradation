@@ -34,7 +34,7 @@ write_csv(data_15P_HE_amy, "data/tidydata/HE_amy_15P.csv")
 
 # read in the master size dataset
 
-master_size <- read_csv("data/tidydata/master_size.csv") 
+master_size <- read_csv("data/tidydata/master_size_bis.csv") 
 
 # combine these datasets together
 
@@ -45,7 +45,7 @@ write_csv(HE_amy_size_15P, "data/tidydata/HE_amy_size_15P.csv")
 
 #                                          ** add fitted parameters (Weibull, fit for each replicate) **
 
-parameters <- read_csv("analysis/fitted_weibull_parameters_for_replicates.csv")
+parameters <- read_csv("analysis/fitted_weibull_parameters_well_with_T0.csv")
 
 HE_amy_size_para_15P <- left_join(HE_amy_size_15P, parameters)
 
