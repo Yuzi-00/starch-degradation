@@ -1429,7 +1429,7 @@ ggsave("figures/HCPC/ncp6/ncp6_c12_scal.png",
 res.pca <- PCA(df_new, 
                ncp = 9,
                scale.unit = TRUE, 
-               quanti.sup = 12:19, 
+               quanti.sup = 16:23, # 8 supplementary variables; 15 active variables 
                graph = FALSE)
 
 summary(res.pca)
@@ -1514,9 +1514,9 @@ hcpc5 <- do.call(rbind, lapply(hcpc5, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc5[is.na(hcpc5)] = "D0.9" 
+# # replace the NAs 
+# 
+# hcpc5[is.na(hcpc5)] = "D0.9" 
 
 # save the results
 
@@ -1537,9 +1537,9 @@ hcpc6 <- do.call(rbind, lapply(hcpc6, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc6[is.na(hcpc6)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc6[is.na(hcpc6)] = "D0.9"
 
 # save the results
 
@@ -1560,9 +1560,9 @@ hcpc7 <- do.call(rbind, lapply(hcpc7, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc7[is.na(hcpc7)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc7[is.na(hcpc7)] = "D0.9"
 
 # save the results
 
@@ -1583,9 +1583,9 @@ hcpc8 <- do.call(rbind, lapply(hcpc8, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc8[is.na(hcpc8)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc8[is.na(hcpc8)] = "D0.9"
 
 # save the results
 
@@ -1606,9 +1606,9 @@ hcpc9 <- do.call(rbind, lapply(hcpc9, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc9[is.na(hcpc9)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc9[is.na(hcpc9)] = "D0.9"
 
 # save the results
 
@@ -1629,9 +1629,9 @@ hcpc10 <- do.call(rbind, lapply(hcpc10, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc10[is.na(hcpc10)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc10[is.na(hcpc10)] = "D0.9"
 
 # save the results
 
@@ -1652,9 +1652,9 @@ hcpc11 <- do.call(rbind, lapply(hcpc11, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc11[is.na(hcpc11)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc11[is.na(hcpc11)] = "D0.9"
 
 # save the results
 
@@ -1675,9 +1675,9 @@ hcpc12 <- do.call(rbind, lapply(hcpc12, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc12[is.na(hcpc12)] = "D0.9"
+# # replace the NAs 
+# 
+# hcpc12[is.na(hcpc12)] = "D0.9"
 
 # save the results
 
@@ -1698,9 +1698,9 @@ hcpc13 <- do.call(rbind, lapply(hcpc13, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc13[is.na(hcpc13)] = c("Amylase_Act", "D0.9")
+# # replace the NAs 
+# 
+# hcpc13[is.na(hcpc13)] = c("Amylase_Act", "D0.9")
 
 # save the results
 
@@ -1721,9 +1721,9 @@ hcpc14 <- do.call(rbind, lapply(hcpc14, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc14[is.na(hcpc14)] = c("Amylase_Act", "D0.9")
+# # replace the NAs 
+# 
+# hcpc14[is.na(hcpc14)] = c("Amylase_Act", "D0.9")
 
 # save the results
 
@@ -1744,9 +1744,9 @@ hcpc15 <- do.call(rbind, lapply(hcpc15, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc15[is.na(hcpc15)] = c("Amylase_Act", "D0.9")
+# # replace the NAs 
+# 
+# hcpc15[is.na(hcpc15)] = c("Amylase_Act", "D0.9")
 
 # save the results
 
@@ -1767,9 +1767,9 @@ hcpc16 <- do.call(rbind, lapply(hcpc16, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# replace the NAs 
-
-hcpc16[is.na(hcpc16)] = c("Amylase_Act", "D0.9")
+# # replace the NAs 
+# 
+# hcpc16[is.na(hcpc16)] = c("Amylase_Act", "D0.9")
 
 # save the results
 
@@ -1792,7 +1792,7 @@ hcpc17 <- do.call(rbind, lapply(hcpc17, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc17[is.na(hcpc17)] = c("Amylase_Act", "D0.9")
+hcpc17[is.na(hcpc17)] = c("Amylase_Act")
 
 # save the results
 
@@ -1815,7 +1815,7 @@ hcpc18 <- do.call(rbind, lapply(hcpc18, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc18[is.na(hcpc18)] = c("Amylase_Act", "D0.9")
+hcpc18[is.na(hcpc18)] = c("Amylase_Act")
 
 # save the results
 
@@ -1838,7 +1838,7 @@ hcpc19 <- do.call(rbind, lapply(hcpc19, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc19[is.na(hcpc19)] = c("Amylase_Act", "D0.9")
+hcpc19[is.na(hcpc19)] = c("Amylase_Act")
 
 # save the results
 
@@ -1861,7 +1861,7 @@ hcpc20 <- do.call(rbind, lapply(hcpc20, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc20[is.na(hcpc20)] = c("Amylase_Act", "D0.9")
+hcpc20[is.na(hcpc20)] = c("Amylase_Act")
 
 # save the results
 
@@ -2176,12 +2176,12 @@ mean_2c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_2c_m <- mean_2c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster2) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_2c_s <- mean_2c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster2) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2273,12 +2273,12 @@ mean_3c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_3c_m <- mean_3c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster3) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_3c_s <- mean_3c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster3) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2370,12 +2370,12 @@ mean_4c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_4c_m <- mean_4c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster4) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_4c_s <- mean_4c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster4) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2425,12 +2425,12 @@ ggsave("figures/HCPC/ncp9/ncp9_c4_scal.png",
 # # creat two subsets for means and std errors
 # 
 # mean_5c_m <- mean_5c %>%
-#   select(1:20) %>%
+#   select(1:24) %>%
 #   gather("factor", "mean", -cluster5) %>%
 #   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 # 
 # mean_5c_s <- mean_5c %>%
-#   select(1, 40:58) %>%
+#   select(1, 48:70) %>%
 #   gather("factor", "se", -cluster5) %>%
 #   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 # 
@@ -2467,12 +2467,12 @@ mean_5c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_5c_m <- mean_5c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster5) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_5c_s <- mean_5c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster5) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2564,12 +2564,12 @@ mean_6c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_6c_m <- mean_6c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster6) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_6c_s <- mean_6c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster6) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2661,12 +2661,12 @@ mean_7c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_7c_m <- mean_7c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster7) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_7c_s <- mean_7c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster7) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2758,12 +2758,12 @@ mean_8c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_8c_m <- mean_8c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster8) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_8c_s <- mean_8c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster8) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2855,12 +2855,12 @@ mean_9c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_9c_m <- mean_9c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster9) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_9c_s <- mean_9c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster9) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -2952,12 +2952,12 @@ mean_10c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_10c_m <- mean_10c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster10) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_10c_s <- mean_10c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster10) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3049,12 +3049,12 @@ mean_11c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_11c_m <- mean_11c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster11) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_11c_s <- mean_11c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster11) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3146,12 +3146,12 @@ mean_12c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_12c_m <- mean_12c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster12) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_12c_s <- mean_12c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster12) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3243,12 +3243,12 @@ mean_13c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_13c_m <- mean_13c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster13) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_13c_s <- mean_13c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster13) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3340,12 +3340,12 @@ mean_14c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_14c_m <- mean_14c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster14) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_14c_s <- mean_14c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster14) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3395,12 +3395,12 @@ mean_15c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_15c_m <- mean_15c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster15) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_15c_s <- mean_15c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster15) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3450,12 +3450,12 @@ mean_16c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_16c_m <- mean_16c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster16) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_16c_s <- mean_16c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster16) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3505,12 +3505,12 @@ mean_17c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_17c_m <- mean_17c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster17) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_17c_s <- mean_17c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster17) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3560,12 +3560,12 @@ mean_18c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_18c_m <- mean_18c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster18) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_18c_s <- mean_18c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster18) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3615,12 +3615,12 @@ mean_19c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_19c_m <- mean_19c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster19) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_19c_s <- mean_19c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster19) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
@@ -3670,12 +3670,12 @@ mean_20c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_20c_m <- mean_20c %>%
-  select(1:20) %>%
+  select(1:24) %>%
   gather("factor", "mean", -cluster20) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
 mean_20c_s <- mean_20c %>%
-  select(1, 40:58) %>%
+  select(1, 48:70) %>%
   gather("factor", "se", -cluster20) %>%
   mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
 
