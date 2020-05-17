@@ -2345,3 +2345,5 @@ count <- r_hcpc_all %>%
   gather(nbr_cluster, values) %>%
   group_by(nbr_cluster, values) %>%
   count()
+
+write_csv(count, "analysis/ncp9/count_individual.csv")
