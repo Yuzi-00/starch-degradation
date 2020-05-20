@@ -20,10 +20,20 @@ chart.Correlation(df_sel, histogram=TRUE, pch=19)
 ## we can also use the argument "method = " to change it into "kendall" or
 ## "sprearman"
 
+chart.Correlation(df_sel, histogram=TRUE, pch=19,
+                  method = "spearman")
+
 df_sel <- df %>%
   select(20:31)
 
 chart.Correlation(df_sel, histogram=TRUE, pch=19)
+
+# correlations between kinetic parameters 
+
+df_kin <- df %>%
+  select(33:35)
+
+chart.Correlation(df_kin, histogram=TRUE, pch=19, method = "spearman")
 
 #### correlation_function ####
 
@@ -67,6 +77,11 @@ chart.Correlation(df_sel, histogram=TRUE, pch=19)
 # install.packages("GGally")
 
 library(GGally)
+
+# remove the controls
+
+df <- df %>%
+  filter(Sample != "C+" & Sample != "C-")
 
 # plot the kinetics 
 
@@ -126,7 +141,7 @@ ggsave("figures/CM_kinetics_HE.png", CM, width = 8, height = 5)
 # plot kinetics with D1
 
 df_sel <- df %>%
-  select(D1, HE_0min:HE_1800min)
+  select(D0.1, HE_0min:HE_1800min)
 
 CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
 
@@ -144,6 +159,15 @@ CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
 CM
 
 ggsave("figures/CM_kinetics_HE.png", CM, width = 8, height = 5)
+
+# plot structural properties 
+
+df_sel <- df %>%
+  select(Amylose_Con:Amylase_Act)
+
+CM <- ggpairs(df_sel, axisLabels = "show", showStrips = NULL)
+
+CM
 
 # corrplot
 
@@ -168,3 +192,9 @@ corrplot(correlation, method = "number", type = "lower", tl.cex = 0.5,
          mar = c(0,0,1,0), number.cex = 0.5, number.digits = 2)
 
 dev.off()
+
+cor.test( ~ h + Xinf, 
+          data=df_sel,
+          method = "spearman",
+          continuity = FALSE,
+          conf.level = 0.95)
