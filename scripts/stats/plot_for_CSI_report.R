@@ -1,0 +1,125 @@
+
+# !!!!!! run script HCPC_mod_ncp9 before this script !!!!!!
+
+#### plot for cluster6-6 ####
+
+# this cluster contains significant h and k 
+
+mean_6c <- r_hcpc_s_all %>%
+  group_by(cluster6) %>% # by 6 clusters
+  # summarise_if(is.numeric, mean, na.rm = TRUE) 
+  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# for the numerical column, calculate the mean, standard deviation and standard error
+
+# creat two subsets for means and std errors
+
+mean_6c_m <- mean_6c %>%
+  select(1:24) %>%
+  gather("factor", "mean", -cluster6) %>%
+  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+
+mean_6c_s <- mean_6c %>%
+  select(1, 48:70) %>%
+  gather("factor", "se", -cluster6) %>%
+  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+
+# combine the above two datasets together
+
+mean_6c_full <- full_join(mean_6c_m, mean_6c_s) %>%
+  filter(cluster6 ==6)
+
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_6c_full <- mean_6c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "Supplementary variable",
+                          TRUE ~ "Active variable"))
+
+# histogram (scaled values)
+
+ncp9_c6_6 <- mean_6c_full %>%
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
+  geom_errorbar(aes(x = factor,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "dark grey") +
+  geom_bar(stat = 'identity', width = 0.3) +
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15),
+        legend.spacing.x = unit(0.5, 'cm')) +
+  theme(axis.text.x = element_text(color="black", size=15), 
+        axis.text.y = element_text(color="black", size=15)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
+  xlab("Factors") +
+  ylab("Variability around mean")
+
+ggsave("figures/HCPC/ncp9/ncp9_c6-6_scal.png", 
+       plot = ncp9_c6_6, 
+       width = 30, 
+       height = 20, 
+       units = "cm") 
+
+#### plot for cluster7-5 ####
+
+# this cluster contains significant Xinf 
+
+# creat two subsets for means and std errors
+
+mean_7c_m <- mean_7c %>%
+  select(1:24) %>%
+  gather("factor", "mean", -cluster7) %>%
+  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+
+mean_7c_s <- mean_7c %>%
+  select(1, 48:70) %>%
+  gather("factor", "se", -cluster7) %>%
+  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+
+# combine the above two datasets together
+
+mean_7c_full <- full_join(mean_7c_m, mean_7c_s) %>%
+  filter(cluster7 == 5)
+
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_7c_full <- mean_7c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "Supplementary variable",
+                          TRUE ~ "Active variable"))
+
+# histogram (scaled values)
+
+ncp9_c7_5 <- mean_7c_full %>%
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
+  geom_errorbar(aes(x = factor,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "dark grey") +
+  geom_bar(stat = 'identity', width = 0.3) +
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15),
+        legend.spacing.x = unit(0.5, 'cm')) +
+  theme(axis.text.x = element_text(color="black", size=15), 
+        axis.text.y = element_text(color="black", size=15)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
+  xlab("Factors") +
+  ylab("Variability around mean")
+
+ggsave("figures/HCPC/ncp9/ncp9_c7-5_scal.png", 
+       plot = ncp9_c7_5, 
+       width = 30, 
+       height = 20,  
+       units = "cm") 
+
