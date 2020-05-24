@@ -17,11 +17,11 @@ P <- ggplot() +
               formula = y ~ log(x, base = exp(1))) +
   stat_cor(data = test_sample, aes(x = k, 
                                    y = h),
-           label.x = 0.003, label.y = 0.23, size = 5) + #this means at 35th unit in the y axis, the r squared and p value will be shown
+           label.x = 0.008, label.y = 0, size = 5) + #this means at 35th unit in the y axis, the r squared and p value will be shown
   stat_regline_equation(data = test_sample, aes(x = k, 
                                                 y = h),
                         formula = y ~ log(x, base = exp(1)),
-                        label.x = 0.003, label.y = 0.27, size = 5) +
+                        label.x = 0.008, label.y = 0.05, size = 5) +
   theme(axis.text.x = element_text(color="black", size=15), 
         axis.text.y = element_text(color="black", size=15)) +
   theme(axis.title.x = element_text(size = 15),
