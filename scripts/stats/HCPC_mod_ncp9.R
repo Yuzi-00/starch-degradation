@@ -493,6 +493,212 @@ hcpc20[is.na(hcpc20)] = c("Amylase_Act")
 
 write_csv(hcpc20, "analysis/ncp9/hcpc20.csv")
 
+# 21 clusters
+
+res.hcpc21 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 21)
+
+hcpc21 <- res.hcpc21$desc.var$quanti # contribution of factors 
+
+hcpc21 <- do.call(rbind, lapply(hcpc21, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc21, "analysis/ncp9/hcpc21.csv")
+
+# 22 clusters
+
+res.hcpc22 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 22)
+
+hcpc22 <- res.hcpc22$desc.var$quanti # contribution of factors 
+
+hcpc22 <- do.call(rbind, lapply(hcpc22, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc22, "analysis/ncp9/hcpc22.csv")
+
+# 23 clusters
+
+res.hcpc23 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 23)
+
+hcpc23 <- res.hcpc23$desc.var$quanti # contribution of factors 
+
+hcpc23 <- do.call(rbind, lapply(hcpc23, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc23, "analysis/ncp9/hcpc23.csv")
+
+# 24 clusters
+
+res.hcpc24 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 24)
+
+hcpc24 <- res.hcpc24$desc.var$quanti # contribution of factors 
+
+hcpc24 <- do.call(rbind, lapply(hcpc24, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc24, "analysis/ncp9/hcpc24.csv")
+
+# 25 clusters
+
+res.hcpc25 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 25)
+
+hcpc25 <- res.hcpc25$desc.var$quanti # contribution of factors 
+
+hcpc25 <- do.call(rbind, lapply(hcpc25, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc25, "analysis/ncp9/hcpc25.csv")
+
+# 26 clusters
+
+res.hcpc26 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 26)
+
+hcpc26 <- res.hcpc26$desc.var$quanti # contribution of factors 
+
+hcpc26 <- do.call(rbind, lapply(hcpc26, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# save the results
+
+write_csv(hcpc26, "analysis/ncp9/hcpc26.csv")
+
+# 27 clusters
+
+res.hcpc27 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 27)
+
+hcpc27 <- res.hcpc27$desc.var$quanti # contribution of factors 
+
+hcpc27 <- do.call(rbind, lapply(hcpc27, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc27[is.na(hcpc27)] = c("Amylase_Act", "DP13_24")
+
+# save the results
+
+write_csv(hcpc27, "analysis/ncp9/hcpc27.csv")
+
+# 28 clusters
+
+res.hcpc28 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 28)
+
+hcpc28 <- res.hcpc28$desc.var$quanti # contribution of factors 
+
+hcpc28 <- do.call(rbind, lapply(hcpc28, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc28[is.na(hcpc28)] = c("Amylase_Act", "DP13_24")
+
+# save the results
+
+write_csv(hcpc28, "analysis/ncp9/hcpc28.csv")
+
+# 29 clusters
+
+res.hcpc29 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 29)
+
+hcpc29 <- res.hcpc29$desc.var$quanti # contribution of factors 
+
+hcpc29 <- do.call(rbind, lapply(hcpc29, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc29[is.na(hcpc29)] = c("Amylase_Act", "DP13-24", "Amylase_Act")
+
+# save the results
+
+write_csv(hcpc29, "analysis/ncp9/hcpc29.csv")
+
+# 30 clusters
+
+res.hcpc30 <- HCPC(res.pca, graph = TRUE, 
+                   consol = TRUE,
+                   nb.clust = 30)
+
+hcpc30 <- res.hcpc30$desc.var$quanti # contribution of factors 
+
+hcpc30 <- do.call(rbind, lapply(hcpc30, as.data.frame)) %>%
+  rownames_to_column() %>%
+  mutate(rowname = str_replace(rowname, "\\.", "-")) %>%
+  separate(col = rowname,
+           into = c("cluster", "factor"),
+           sep = "-") 
+
+# replace the NAs 
+
+hcpc30[is.na(hcpc30)] = c("Amylase_Act", "DP13-24", "Amylase_Act", "VWM")
+
+# save the results
+
+write_csv(hcpc30, "analysis/ncp9/hcpc30.csv")
+
 # # visualize the dendrogram generated by the hierarchical clustering
 # 
 # fviz_dend(res.hcpc14, 
@@ -655,6 +861,76 @@ r_hcpc20_s <- res.hcpc20$data.clust %>% # 20 clusters
 
 r_hcpc20 <- r_hcpc20_s %>%
   select(Sample, cluster20)
+
+r_hcpc21_s <- res.hcpc21$data.clust %>% # 21 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster21 = clust) 
+
+r_hcpc21 <- r_hcpc21_s %>%
+  select(Sample, cluster21)
+
+r_hcpc22_s <- res.hcpc22$data.clust %>% # 22 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster22 = clust) 
+
+r_hcpc22 <- r_hcpc22_s %>%
+  select(Sample, cluster22)
+
+r_hcpc23_s <- res.hcpc23$data.clust %>% # 23 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster23 = clust) 
+
+r_hcpc23 <- r_hcpc23_s %>%
+  select(Sample, cluster23)
+
+r_hcpc24_s <- res.hcpc24$data.clust %>% # 24 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster24 = clust) 
+
+r_hcpc24 <- r_hcpc24_s %>%
+  select(Sample, cluster24)
+
+r_hcpc25_s <- res.hcpc25$data.clust %>% # 25 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster25 = clust) 
+
+r_hcpc25 <- r_hcpc25_s %>%
+  select(Sample, cluster25)
+
+r_hcpc26_s <- res.hcpc26$data.clust %>% # 26 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster26 = clust) 
+
+r_hcpc26 <- r_hcpc26_s %>%
+  select(Sample, cluster26)
+
+r_hcpc27_s <- res.hcpc27$data.clust %>% # 27 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster27 = clust) 
+
+r_hcpc27 <- r_hcpc27_s %>%
+  select(Sample, cluster27)
+
+r_hcpc28_s <- res.hcpc28$data.clust %>% # 28 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster28 = clust) 
+
+r_hcpc28 <- r_hcpc28_s %>%
+  select(Sample, cluster28)
+
+r_hcpc29_s <- res.hcpc29$data.clust %>% # 29 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster29 = clust) 
+
+r_hcpc29 <- r_hcpc29_s %>%
+  select(Sample, cluster29)
+
+r_hcpc30_s <- res.hcpc30$data.clust %>% # 30 clusters
+  rownames_to_column() %>% # change the row names into column names 
+  rename(Sample = rowname, cluster30 = clust) 
+
+r_hcpc30 <- r_hcpc30_s %>%
+  select(Sample, cluster30)
 
 # combine all the cluster results together to one single dataframe (unscaled values)
 
