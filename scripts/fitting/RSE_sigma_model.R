@@ -1,4 +1,7 @@
 
+
+# please run the curve_fitting_well script before this one !!!!!!
+
 # extract the sigma (RSE) of the model
 
 ####
