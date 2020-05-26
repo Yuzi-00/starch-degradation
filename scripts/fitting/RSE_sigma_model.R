@@ -1,4 +1,5 @@
 
+# this is the first script of RSE
 
 # please run the curve_fitting_well script before this one !!!!!!
 
