@@ -26,13 +26,13 @@ fit_model <- function(dfr){ # a dataframe will be passed through the following t
   
 }
 
-fit_list <- hydro_data %>% 
+# extract the residual standard error (RSE)
+
+RSE <- hydro_data %>% 
   split(.$Well) %>% # split the initial dataset by Well into a list (680 wells)
-  map_df(fit_model, .id = "Well")
+  map_df(fit_model, .id = "Well") %>%
+  select(1:2)
 
-#### plot RSE (sigma)
+# save the RSE dataset
 
-ggplot(data = fit_list,
-       aes(x = Well,
-           y = sigma)) +
-  geom_point()
+write_csv(RSE, "analysis/RSE_weibull.csv")
