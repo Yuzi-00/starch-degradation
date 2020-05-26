@@ -22,6 +22,8 @@ fit_model <- function(dfr){ # a dataframe will be passed through the following t
   # control = list(warnOnly = TRUE)) ## change the setting, give us just the waining messages instead of error messages
   
   result <- glance(model) # get the overview of the fitting
+  # compute summary(model) if you want to see the whole summary and the residual standard 
+  # error(RSE) although sigma is the same thing as RSE
   result # give back the content of the model
   
 }
