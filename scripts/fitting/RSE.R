@@ -1,4 +1,6 @@
 
+# this is the second script of the RSE
+
 library(tidyverse)
 
 # import the dataset
