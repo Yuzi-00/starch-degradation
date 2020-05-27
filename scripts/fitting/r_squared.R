@@ -19,7 +19,7 @@ rs1 <- residual_data %>%
 
 rs1 <- rs1 %>%
   group_by(Well) %>%
-  mutate(rss = sum((.fitted - HE) ^ 2),
+  mutate(rss = sum((HE - .fitted) ^ 2),
          # calculate the residual sum of squares (rss)
          tss = sum((HE - mean(HE)) ^ 2),
          # calculate the total sum of squares (tss)
@@ -30,8 +30,9 @@ rs1 <- rs1 %>%
 
 rs1 %>%
   summarise(mean_rs = mean(r_squared, na.rm = TRUE),
-            sd = sd(r_squared, na.rm = TRUE))
-# mean = 0.998, sd = 0.00188
+            sd_rs = sd(r_squared, na.rm = TRUE))
+# r-squared -> mean = 0.998, sd = 0.00225
+
 
 #### R2 for positive controls ####
 
@@ -42,7 +43,7 @@ rs2 <- residual_data %>%
 
 rs2 <- rs2 %>%
   group_by(Well) %>%
-  mutate(rss = sum((.fitted - HE) ^ 2),
+  mutate(rss = sum((HE - .fitted) ^ 2),
          # calculate the residual sum of squares (rss)
          tss = sum((HE - mean(HE)) ^ 2),
          # calculate the total sum of squares (tss)
@@ -54,7 +55,7 @@ rs2 <- rs2 %>%
 rs2 %>%
   summarise(mean_rs = mean(r_squared, na.rm = TRUE),
             sd = sd(r_squared, na.rm = TRUE)) 
-# mean = 0.997, sd = 0.00213
+# mean = 0.995, sd = 0.00307
 
 #### R2 for negative controls ####
 
@@ -63,7 +64,7 @@ rs2 %>%
 rs3 <- residual_data %>%
   filter(Sample == "C-") %>%
   group_by(Well) %>%
-  mutate(rss = sum((.fitted - HE) ^ 2),
+  mutate(rss = sum((HE - .fitted) ^ 2),
          # calculate the residual sum of squares (rss)
          tss = sum((HE - mean(HE)) ^ 2),
          # calculate the total sum of squares (tss)
@@ -75,4 +76,4 @@ rs3 <- residual_data %>%
 rs3 %>%
   summarise(mean_rs = mean(r_squared, na.rm = TRUE),
             sd = sd(r_squared, na.rm = TRUE))
-# mean = 0.996, sd = 0.00260
+# mean = 0.995, sd = 0.00313
