@@ -136,12 +136,12 @@ ggp <- ggplot() +
   # change the color of the ticks into black and the size to 0.5
   labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
   # change the title of the x and y axis
-  theme(axis.text.x = element_text(color="black", size=15), 
-        axis.text.y = element_text(color="black", size=15)) +
+  theme(axis.text.x = element_text(color="black", size=20), 
+        axis.text.y = element_text(color="black", size=20)) +
   # change the color and size of the tick label for x and y axis
   theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt")) +
-  theme(axis.title.x = element_text(size = 15),
-        axis.title.y = element_text(size = 15))
+  theme(axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
 
 ggp
 
