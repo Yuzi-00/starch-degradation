@@ -15,7 +15,7 @@ P <- ggplot() +
   geom_point(data = test_sample,
              aes(x = k, 
                  y = h,
-                 color = "Test_sample"),
+                 color = "MAGIC"),
              alpha = 0.5) +
   geom_smooth(data = test_sample,
               aes(x = k, 
@@ -33,7 +33,7 @@ P <- ggplot() +
   geom_point(data = pos_control,
              aes(x = k, 
                  y = h,
-                 color = "Pos_control"),
+                 color = "Wx"),
              alpha = 0.5,
   ) +
   geom_smooth(data = pos_control,
@@ -54,7 +54,7 @@ P <- ggplot() +
   geom_point(data = neg_control,
              aes(x = k, 
                  y = h,
-                 color = "Neg_control"),
+                 color = "HAM"),
              alpha = 0.5
   ) +
   geom_smooth(data = neg_control,
@@ -74,7 +74,7 @@ P <- ggplot() +
                         formula = y ~ log(x, base = exp(1)),
                         label.x = 0.01, label.y = 0.15, color="blue", size = 5) +
   scale_colour_manual(name="Sample type",
-                      values=c(Pos_control="red", Test_sample="black", Neg_control = "blue")) +
+                      values=c("Wx"="red", "MAGIC"="black", "HAM" = "blue")) +
   scale_x_continuous(limits = c(0, 0.02)) +
   theme(axis.text.x = element_text(color="black", size=15), 
         axis.text.y = element_text(color="black", size=15)) +
