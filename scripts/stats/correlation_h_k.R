@@ -282,7 +282,9 @@ P <- ggplot() +
                         label.x = 0.01, label.y = 0.15, color="blue") +
   scale_colour_manual(name="Sample type",
                       values=c(Pos_control="red", Test_sample="black", Neg_control = "blue")) +
-  geom_hline(yintercept=0.04, color = "black", linetype = "dashed", size = 0.7)
+  geom_hline(yintercept=0.04, color = "black", linetype = "dashed", size = 0.7) +
+  scale_x_continuous(limits = c(0, 0.02), expand = c(0, 0)) 
+  
 
 P
 
