@@ -18,6 +18,14 @@ data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outl
 data_15P_cal_HE_outlier_replaced <- data_15P_cal_HE_outlier_replaced %>% 
   filter(Sample != "X")
 
+# change the name of the Wellgrouptype (for a proper legend later)
+
+data_15P_cal_HE_outlier_replaced$WellGroupType <- gsub("Control[+]", "Wx", data_15P_cal_HE_outlier_replaced$WellGroupType)
+
+data_15P_cal_HE_outlier_replaced$WellGroupType <- gsub("Control[-]", "HAM", data_15P_cal_HE_outlier_replaced$WellGroupType)
+
+data_15P_cal_HE_outlier_replaced$WellGroupType <- gsub("Test sample", "MAGIC", data_15P_cal_HE_outlier_replaced$WellGroupType)
+
 # plotting
 
 HE_scatter_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced, 
@@ -61,7 +69,7 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
                      group = Well,
                      color = WellGroupType)) + # colored by the status (distinguish the control from the other samples)
   geom_point(size = 1, shape = 1) + # add the transparency
-  geom_line(size = 0.005, alpha = 0.8) +
+  geom_line(size = 0.3, alpha = 0.5) +
   scale_y_continuous(limits = c(0,100), expand = c(0, 0)) + ## set the range of the y axis
   scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
   ylab("Hydrolysis extent (%)") + ## change the label for the y axis
@@ -74,11 +82,19 @@ HE_line_15P <- ggplot(data = data_15P_cal_HE_outlier_replaced,
           colour="black",
           size=.5)) +
   labs(x = "Time (min)", y = "Hydrolysis extent (%)") +
-  theme(axis.text.x = element_text(color="black", size=10), 
-        axis.text.y = element_text(color="black", size=10)) +
+  theme(axis.text.x = element_text(color="black", size=15), 
+        axis.text.y = element_text(color="black", size=15)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
   theme(legend.key = element_blank(),
-        legend.position = "bottom")+
-  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
+        legend.position = "bottom",
+        legend.spacing.x = unit(0.2, 'cm'),
+        legend.text = element_text(size = 15))+
+  theme(plot.margin = unit(c(7,18,5,5), "pt")) +
+  scale_color_brewer(palette = "Set1")
+
+
+HE_line_15P
 
 # save the plot
 
