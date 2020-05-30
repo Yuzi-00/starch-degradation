@@ -111,6 +111,15 @@ ggsave("figures/cumulative_screeplot.png",
 
 # HCPC 
 
+# globle HCPC
+
+res.hcpc <- HCPC(res.pca, graph = TRUE, 
+                  consol = TRUE)
+
+res.hcpc <- HCPC(res.pca, graph = FALSE)
+
+fviz_dend(res.hcpc, k =100)
+
 # Compute hierarchical clustering on principal components
 
 # 2 clusters
