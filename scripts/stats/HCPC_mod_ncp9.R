@@ -60,9 +60,54 @@ res.pca <- PCA(df_new,
 
 summary(res.pca)
 
+# Extract eigenvalues/variances
+
+eig <- get_eig(res.pca) %>%
+  as_tibble() %>%
+  rownames_to_column() %>%
+  rename(dimension = rowname) %>%
+  mutate_if(is.numeric, round, digits = 1)
+
 # scree plot
 
-fviz_eig(res.pca)
+fviz_eig(res.pca, choice = "variance" ,addlabels = TRUE)
+
+# cumulative scree plot
+
+sp <- ggplot(data = eig, 
+       aes(x = reorder(dimension, cumulative.variance.percent),
+           y = cumulative.variance.percent,
+           group = 1)) +
+  geom_point(size = 1.5) +
+  geom_line() +
+  geom_bar(stat = 'identity', width = 0.7, fill = "#4682B4") +
+  scale_x_discrete(limits = c(1,2,3,4,5,6,7,8,9, 10)) +
+  geom_text(aes(label = cumulative.variance.percent, hjust = 0.5, vjust = -0.5),size = 7) +
+  scale_y_continuous(limits = c(0,110), expand = c(0,0)) +
+  labs(x = "Dimensions", y = "Cumulative proportion of variance explained (%)") +
+  theme(axis.text.x = element_text(color="black", size=17), 
+        axis.text.y = element_text(color="black", size=17)) +
+  # change the color and size of the tick label for x and y axis
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt")) +
+  theme(axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20)) +
+  theme(legend.title = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_line(colour = "black", size = 0.5),
+        panel.background = element_rect(fill = "white"),
+        axis.ticks=element_line(
+          colour="black",
+          size=.5)) 
+
+sp
+
+# save the cumulative plot 
+
+ggsave("figures/cumulative_screeplot.png", 
+       plot = sp,
+       width = 25, 
+       height = 20, 
+       units = "cm") 
 
 # HCPC 
 
