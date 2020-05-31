@@ -125,8 +125,8 @@ ggp <- ggplot() +
                 y = mean),
             color = "blue",
             linetype = "dashed") +
-  scale_y_continuous(limits = c(-2,100)) + ## set the range of the y axis
-  scale_x_continuous(limits = c(0, 2000)) +
+  scale_y_continuous(limits = c(0,105), expand = c(0, 0)) + ## set the range of the y axis
+  scale_x_continuous(limits = c(0, 2050), expand = c(0, 0)) +
   theme( # remove the legend
     panel.grid = element_blank(), # remove the grid 
     axis.line = element_line(colour = "black", size = 0.5), # add the x axis
