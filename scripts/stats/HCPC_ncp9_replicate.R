@@ -1,4 +1,5 @@
-# **** this script is for the plots of each cluster **** 
+
+# **** this script doesn't use averaged h k Xinf values but the h k Xinf for each replicate **** 
 
 library(tidyverse)
 
