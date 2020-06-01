@@ -23,12 +23,36 @@ res <- df1 %>%
   mutate(resid = HE - .fitted) %>%
   group_by(Sample, Time) %>%
   mutate(mean_resid = mean(resid), sd_fit = sd(.fitted),
-         std_resid = mean_resid / sd_fit)
+         std_resid = resid / sd_fit) 
 
 # plot
 
-ggplot(data = res,
+rp <- ggplot(data = res,
        aes(x = .fitted,
            y = std_resid)) +
-  geom_point() +
-  scale_y_continuous(limits = c(-5,5))
+  geom_point(shape = 1,
+             alpha = 0.8,
+             size = 1) +
+  scale_y_continuous(limits = c(-5,5)) +
+  theme(legend.title = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_line(colour = "black", size = 0.5),
+        panel.background = element_rect(fill = "white"),
+        axis.ticks=element_line(
+          colour="black",
+          size=.5)) +
+  labs(x = "Fitted values", y = "Standardized residuals") +
+  geom_hline(yintercept=0, color = "blue", linetype = "dashed", size = 0.7) +
+  scale_x_continuous(limits = c(-2,100), expand = c(0, 0)) +
+  # geom_smooth(colour="red")
+  theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
+
+rp
+
+# save the plot
+
+ggsave("figures/std_residual_CSI.png", 
+       plot = rp, 
+       width = 12, 
+       height = 12, 
+       units = "cm") 
