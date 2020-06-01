@@ -3,7 +3,7 @@ library(tidyverse)
 
 # plot the residual with or without the time 0 
 
-removeT0 <- TRUE
+removeT0 <- FALSE
 
 # import the dataset
 
@@ -27,7 +27,7 @@ residual_plot <- residual_data %>%
           size=.5)) +
   labs(x = "Fitted values", y = "Residuals") +
   geom_hline(yintercept=0, color = "blue", linetype = "dashed", size = 0.7) +
-  scale_y_continuous(limits = c(-7,7), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-10,10), expand = c(0, 0)) +
   scale_x_continuous(limits = c(-2,100), expand = c(0, 0)) +
   # geom_smooth(colour="red")
   theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
