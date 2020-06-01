@@ -20,17 +20,19 @@ residual_plot <- residual_data %>%
              size = 1) +
   theme(legend.title = element_blank(),
         panel.grid = element_blank(),
-        axis.line = element_line(colour = "black", size = 0.5)，
+        axis.line = element_line(colour = "black", size = 0.5),
         panel.background = element_rect(fill = "white"),
         axis.ticks=element_line(
           colour="black",
           size=.5)) +
   labs(x = "Fitted values", y = "Residuals") +
   geom_hline(yintercept=0, color = "blue", linetype = "dashed", size = 0.7) +
-  scale_y_continuous(limits = c(-15,15), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-7,7), expand = c(0, 0)) +
   scale_x_continuous(limits = c(-2,100), expand = c(0, 0)) +
   # geom_smooth(colour="red")
   theme(plot.margin = unit(c(5.5,12,5.5,5.5), "pt"))
+
+residual_plot
 
 # save the plot
 
