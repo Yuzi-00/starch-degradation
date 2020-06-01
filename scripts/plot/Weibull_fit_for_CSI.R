@@ -118,13 +118,13 @@ ggp <- ggplot() +
                 y = fitted_3),
             color = "red") +
   
-  # add the average line (the average of the above three lines)
-  
-  geom_line(data = new_mean,
-            aes(x = Time,
-                y = mean),
-            color = "blue",
-            linetype = "dashed") +
+  # # add the average line (the average of the above three lines)
+  # 
+  # geom_line(data = new_mean,
+  #           aes(x = Time,
+  #               y = mean),
+  #           color = "blue",
+  #           linetype = "dashed") +
   scale_y_continuous(limits = c(0,105), expand = c(0, 0)) + ## set the range of the y axis
   scale_x_continuous(limits = c(0, 2050), expand = c(0, 0)) +
   theme( # remove the legend
