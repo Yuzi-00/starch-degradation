@@ -114,7 +114,7 @@ sp
 
 # save the cumulative plot 
 
-ggsave("figures/cumulative_screeplot.png", 
+ggsave("figures/cumulative_screeplot_rep.png", 
        plot = sp,
        width = 25, 
        height = 20, 
