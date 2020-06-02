@@ -129,7 +129,7 @@ res.hcpc <- HCPC(res.pca, graph = TRUE,
 
 res.hcpc <- HCPC(res.pca, graph = FALSE)
 
-fviz_dend(res.hcpc, k =100)
+fviz_dend(res.hcpc, k = 2, k_colors = "black")
 
 # Compute hierarchical clustering on principal components
 
