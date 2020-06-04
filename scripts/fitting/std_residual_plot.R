@@ -56,3 +56,8 @@ ggsave("figures/std_residual_CSI.png",
        width = 12, 
        height = 12, 
        units = "cm") 
+
+# check the distribution of the residuals 
+
+qqnorm(res$resid, pch = 1, frame = FALSE)
+qqline(res$resid, col = "steelblue", lwd = 2)
