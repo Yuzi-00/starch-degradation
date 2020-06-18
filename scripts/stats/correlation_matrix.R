@@ -35,6 +35,22 @@ df_kin <- df %>%
 
 chart.Correlation(df_kin, histogram=TRUE, pch=19, method = "spearman")
 
+# select just the pos controls
+
+dfc <- df %>%
+  filter(Sample == "C+") %>%
+  select(33:35)
+
+chart.Correlation(dfc, histogram=TRUE, pch=19)
+
+# select just the neg controls
+
+dfc <- df %>%
+  filter(Sample == "C-") %>%
+  select(33:35)
+
+chart.Correlation(dfc, histogram=TRUE, pch=19)
+
 #### correlation_function ####
 
 df_sel <- df %>%
