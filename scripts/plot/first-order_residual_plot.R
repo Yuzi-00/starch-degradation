@@ -4,7 +4,7 @@ library(tidyverse)
 
 # import the dataset
 
-residual_data <- read_csv("analysis/first-order_residuals_well_with_T0.csv") 
+residual_data <- read_csv("analysis/first-order_6h_residuals_well_with_T0.csv") 
 
 # plotting
 
@@ -32,7 +32,7 @@ residual_plot
 
 # save the plot
 
-ggsave("figures/first-order_residuals_well_with_T0.png", 
+ggsave("figures/first-order_6h_residuals_well_with_T0.png", 
                     plot = residual_plot, 
                     width = 12, 
                     height = 12, 
