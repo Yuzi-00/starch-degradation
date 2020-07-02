@@ -13,32 +13,32 @@ data_15P_cal_HE_outlier_replaced <- read_csv("data/tidydata/data_15P_cal_HE_outl
 
 hydro_data <- data_15P_cal_HE_outlier_replaced %>% 
   filter(Time != 1440 & Time != 1800) %>%
-  mutate(HE = if_else(Sample == 75 & Plate == 13, NA_real_,HE)) %>% # remove one replicat 
-  mutate(HE = if_else(Sample == 111 & Plate == 2 & Time == 180, NA_real_,HE)) %>% # remove one point
-  mutate(HE = if_else(Sample == 95 & Plate == 2 & Time == 240, NA_real_,HE)) %>% # remove one point
-  mutate(HE = if_else(Sample == 2 & Plate == 2, NA_real_,HE)) %>% # remove one replicat
-  mutate(HE = if_else(Sample == 8 & Plate == 9 & Time == 120, NA_real_,HE)) %>% # remove one replicat
-  mutate(HE = if_else(Sample == 179 & Plate == 13 & Time == 180, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 210 & Plate == 3 & Time == 60, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 35 & Plate == 13 & Time == 240, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 56 & Plate == 3, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 188 & Plate == 3, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 171 & Plate == 3, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 31 & Plate == 2, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 136 & Plate == 2, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 50 & Plate == 13, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 46 & Plate == 3, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 52 & Plate == 2, NA_real_,HE)) %>%
-  mutate(HE = if_else(Sample == 25 & Plate == 3, NA_real_,HE)) %>%
-  filter(Sample != "77") %>% # 待定，需重新检查
-  filter(Sample != "118") %>%
-  filter(Sample != "92") %>%
-  filter(Time != 0) %>%
+  # mutate(HE = if_else(Sample == 75 & Plate == 13, NA_real_,HE)) %>% # remove one replicat 
+  # mutate(HE = if_else(Sample == 111 & Plate == 2 & Time == 180, NA_real_,HE)) %>% # remove one point
+  # mutate(HE = if_else(Sample == 95 & Plate == 2 & Time == 240, NA_real_,HE)) %>% # remove one point
+  # mutate(HE = if_else(Sample == 2 & Plate == 2, NA_real_,HE)) %>% # remove one replicat
+  # mutate(HE = if_else(Sample == 8 & Plate == 9 & Time == 120, NA_real_,HE)) %>% # remove one replicat
+  # mutate(HE = if_else(Sample == 179 & Plate == 13 & Time == 180, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 210 & Plate == 3 & Time == 60, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 35 & Plate == 13 & Time == 240, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 56 & Plate == 3, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 188 & Plate == 3, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 171 & Plate == 3, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 31 & Plate == 2, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 136 & Plate == 2, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 50 & Plate == 13, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 46 & Plate == 3, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 52 & Plate == 2, NA_real_,HE)) %>%
+  # mutate(HE = if_else(Sample == 25 & Plate == 3, NA_real_,HE)) %>%
+  # filter(Sample != "77") %>% # 待定，需重新检查
+  # filter(Sample != "118") %>%
+  # filter(Sample != "92") %>%
+  # filter(Time != 0) %>%
   filter(!is.na(HE))
 
 
-hydro_data <- hydro_data %>%
-  filter(Sample == "1") 
+# hydro_data <- hydro_data %>%
+#   filter(Sample == "1") 
 # creat a function to generate the fitted model
 
 fit_model <- function(dfr){ # a dataframe will be passed through the following things 
@@ -51,7 +51,7 @@ fit_model <- function(dfr){ # a dataframe will be passed through the following t
                algorithm = "port", # add this if setting the constrains 
                start = list(Xinf = 50, # some guessing values of the parameters
                             k = 0.002,
-                            H = 0.9),
+                            H = 1.5),
                lower = list(Xinf = 0, # set the constrains for some of the parameters
                             k = 0),
                upper = list(Xinf = 100))
@@ -79,18 +79,18 @@ model_list <- hydro_data %>%
   map(fit_model) # pass each element of the list into the fit_model function and save all the created models in a new list
 
 
-# if can't fit properly, try the following codes to check where the probelm comes from 
-
-get_isconv <- function(x)x$convInfo$isConv # create a function to get all the conteng in "isConv"
+# # if can't fit properly, try the following codes to check where the probelm comes from 
 # 
-sum(map_chr(model_list, class) != "nls", na.rm = TRUE) 
-#this is to show how many items in the model_list are not "nls"
+# get_isconv <- function(x)x$convInfo$isConv # create a function to get all the conteng in "isConv"
+# # 
+# sum(map_chr(model_list, class) != "nls", na.rm = TRUE) 
+# #this is to show how many items in the model_list are not "nls"
+# # 
+# isconv <- model_list %>%
+#   map_lgl(.f = get_isconv) # map_lgl: give back a logical vector (lgl stands for logical)
+# # this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
 # 
-isconv <- model_list %>%
-  map_lgl(.f = get_isconv) # map_lgl: give back a logical vector (lgl stands for logical)
-# this will show us for each item, if it has been converged or not (TRUE or FALSE), and put them together
-
-names(isconv)[isconv == FALSE] # give us the item that is not converged
+# names(isconv)[isconv == FALSE] # give us the item that is not converged
 
 # get all the residuals from the models
 
@@ -139,8 +139,7 @@ well <- hydro_data %>% # this is the complete hydro_data
 
 # save the residual data
 
-if(removeT0) write_csv(residual_data, "analysis/weibull_residuals_well_without_T0.csv") else
-  write_csv(residual_data, "analysis/weibull_residuals_well_with_T0.csv")
+write_csv(residual_data, "analysis/weibull_6h_residuals_well_with_T0.csv")
 
 # combine the estimated parameters with the well names (by order)  
 
@@ -148,5 +147,4 @@ parameter_well <- bind_cols(well, parameters_with_control)
 
 # save the estimated parameters
 
-if(removeT0) write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_without_T0.csv") else
-  write_csv(parameter_well, "analysis/fitted_weibull_parameters_well_with_T0.csv")
+write_csv(parameter_well, "analysis/fitted_weibull_parameters_6h_well_with_T0.csv")
