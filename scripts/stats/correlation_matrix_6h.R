@@ -27,3 +27,21 @@ df_sel <- df3 %>%
 
 
 chart.Correlation(df_sel, histogram=TRUE, pch=19)
+
+# positive control
+
+df_sel <- df3 %>%
+  filter(Sample == "C+") %>%
+  select(-Well, -Sample)
+
+
+chart.Correlation(df_sel, histogram=TRUE, pch=19)
+
+# negative control
+
+df_sel <- df3 %>%
+  filter(Sample == "C-") %>%
+  select(-Well, -Sample)
+
+
+chart.Correlation(df_sel, histogram=TRUE, pch=19)
