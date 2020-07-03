@@ -28,3 +28,14 @@ df3 <- df %>%
                        158, 161, 163, 176, 177, 178, 182, 189, 197, 198, 199, 203, 206, 219, 220))
 
 write_csv(df3, "data/tidydata/mastersize_granular_subset02.csv")
+
+#### 3rd round fitting ####
+
+# extract all the samples that were not well fitted during the 1st round of fitting 
+# 25 samples were not well fitted in total
+
+df4 <- df %>%
+  filter(sample %in% c(17, 20, 21, 27, 28, 30, 32, 89, 90, 95, 98, 101, 104, 109, 154, 156,
+                       158, 163, 176, 177, 178, 197, 198, 203, 220))
+
+write_csv(df4, "data/tidydata/mastersize_granular_subset03.csv")
