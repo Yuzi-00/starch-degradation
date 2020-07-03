@@ -1,6 +1,8 @@
 
 library(tidyverse)
 
+#### 1st round fitting ####
+
 df <- read_csv("analysis/granular_output_01.csv")
 
 # remove samples that were not well fitted 
@@ -16,3 +18,15 @@ df2 <- df %>%
 # save the dataset
 
 write_csv(df2, "analysis/granular_output_01_tidy.csv")
+
+#### 2nd round fitting ####
+
+df3 <- read_csv("analysis/granular_output_02.csv")
+
+df4 <- df3 %>%
+  filter(!sample %in% c(17, 20, 21, 27, 28, 30, 32, 89, 90, 93, 95, 98, 101, 104, 109, 146, 153, 154, 156,
+                       158, 161, 163, 176, 177, 178, 182, 189, 197, 198, 199, 203, 206, 219, 220))
+
+# save the dataset
+
+write_csv(df4, "analysis/granular_output_02_tidy.csv")
