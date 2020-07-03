@@ -1,6 +1,8 @@
 
 library(tidyverse)
 
+#### 1st round fitting ####
+
 df <- read_csv("data/tidydata/mastersize_granular.csv")
 
 # extract all the samples that were not well fitted during the 1st round of fitting 
@@ -15,3 +17,14 @@ df2 <- df %>%
                      197, 198, 199, 200, 202, 203, 206, 208, 211, 217, 218, 219, 220))
 
 write_csv(df2, "data/tidydata/mastersize_granular_subset01.csv")
+
+#### 2nd round fitting ####
+
+# extract all the samples that were not well fitted during the 1st round of fitting 
+#  34 samples were not well fitted in total
+
+df3 <- df %>%
+  filter(sample %in% c(17, 20, 21, 27, 28, 30, 32, 89, 90, 93, 95, 98, 101, 104, 109, 146, 153, 154, 156,
+                       158, 161, 163, 176, 177, 178, 182, 189, 197, 198, 199, 203, 206, 219, 220))
+
+write_csv(df3, "data/tidydata/mastersize_granular_subset02.csv")
