@@ -30,3 +30,15 @@ df4 <- df3 %>%
 # save the dataset
 
 write_csv(df4, "analysis/granular_output_02_tidy.csv")
+
+#### 3rd round fitting ####
+
+df5 <- read_csv("analysis/granular_output_03.csv")
+
+df6 <- df5 %>%
+  filter(!sample %in% c(17, 20, 21, 27, 28, 30, 32, 89, 90, 95, 98, 101, 104, 109, 154, 156,
+                       158, 163, 176, 177, 178, 197, 198, 203, 220))
+
+# save the dataset
+
+write_csv(df6, "analysis/granular_output_03_tidy.csv")
