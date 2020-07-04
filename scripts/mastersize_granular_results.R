@@ -89,6 +89,6 @@ df_total <- left_join(df_inter, df_sigma)
 
 # replace the NA 
 
-df_total[is.na(df_total)] = "82*"
+df_total[is.na(df_total)] = "81"
 
 write_csv(df_total, "analysis/granular_output_final_tidy.csv")
