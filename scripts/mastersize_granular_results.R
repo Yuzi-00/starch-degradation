@@ -52,6 +52,10 @@ df7 <- read_csv("analysis/granular_output_04.csv")
 
 write_csv(df7, "analysis/granular_output_04_tidy.csv")
 
+#### sample 43 ####
+
+
+
 # combine all these four datasets together 
 
 df8 <- full_join(df2, df4)
