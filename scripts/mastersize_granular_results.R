@@ -84,6 +84,11 @@ df_sigma <- df10 %>%
 
 df_inter <- left_join(df_pi, df_mu)
 
-df_total <- left_join(df_inter, df_sigma)
+df_total <- left_join(df_inter, df_sigma) 
+## there is one NA in ths dataset (sample name 82*)
+
+# replace the NA 
+
+df_total[is.na(df_total)] = "82*"
 
 write_csv(df_total, "analysis/granular_output_final_tidy.csv")
