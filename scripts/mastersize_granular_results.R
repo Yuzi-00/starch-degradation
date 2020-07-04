@@ -61,3 +61,29 @@ df9 <- full_join(df8, df6)
 df10 <- full_join(df9, df7)
 
 write_csv(df10, "analysis/granular_output_final.csv")
+
+#### calculate A/B granule proportion ####
+
+df_pi <- df10 %>%
+  select(sample, peak, pi) %>%
+  spread(key = peak, value = pi) %>%
+  mutate(pi_AB_ratio = peak_A / peak_B) %>%
+  rename(pi_A = peak_A, pi_B = peak_B, pi_C = peak_C)
+
+df_mu <- df10 %>%
+  select(sample, peak, mu) %>%
+  spread(key = peak, value = mu) %>%
+  rename(mu_A = peak_A, mu_B = peak_B, mu_C = peak_C)
+
+df_sigma <- df10 %>%
+  select(sample, peak, sigma) %>%
+  spread(key = peak, value = sigma) %>%
+  rename(sigma_A = peak_A, sigma_B = peak_B, sigma_C = peak_C)
+
+# put the above subsets together
+
+df_inter <- left_join(df_pi, df_mu)
+
+df_total <- left_join(df_inter, df_sigma)
+
+write_csv(df_total, "analysis/granular_output_final_tidy.csv")
