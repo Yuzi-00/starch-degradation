@@ -13,7 +13,8 @@ df2 <- df %>%
                        93, 95, 96, 97, 98, 100, 101, 102, 104, 109, 116, 117, 122, 127, 136, 144,
                        146, 151, 153, 154, 155, 156, 157, 158, 161, 163, 164, 165, 166, 167, 168,
                        170, 172, 176, 177, 178, 180, 182, 185, 187, 188, 189, 191, 192, 193, 194,
-                       197, 198, 199, 200, 202, 203, 206, 208, 211, 217, 218, 219, 220))
+                       197, 198, 199, 200, 202, 203, 206, 208, 211, 217, 218, 219, 220)) %>%
+  mutate(sample = as.numeric(sample))
 
 # save the dataset
 
@@ -42,3 +43,21 @@ df6 <- df5 %>%
 # save the dataset
 
 write_csv(df6, "analysis/granular_output_03_tidy.csv")
+
+#### 4rd round fitting ####
+
+df7 <- read_csv("analysis/granular_output_04.csv")
+
+# save the dataset
+
+write_csv(df7, "analysis/granular_output_04_tidy.csv")
+
+# combine all these four datasets together 
+
+df8 <- full_join(df2, df4)
+
+df9 <- full_join(df8, df6)
+
+df10 <- full_join(df9, df7)
+
+write_csv(df10, "analysis/granular_output_final.csv")
