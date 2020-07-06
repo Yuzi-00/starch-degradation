@@ -52,9 +52,9 @@ df7 <- read_csv("analysis/granular_output_04.csv")
 
 write_csv(df7, "analysis/granular_output_04_tidy.csv")
 
-#### sample 43 ####
+#### refitting of sample 43 ####
 
-
+df43 <- read_csv("analysis/granular_output_05.csv")
 
 # combine all these four datasets together 
 
@@ -64,22 +64,31 @@ df9 <- full_join(df8, df6)
 
 df10 <- full_join(df9, df7)
 
-write_csv(df10, "analysis/granular_output_final.csv")
+# remove the wrong sample 43
+
+df_inter <- df10 %>%
+  filter(!sample %in% "43")
+
+# add the correct sample 43
+
+df11 <- full_join(df_inter, df43)
+
+write_csv(df11, "analysis/granular_output_final.csv")
 
 #### calculate A/B granule proportion ####
 
-df_pi <- df10 %>%
+df_pi <- df11 %>%
   select(sample, peak, pi) %>%
   spread(key = peak, value = pi) %>%
   mutate(pi_AB_ratio = peak_A / peak_B) %>%
   rename(pi_A = peak_A, pi_B = peak_B, pi_C = peak_C)
 
-df_mu <- df10 %>%
+df_mu <- df11 %>%
   select(sample, peak, mu) %>%
   spread(key = peak, value = mu) %>%
   rename(mu_A = peak_A, mu_B = peak_B, mu_C = peak_C)
 
-df_sigma <- df10 %>%
+df_sigma <- df11 %>%
   select(sample, peak, sigma) %>%
   spread(key = peak, value = sigma) %>%
   rename(sigma_A = peak_A, sigma_B = peak_B, sigma_C = peak_C)
@@ -96,3 +105,5 @@ df_total <- left_join(df_inter, df_sigma)
 df_total[is.na(df_total)] = "81"
 
 write_csv(df_total, "analysis/granular_output_final_tidy.csv")
+
+
