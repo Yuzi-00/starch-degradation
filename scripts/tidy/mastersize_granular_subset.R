@@ -39,3 +39,14 @@ df4 <- df %>%
                        158, 163, 176, 177, 178, 197, 198, 203, 220))
 
 write_csv(df4, "data/tidydata/mastersize_granular_subset03.csv")
+
+#### sample 43 ####
+
+# this sample was not well fitted 
+
+df <- read_csv("data/tidydata/mastersize_granular.csv")
+
+s43 <- df %>%
+  filter(sample == "43")
+
+write_csv(s43, "data/tidydata/mastersize_granular_s43.csv")
