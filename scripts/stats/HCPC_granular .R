@@ -49,7 +49,7 @@ df_new <- full_join(df2, df1) %>%
   column_to_rownames(var = 'Sample') %>%
   scale()
 
-#### ncp=9 #### 
+#### ncp=11 #### 
 
 # compute PCA
 
@@ -341,7 +341,7 @@ hcpc11 <- do.call(rbind, lapply(hcpc11, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc11, "analysis/ncp9/hcpc11.csv")
+write_csv(hcpc11, "analysis/ncp11/hcpc11_granular.csv")
 
 # 12 clusters
 
@@ -364,7 +364,7 @@ hcpc12 <- do.call(rbind, lapply(hcpc12, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc12, "analysis/ncp9/hcpc12.csv")
+write_csv(hcpc12, "analysis/ncp11/hcpc12_granular.csv")
 
 # 13 clusters
 
@@ -387,7 +387,7 @@ hcpc13 <- do.call(rbind, lapply(hcpc13, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc13, "analysis/ncp9/hcpc13.csv")
+write_csv(hcpc13, "analysis/ncp11/hcpc13_granular.csv")
 
 # 14 clusters
 
@@ -410,7 +410,7 @@ hcpc14 <- do.call(rbind, lapply(hcpc14, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc14, "analysis/ncp9/hcpc14.csv")
+write_csv(hcpc14, "analysis/ncp11/hcpc14_granular.csv")
 
 # 15 clusters
 
@@ -433,7 +433,7 @@ hcpc15 <- do.call(rbind, lapply(hcpc15, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc15, "analysis/ncp9/hcpc15.csv")
+write_csv(hcpc15, "analysis/ncp11/hcpc15_granular.csv")
 
 # 16 clusters
 
@@ -450,13 +450,13 @@ hcpc16 <- do.call(rbind, lapply(hcpc16, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
-# # replace the NAs 
-# 
-# hcpc16[is.na(hcpc16)] = c("Amylase_Act", "D0.9")
+# replace the NAs
+
+hcpc16[is.na(hcpc16)] = "sigma_A"
 
 # save the results
 
-write_csv(hcpc16, "analysis/ncp9/hcpc16.csv")
+write_csv(hcpc16, "analysis/ncp11/hcpc16_granular.csv")
 
 # 17 clusters
 
@@ -475,11 +475,11 @@ hcpc17 <- do.call(rbind, lapply(hcpc17, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc17[is.na(hcpc17)] = c("Amylase_Act")
+hcpc17[is.na(hcpc17)] = "sigma_A"
 
 # save the results
 
-write_csv(hcpc17, "analysis/ncp9/hcpc17.csv")
+write_csv(hcpc17, "analysis/ncp11/hcpc17_granular.csv")
 
 # 18 clusters
 
@@ -498,11 +498,11 @@ hcpc18 <- do.call(rbind, lapply(hcpc18, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc18[is.na(hcpc18)] = c("Amylase_Act")
+hcpc18[is.na(hcpc18)] = "sigma_A"
 
 # save the results
 
-write_csv(hcpc18, "analysis/ncp9/hcpc18.csv")
+write_csv(hcpc18, "analysis/ncp11/hcpc18_granular.csv")
 
 # 19 clusters
 
@@ -521,11 +521,11 @@ hcpc19 <- do.call(rbind, lapply(hcpc19, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc19[is.na(hcpc19)] = c("Amylase_Act")
+hcpc19[is.na(hcpc19)] = "sigma_A"
 
 # save the results
 
-write_csv(hcpc19, "analysis/ncp9/hcpc19.csv")
+write_csv(hcpc19, "analysis/ncp11/hcpc19_granular.csv")
 
 # 20 clusters
 
@@ -544,11 +544,11 @@ hcpc20 <- do.call(rbind, lapply(hcpc20, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc20[is.na(hcpc20)] = c("Amylase_Act")
+hcpc20[is.na(hcpc20)] = "sigma_A"
 
 # save the results
 
-write_csv(hcpc20, "analysis/ncp9/hcpc20.csv")
+write_csv(hcpc20, "analysis/ncp11/hcpc20_granular.csv")
 
 # 21 clusters
 
@@ -565,9 +565,13 @@ hcpc21 <- do.call(rbind, lapply(hcpc21, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
+# replace the NAs 
+
+hcpc21[is.na(hcpc21)] = "sigma_A"
+
 # save the results
 
-write_csv(hcpc21, "analysis/ncp9/hcpc21.csv")
+write_csv(hcpc21, "analysis/ncp11/hcpc21_granular.csv")
 
 # 22 clusters
 
@@ -584,9 +588,13 @@ hcpc22 <- do.call(rbind, lapply(hcpc22, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
+# replace the NAs 
+
+hcpc22[is.na(hcpc22)] = c("Amylase_Act","sigma_A")
+
 # save the results
 
-write_csv(hcpc22, "analysis/ncp9/hcpc22.csv")
+write_csv(hcpc22, "analysis/ncp11/hcpc22_granular.csv")
 
 # 23 clusters
 
@@ -603,9 +611,13 @@ hcpc23 <- do.call(rbind, lapply(hcpc23, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
+# replace the NAs 
+
+hcpc23[is.na(hcpc23)] = c("Amylase_Act","sigma_A")
+
 # save the results
 
-write_csv(hcpc23, "analysis/ncp9/hcpc23.csv")
+write_csv(hcpc23, "analysis/ncp11/hcpc23_granular.csv")
 
 # 24 clusters
 
@@ -622,9 +634,13 @@ hcpc24 <- do.call(rbind, lapply(hcpc24, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
+# replace the NAs 
+
+hcpc24[is.na(hcpc24)] = c("Amylase_Act","sigma_A")
+
 # save the results
 
-write_csv(hcpc24, "analysis/ncp9/hcpc24.csv")
+write_csv(hcpc24, "analysis/ncp11/hcpc24_granular.csv")
 
 # 25 clusters
 
@@ -641,9 +657,13 @@ hcpc25 <- do.call(rbind, lapply(hcpc25, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
+# replace the NAs 
+
+hcpc25[is.na(hcpc25)] = c("Amylase_Act","sigma_A")
+
 # save the results
 
-write_csv(hcpc25, "analysis/ncp9/hcpc25.csv")
+write_csv(hcpc25, "analysis/ncp11/hcpc25_granular.csv")
 
 # 26 clusters
 
@@ -660,9 +680,13 @@ hcpc26 <- do.call(rbind, lapply(hcpc26, as.data.frame)) %>%
            into = c("cluster", "factor"),
            sep = "-") 
 
+# replace the NAs 
+
+hcpc26[is.na(hcpc26)] = c("Amylase_Act","sigma_A")
+
 # save the results
 
-write_csv(hcpc26, "analysis/ncp9/hcpc26.csv")
+write_csv(hcpc26, "analysis/ncp11/hcpc26_granular.csv")
 
 # 27 clusters
 
@@ -681,11 +705,11 @@ hcpc27 <- do.call(rbind, lapply(hcpc27, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc27[is.na(hcpc27)] = c("Amylase_Act", "DP13_24")
+hcpc27[is.na(hcpc27)] = c("Amylase_Act","sigma_A")
 
 # save the results
 
-write_csv(hcpc27, "analysis/ncp9/hcpc27.csv")
+write_csv(hcpc27, "analysis/ncp11/hcpc27_granular.csv")
 
 # 28 clusters
 
@@ -704,11 +728,11 @@ hcpc28 <- do.call(rbind, lapply(hcpc28, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc28[is.na(hcpc28)] = c("Amylase_Act", "DP13_24")
+hcpc28[is.na(hcpc28)] = c("Amylase_Act","sigma_A")
 
 # save the results
 
-write_csv(hcpc28, "analysis/ncp9/hcpc28.csv")
+write_csv(hcpc28, "analysis/ncp11/hcpc28_granular.csv")
 
 # 29 clusters
 
@@ -727,11 +751,11 @@ hcpc29 <- do.call(rbind, lapply(hcpc29, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc29[is.na(hcpc29)] = c("Amylase_Act", "DP13-24", "Amylase_Act")
+hcpc29[is.na(hcpc29)] = c("Amylase_Act","sigma_A")
 
 # save the results
 
-write_csv(hcpc29, "analysis/ncp9/hcpc29.csv")
+write_csv(hcpc29, "analysis/ncp11/hcpc29_granular.csv")
 
 # 30 clusters
 
@@ -750,11 +774,11 @@ hcpc30 <- do.call(rbind, lapply(hcpc30, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc30[is.na(hcpc30)] = c("Amylase_Act", "DP13-24", "Amylase_Act", "VWM")
+hcpc30[is.na(hcpc30)] = c("Amylase_Act","sigma_A")
 
 # save the results
 
-write_csv(hcpc30, "analysis/ncp9/hcpc30.csv")
+write_csv(hcpc30, "analysis/ncp11/hcpc30_granular.csv")
 
 ####
 
@@ -850,8 +874,6 @@ r_hcpc10_s <- res.hcpc10$data.clust %>% # 10 clusters
 
 r_hcpc10 <- r_hcpc10_s %>%
   select(Sample, cluster10)
-
-#### wait to be modified02 ####
 
 r_hcpc11_s <- res.hcpc11$data.clust %>% # 4 clusters
   rownames_to_column() %>% # change the row names into column names 
@@ -1015,9 +1037,7 @@ r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc8)
 
 r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc9)
 
-r_hcpc_all <- left_join(r_hcpc_inter, r_hcpc10)
-
-#### wait to be modified03 ####
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc10)
 
 r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc11)
 
@@ -1037,9 +1057,27 @@ r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc18)
 
 r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc19)
 
-r_hcpc_all <- left_join(r_hcpc_inter, r_hcpc20)
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc20)
 
-#### 
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc21)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc22)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc23)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc24)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc25)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc26)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc27)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc28)
+
+r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc29)
+
+r_hcpc_all <- left_join(r_hcpc_inter, r_hcpc30)
 
 # save the final dataset
 
@@ -1061,9 +1099,7 @@ r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc8)
 
 r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc9)
 
-r_hcpc_s_all <- left_join(r_hcpc_s_inter, r_hcpc10)
-
-#### wait to be modified04 ####
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc10)
 
 r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc11)
 
@@ -1083,9 +1119,27 @@ r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc18)
 
 r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc19)
 
-r_hcpc_s_all <- left_join(r_hcpc_s_inter, r_hcpc20)
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc20)
 
-####
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc21)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc22)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc23)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc24)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc25)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc26)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc27)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc28)
+
+r_hcpc_s_inter <- left_join(r_hcpc_s_inter, r_hcpc29)
+
+r_hcpc_s_all <- left_join(r_hcpc_s_inter, r_hcpc30)
 
 # save the final dataset
 
@@ -2696,7 +2750,7 @@ ggsave("figures/HCPC/ncp9/ncp9_c20_scal.png",
 #### count for the number of samples in each cluster ####
 
 count <- r_hcpc_s_all %>% 
-  select(cluster2:cluster10) %>%
+  select(cluster2:cluster30) %>%
   gather(nbr_cluster, values) %>%
   group_by(nbr_cluster, values) %>%
   count()
