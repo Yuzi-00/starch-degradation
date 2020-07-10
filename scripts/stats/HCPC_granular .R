@@ -140,7 +140,7 @@ hcpc2 <- do.call(rbind, lapply(hcpc2, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc2, "analysis/ncp9/hcpc2_granular.csv")
+write_csv(hcpc2, "analysis/ncp11/hcpc2_granular.csv")
 
 # 3 clusters
 
@@ -159,7 +159,7 @@ hcpc3 <- do.call(rbind, lapply(hcpc3, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc3, "analysis/ncp9/hcpc3_granular.csv")
+write_csv(hcpc3, "analysis/ncp11/hcpc3_granular.csv")
 
 # 4 clusters
 
@@ -178,7 +178,7 @@ hcpc4 <- do.call(rbind, lapply(hcpc4, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc4, "analysis/ncp9/hcpc4_granular.csv")
+write_csv(hcpc4, "analysis/ncp11/hcpc4_granular.csv")
 
 # 5 clusters
 
@@ -201,7 +201,7 @@ hcpc5 <- do.call(rbind, lapply(hcpc5, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc5, "analysis/ncp9/hcpc5_granular.csv")
+write_csv(hcpc5, "analysis/ncp11/hcpc5_granular.csv")
 
 # 6 clusters
 
@@ -224,7 +224,7 @@ hcpc6 <- do.call(rbind, lapply(hcpc6, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc6, "analysis/ncp9/hcpc6_granular.csv")
+write_csv(hcpc6, "analysis/ncp11/hcpc6_granular.csv")
 
 # 7 clusters
 
@@ -247,7 +247,7 @@ hcpc7 <- do.call(rbind, lapply(hcpc7, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc7, "analysis/ncp9/hcpc7_granular.csv")
+write_csv(hcpc7, "analysis/ncp11/hcpc7_granular.csv")
 
 # 8 clusters
 
@@ -270,7 +270,7 @@ hcpc8 <- do.call(rbind, lapply(hcpc8, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc8, "analysis/ncp9/hcpc8_granular.csv")
+write_csv(hcpc8, "analysis/ncp11/hcpc8_granular.csv")
 
 # 9 clusters
 
@@ -293,7 +293,7 @@ hcpc9 <- do.call(rbind, lapply(hcpc9, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc9, "analysis/ncp9/hcpc9_granular.csv")
+write_csv(hcpc9, "analysis/ncp11/hcpc9_granular.csv")
 
 # 10 clusters
 
@@ -316,7 +316,7 @@ hcpc10 <- do.call(rbind, lapply(hcpc10, as.data.frame)) %>%
 
 # save the results
 
-write_csv(hcpc10, "analysis/ncp9/hcpc10_granular.csv")
+write_csv(hcpc10, "analysis/ncp11/hcpc10_granular.csv")
 
 #### wait to be modified ####
 
