@@ -318,8 +318,6 @@ hcpc10 <- do.call(rbind, lapply(hcpc10, as.data.frame)) %>%
 
 write_csv(hcpc10, "analysis/ncp11/hcpc10_granular.csv")
 
-#### wait to be modified ####
-
 # 11 clusters
 
 res.hcpc11 <- HCPC(res.pca, graph = TRUE, 
@@ -2744,8 +2742,6 @@ ggsave("figures/HCPC/ncp9/ncp9_c20_scal.png",
        width = 30, 
        height = 20, 
        units = "cm") 
-
-####
 
 #### count for the number of samples in each cluster ####
 
