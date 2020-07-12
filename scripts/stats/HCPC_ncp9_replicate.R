@@ -997,51 +997,51 @@ r_hcpc20 <- r_hcpc20_s %>%
 # r_hcpc30 <- r_hcpc30_s %>%
 #   select(Sample, cluster30)
 
-# combine all the cluster results together to one single dataframe (unscaled values)
-
-df_0 <- full_join(df2, df1) 
-
-r_hcpc_inter <- left_join(df_0, r_hcpc2)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc3)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc4)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc5)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc6)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc7)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc8)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc9)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc10)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc11)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc12)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc13)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc14)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc15)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc16)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc17)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc18)
-
-r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc19)
-
-r_hcpc_all <- left_join(r_hcpc_inter, r_hcpc20)
-
-# save the final dataset
-
-write_csv(r_hcpc_all, "analysis/hcpc_ncp9_rep.csv")
+# # combine all the cluster results together to one single dataframe (unscaled values)
+# 
+# df_0 <- full_join(df2, df1) 
+# 
+# r_hcpc_inter <- left_join(df_0, r_hcpc2)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc3)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc4)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc5)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc6)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc7)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc8)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc9)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc10)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc11)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc12)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc13)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc14)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc15)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc16)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc17)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc18)
+# 
+# r_hcpc_inter <- left_join(r_hcpc_inter, r_hcpc19)
+# 
+# r_hcpc_all <- left_join(r_hcpc_inter, r_hcpc20)
+# 
+# # save the final dataset
+# 
+# write_csv(r_hcpc_all, "analysis/hcpc_ncp9_rep.csv")
 
 # combine all the cluster results together to one single dataframe (scaled values)
 
