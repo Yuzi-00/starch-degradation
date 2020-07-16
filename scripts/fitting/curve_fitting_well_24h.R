@@ -181,7 +181,7 @@ df2 <- left_join(fitted_parameters_with_control, df) %>%
 pos_control <- df2 %>%
   filter(Sample == "C+") 
 
-# calculate the std deviation for the pos control (first order)
+# calculate the std deviation for the pos control (weibull 24h)
 
 pos_control %>%
   summarise(Mean_k = mean(k, na.rm = TRUE), 
@@ -203,7 +203,7 @@ df <- read_csv("analysis/total_new_convert.csv") %>%
   select(Sample, k, Xinf, h) %>%
   filter(Sample == "C+") 
 
-# calculate the std deviation for the pos control (Weibull)
+# calculate the std deviation for the pos control (Weibull 30h)
 
 df %>%
   summarise(Mean_k = mean(k, na.rm = TRUE), 
@@ -235,7 +235,7 @@ df2 <- left_join(fitted_parameters_with_control, df) %>%
 neg_control <- df2 %>%
   filter(Sample == "C-") 
 
-# calculate the std deviation for the neg control (first order)
+# calculate the std deviation for the neg control (weibull 24h)
 
 neg_control %>%
   summarise(Mean_k = mean(k, na.rm = TRUE), 
@@ -258,7 +258,7 @@ df <- read_csv("analysis/total_new_convert.csv") %>%
   select(Sample, k, Xinf, h) %>%
   filter(Sample == "C-")
 
-# calculate the std deviation for the neg control (Weibull)
+# calculate the std deviation for the neg control (Weibull 30h)
 
 df %>%
   summarise(Mean_k = mean(k, na.rm = TRUE), 
