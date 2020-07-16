@@ -148,3 +148,129 @@ parameter_well <- bind_cols(well, parameters_with_control)
 # save the estimated parameters
 
 write_csv(parameter_well, "analysis/fitted_weibull_parameters_24h_well_with_T0.csv")
+
+# add the well colume to the fitted parameter dataset
+
+well <- hydro_data %>% # this is the first hydro_data of this script
+  select(Well) %>% # select just the sample column
+  unique() %>% # remove the duplicated sample names
+  arrange(Well) # get the same order as the output of the split(.$Sample) step
+
+# combine the fitted parameters with their wells (by order)
+
+fitted_parameters_with_control <- bind_cols(well, parameters_with_control)
+
+# save the fitted parameters into the analysis folder 
+
+write_csv(fitted_parameters_with_control, 
+          "analysis/fitted_Weibull_24h_parameters_well_with_T0_wellnumber.csv")
+
+#### check the fitting for pos control ####
+
+df <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv") %>%
+  select(Well, Sample) %>%
+  unique()
+
+# add the sample names to the fitted parameter dataset
+
+df2 <- left_join(fitted_parameters_with_control, df) %>%
+  mutate(h = 1-H)
+
+# extract the pos control
+
+pos_control <- df2 %>%
+  filter(Sample == "C+") 
+
+# calculate the std deviation for the pos control (first order)
+
+pos_control %>%
+  summarise(Mean_k = mean(k, na.rm = TRUE), 
+            Sd_k = sd(k, na.rm = TRUE),
+            Cov_k = Sd_k / Mean_k * 100,
+            Mean_h = mean(h, na.rm = TRUE), 
+            Sd_h = sd(h, na.rm = TRUE),
+            Cov_h = Sd_h / Mean_h * 100,
+            Mean_Xinf = mean(Xinf, na.rm = TRUE), 
+            Sd_Xinf = sd(Xinf, na.rm = TRUE),
+            Cov_Xinf = Sd_Xinf / Mean_Xinf * 100)
+## mean_k = 0.00261, sd_k = 0.00209, cov = 79.8%
+## mean_h = -0.209, sd_h = 0.148, cov = -70.8%
+## mean_Xinf = 81, sd_Xinf = 3.59, cov = 4.43%
+
+#### let's compare with the k fitted by the weibull function
+
+df <- read_csv("analysis/total_new_convert.csv") %>%
+  select(Sample, k, Xinf, h) %>%
+  filter(Sample == "C+") 
+
+# calculate the std deviation for the pos control (Weibull)
+
+df %>%
+  summarise(Mean_k = mean(k, na.rm = TRUE), 
+            Sd_k = sd(k, na.rm = TRUE),
+            Cov_k = Sd_k / Mean_k * 100,
+            Mean_h = mean(h, na.rm = TRUE), 
+            Sd_h = sd(h, na.rm = TRUE),
+            Cov_h = Sd_h / Mean_h * 100,
+            Mean_Xinf = mean(Xinf, na.rm = TRUE), 
+            Sd_Xinf = sd(Xinf, na.rm = TRUE),
+            Cov_Xinf = Sd_Xinf / Mean_Xinf * 100)
+## mean_k = 0.00281, sd_k = 0.00205, cov = 73%
+## mean_h = -0.181, sd_h = 0.139, cov = -77.2%
+## mean_Xinf = 82.6, sd_Xinf = 3.58, cov = 4.34%
+
+#### check the fitting for neg control ####
+
+df <- read_csv("data/tidydata/data_15P_cal_HE_outlier_replaced.csv") %>%
+  select(Well, Sample) %>%
+  unique()
+
+# add the sample names to the fitted parameter dataset
+
+df2 <- left_join(fitted_parameters_with_control, df) %>%
+  mutate(h = 1-H)
+
+# extract the neg control
+
+neg_control <- df2 %>%
+  filter(Sample == "C-") 
+
+# calculate the std deviation for the neg control (first order)
+
+neg_control %>%
+  summarise(Mean_k = mean(k, na.rm = TRUE), 
+            Sd_k = sd(k, na.rm = TRUE),
+            Cov_k = Sd_k / Mean_k * 100,
+            Mean_h = mean(h, na.rm = TRUE), 
+            Sd_h = sd(h, na.rm = TRUE),
+            Cov_h = Sd_h / Mean_h * 100,
+            Mean_Xinf = mean(Xinf, na.rm = TRUE),
+            Mean_Xinf = mean(Xinf, na.rm = TRUE), 
+            Sd_Xinf = sd(Xinf, na.rm = TRUE),
+            Cov_Xinf = Sd_Xinf / Mean_Xinf * 100)
+## mean_k = 0.0103, sd_k = 0.00384, cov = 37.3%
+## mean_h = 0.164, sd_h = 0.0703, cov = 43%
+## mean_Xinf = 55.3, sd_Xinf = 3.88, cov = 7.02%
+
+#### let's compare with the k fitted by the weibull function
+
+df <- read_csv("analysis/total_new_convert.csv") %>%
+  select(Sample, k, Xinf, h) %>%
+  filter(Sample == "C-")
+
+# calculate the std deviation for the neg control (Weibull)
+
+df %>%
+  summarise(Mean_k = mean(k, na.rm = TRUE), 
+            Sd_k = sd(k, na.rm = TRUE),
+            Cov_k = Sd_k / Mean_k * 100,
+            Mean_h = mean(h, na.rm = TRUE), 
+            Sd_h = sd(h, na.rm = TRUE),
+            Cov_h = Sd_h / Mean_h * 100,
+            Mean_Xinf = mean(Xinf, na.rm = TRUE), 
+            Sd_Xinf = sd(Xinf, na.rm = TRUE),
+            Cov_Xinf = Sd_Xinf / Mean_Xinf * 100)
+## mean_k = 0.011, sd_k = 0.00408, cov = 37.1%
+## mean_h = 0.187, sd_h = 0.0679, cov = 36.4%
+## mean_Xinf = 57, sd_Xinf = 3.19, cov = 5.59%
+
