@@ -9,6 +9,13 @@ library(tidyverse)
 
 df <- read_csv("analysis/total_new_convert_replaced_by_granular.csv")
 
+#### correlation h k ####
+
+df_sel <- df %>%
+  select(24:26)
+
+chart.Correlation(df_sel, histogram=TRUE, pch=19)
+
 #### chart.Correlation ####
 
 df_sel <- df %>%
