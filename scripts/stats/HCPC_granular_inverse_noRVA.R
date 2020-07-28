@@ -568,7 +568,7 @@ hcpc21[is.na(hcpc21)] = "residual"
 
 # save the results
 
-write_csv(hcpc21, "analysis/ncp6/hcpc21_granular_inverse.csv")
+write_csv(hcpc21, "analysis/ncp3/hcpc21_granular_inverse_noRVA.csv")
 
 # 22 clusters
 
@@ -591,7 +591,7 @@ hcpc22[is.na(hcpc22)] = "residual"
 
 # save the results
 
-write_csv(hcpc22, "analysis/ncp6/hcpc22_granular_inverse.csv")
+write_csv(hcpc22, "analysis/ncp3/hcpc22_granular_inverse_noRVA.csv")
 
 # 23 clusters
 
@@ -610,11 +610,11 @@ hcpc23 <- do.call(rbind, lapply(hcpc23, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc23[is.na(hcpc23)] = "residual"
+hcpc23[is.na(hcpc23)] = c("Xinf", "residual", "Xinf", "residual")
 
 # save the results
 
-write_csv(hcpc23, "analysis/ncp6/hcpc23_granular_inverse.csv")
+write_csv(hcpc23, "analysis/ncp3/hcpc23_granular_inverse_noRVA.csv")
 
 # 24 clusters
 
@@ -633,11 +633,11 @@ hcpc24 <- do.call(rbind, lapply(hcpc24, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc24[is.na(hcpc24)] = "residual"
+hcpc24[is.na(hcpc24)] = c("Xinf", "residual", "Xinf", "residual")
 
 # save the results
 
-write_csv(hcpc24, "analysis/ncp6/hcpc24_granular_inverse.csv")
+write_csv(hcpc24, "analysis/ncp3/hcpc24_granular_inverse_noRVA.csv")
 
 # 25 clusters
 
@@ -656,11 +656,11 @@ hcpc25 <- do.call(rbind, lapply(hcpc25, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc25[is.na(hcpc25)] = c("Pasting_temp","residual")
+hcpc25[is.na(hcpc25)] = c("Xinf", "residual", "Xinf", "residual")
 
 # save the results
 
-write_csv(hcpc25, "analysis/ncp6/hcpc25_granular_inverse.csv")
+write_csv(hcpc25, "analysis/ncp3/hcpc25_granular_inverse_noRVA.csv")
 
 # 26 clusters
 
@@ -679,11 +679,11 @@ hcpc26 <- do.call(rbind, lapply(hcpc26, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc26[is.na(hcpc26)] = c("Pasting_temp","residual")
+hcpc26[is.na(hcpc26)] = c("Xinf", "residual", "Xinf", "residual", "residual")
 
 # save the results
 
-write_csv(hcpc26, "analysis/ncp6/hcpc26_granular_inverse.csv")
+write_csv(hcpc26, "analysis/ncp3/hcpc26_granular_inverse_noRVA.csv")
 
 # 27 clusters
 
@@ -702,11 +702,11 @@ hcpc27 <- do.call(rbind, lapply(hcpc27, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc27[is.na(hcpc27)] = c("Pasting_temp","residual")
+hcpc27[is.na(hcpc27)] = c("Xinf", "residual", "Xinf", "residual", "residual")
 
 # save the results
 
-write_csv(hcpc27, "analysis/ncp6/hcpc27_granular_inverse.csv")
+write_csv(hcpc27, "analysis/ncp3/hcpc27_granular_inverse_noRVA.csv")
 
 # 28 clusters
 
@@ -725,11 +725,11 @@ hcpc28 <- do.call(rbind, lapply(hcpc28, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc28[is.na(hcpc28)] = c("Pasting_temp","residual")
+hcpc28[is.na(hcpc28)] = c("Xinf", "residual", "Xinf", "residual", "residual", "k")
 
 # save the results
 
-write_csv(hcpc28, "analysis/ncp6/hcpc28_granular_inverse.csv")
+write_csv(hcpc28, "analysis/ncp3/hcpc28_granular_inverse_noRVA.csv")
 
 # 29 clusters
 
@@ -748,11 +748,11 @@ hcpc29 <- do.call(rbind, lapply(hcpc29, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc29[is.na(hcpc29)] = c("Pasting_temp","residual")
+hcpc29[is.na(hcpc29)] = c("Xinf", "residual", "Xinf", "residual", "k")
 
 # save the results
 
-write_csv(hcpc29, "analysis/ncp6/hcpc29_granular_inverse.csv")
+write_csv(hcpc29, "analysis/ncp3/hcpc29_granular_inverse_noRVA.csv")
 
 # 30 clusters
 
@@ -771,11 +771,11 @@ hcpc30 <- do.call(rbind, lapply(hcpc30, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc30[is.na(hcpc30)] = c("Pasting_temp","residual")
+hcpc30[is.na(hcpc30)] = c("Xinf", "residual", "Xinf", "residual", "k")
 
 # save the results
 
-write_csv(hcpc30, "analysis/ncp6/hcpc30_granular_inverse.csv")
+write_csv(hcpc30, "analysis/ncp3/hcpc30_granular_inverse_noRVA.csv")
 
 ####
 
@@ -1140,7 +1140,7 @@ r_hcpc_s_all <- left_join(r_hcpc_s_inter, r_hcpc30)
 
 # save the final dataset
 
-write_csv(r_hcpc_s_all, "analysis/hcpc_scaled_ncp6_granular_inverse.csv")
+write_csv(r_hcpc_s_all, "analysis/hcpc_scaled_ncp3_granular_inverse_noRVA.csv")
 
 # calculate the mean value of each factor
 
@@ -2750,4 +2750,4 @@ count <- r_hcpc_s_all %>%
   group_by(nbr_cluster, values) %>%
   count()
 
-write_csv(count, "analysis/ncp6/count_individual_granular_inverse.csv")
+write_csv(count, "analysis/ncp3/count_individual_granular_inverse_noRVA.csv")
