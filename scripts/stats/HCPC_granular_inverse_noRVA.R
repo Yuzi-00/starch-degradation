@@ -2751,3 +2751,116 @@ count <- r_hcpc_s_all %>%
   count()
 
 write_csv(count, "analysis/ncp3/count_individual_granular_inverse_noRVA.csv")
+
+#### histograms ####
+
+#### 28 clusters ####
+
+# scaled values
+
+mean_28c <- r_hcpc_s_all %>%
+  group_by(cluster28) %>% # by 20 clusters
+  # summarise_if(is.numeric, mean, na.rm = TRUE) 
+  summarise_if(is.numeric, funs(mean, sd, se=sd(.)/sqrt(n()))) 
+# for the numerical column, calculate the mean, standard deviation and standard error
+
+# creat two subsets for means and std errors
+
+mean_28c_m <- mean_28c %>%
+  select(1:25) %>%
+  gather("factor", "mean", -cluster28) %>%
+  mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+
+mean_28c_s <- mean_28c %>%
+  select(1, 50:73) %>%
+  gather("factor", "se", -cluster28) %>%
+  mutate(factor = str_replace(factor, "_se", "")) # remove the string "_se"
+
+## combine the above two datasets together and choose cluster2
+
+mean_28c_full <- full_join(mean_28c_m, mean_28c_s) %>%
+  filter(cluster28 == 2)
+
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_28c_full <- mean_28c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
+# histogram (scaled values), cluster 28-2
+
+ncp11_c28_2 <- mean_28c_full %>%
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
+  geom_errorbar(aes(x = factor,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "dark grey") +
+  geom_bar(stat = 'identity', width = 0.3) +
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15),
+        legend.spacing.x = unit(0.5, 'cm')) +
+  theme(axis.text.x = element_text(color="black", size=15), 
+        axis.text.y = element_text(color="black", size=15)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
+  xlab("Factors") +
+  ylab("Variability around mean")
+
+ncp11_c28_2
+
+ggsave("figures/HCPC/ncp11/ncp11_c28-2_scal.png", 
+       plot = ncp11_c28_2, 
+       width = 30, 
+       height = 20, 
+       units = "cm") 
+
+## combine the above two datasets together and choose cluster10
+
+mean_28c_full <- full_join(mean_28c_m, mean_28c_s) %>%
+  filter(cluster28 == 10)
+
+# add a new column to distinguish the explicative and illustratif factors 
+
+mean_28c_full <- mean_28c_full %>%
+  mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
+                                        "Trough_Vis", "Final_Vis", "Pasting_Temp",
+                                        "residual") ~ "supplementary_variable",
+                          TRUE ~ "active_variable"))
+
+# histogram (scaled values), cluster 28-2
+
+ncp11_c28_10 <- mean_28c_full %>%
+  ggplot(aes(x = factor, y = mean, fill = type)) +
+  # scale_fill_manual(values = c("8888", "4444")) +
+  geom_errorbar(aes(x = factor,
+                    ymin = mean - se,
+                    ymax = mean + se),
+                width=0.2,
+                color = "dark grey") +
+  geom_bar(stat = 'identity', width = 0.3) +
+  theme(axis.text.x = element_text(angle=45, hjust=1),
+        legend.position="bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15),
+        legend.spacing.x = unit(0.5, 'cm')) +
+  theme(axis.text.x = element_text(color="black", size=15), 
+        axis.text.y = element_text(color="black", size=15)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
+  xlab("Factors") +
+  ylab("Variability around mean")
+
+ncp11_c28_10
+
+ggsave("figures/HCPC/ncp11/ncp11_c28-10_scal.png", 
+       plot = ncp11_c28_10, 
+       width = 30, 
+       height = 20, 
+       units = "cm") 
+# problem with cluster 28-10, the standard error of the amylose content is too large 
