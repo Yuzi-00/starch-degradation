@@ -56,7 +56,7 @@ df_new <- full_join(df2, df1) %>%
 res.pca <- PCA(df_new, 
                ncp = 11, # explain more than 99% of the variability 
                scale.unit = TRUE, 
-               quanti.sup = 17:24, # 8 supplementary variables; 16 active variables 
+               quanti.sup = 17:24, # 8 supplementary variables (RVAs and kinetics); 16 active variables 
                graph = FALSE)
 
 summary(res.pca)
