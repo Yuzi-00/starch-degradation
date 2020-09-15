@@ -101,22 +101,39 @@ res.pca <- PCA(df_new1,
 
 fviz_pca_var(res.pca, col.var = "black") 
 
+var <- get_pca_var(res.pca)
+
+var
+
+# Create a grouping variable using kmeans
+# Create 3 groups of variables (centers = 3)
+
+res.km <- kmeans(var$coord, centers = 4)
+
+grp <- as.factor(res.km$cluster)
+# Color variables by groups
+fviz_pca_var(res.pca, col.var = grp, 
+             legend.title = "Cluster")
+
 # graph of individuals 
 
 ind <- get_pca_ind(res.pca)
 
 ind
 
-fviz_pca_ind(res.pca, col.ind = "coord", 
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+res.km <- kmeans(ind$coord, centers = 5)
+
+grp <- as.factor(res.km$cluster)
+
+fviz_pca_ind(res.pca, col.ind = grp, 
              repel = FALSE # Avoid text overlapping (slow if many points)
 )
 
 # plot of biplot
 
 fviz_pca_biplot(res.pca, repel = FALSE,
-                col.var = "#2E9FDF", # Variables color
-                col.ind = "coord"  # Individuals color
+                col.var = "black", # Variables color
+                col.ind = grp  # Individuals color
 )
 
 
