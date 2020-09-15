@@ -7,12 +7,16 @@ library(FactoMineR)
 
 library(factoextra)
 
+############################ pca on pi_A, pi_B, pi_C ##############################
+
 # import the dataset
 
-df <- read_csv("analysis/total_new_convert_replaced_by_granular.csv")
+df <- read_csv("analysis/total_new_convert_replaced_by_granular.csv") %>%
+  filter(Sample != "C+" & Sample != "C-") %>%
+  na.omit()
 
 df1 <- df %>%
-  select(Sample, pi_A, pi_B, pi_C) %>%
+  select(Sample, pi_A, pi_B, pi_C, k, h, Xinf) %>%
   unique() %>%
   column_to_rownames(var = 'Sample') %>%
   na.omit() %>% 
@@ -45,3 +49,8 @@ fviz_pca_biplot(res.pca, repel = FALSE,
                 col.var = "#2E9FDF", # Variables color
                 col.ind = "#696969"  # Individuals color
 )
+
+# color by groups (by kinetics)
+
+############################ pca on pi_A, pi_B, pi_C, with kinetics as illustratif variable ##############################
+
