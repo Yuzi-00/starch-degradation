@@ -58,7 +58,7 @@ ind <- get_pca_ind(res.pca)
 
 ind
 
-fviz_pca_ind(res.pca, col.ind = "cos2", 
+fviz_pca_ind(res.pca, col.ind = "coord", # color by coordinant
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = FALSE # Avoid text overlapping (slow if many points)
 )
