@@ -13,6 +13,11 @@ library(factoextra)
 
 df <- read_csv("analysis/total_new_convert_replaced_by_granular.csv") 
 
+# transpose the dataframe
+
+dft <- transpose(df) %>%
+  as.data.frame()
+
 df0 <- df %>%
   filter(Sample != "C+" & Sample != "C-") %>%
   na.omit() %>%
@@ -59,6 +64,10 @@ eig.val <- get_eigenvalue(res.pca)
 
 eig.val
 
+# scree plot
+
+fviz_eig(res.pca, addlabels = TRUE)
+
 # plot PCA
 
 fviz_pca_var(res.pca, col.var = "black") 
@@ -93,6 +102,7 @@ df_new1 <- left_join(df0, df1) %>%
 # redo the PCA using dataset without amylose content 
 
 res.pca <- PCA(df_new1, 
+               ncp = 7, # choose 7 as about 90% of the variability is represented by 7 dimensions 
                scale.unit = TRUE,
                quanti.sup = 15:17, # kinetics (h, k, Xinf) as illustrative factors 
                graph = FALSE) 
@@ -136,8 +146,108 @@ fviz_pca_biplot(res.pca, repel = FALSE,
                 col.ind = grp  # Individuals color
 )
 
+# get the 5 clusters
 
-# color by groups (by kinetics)
+cluster <- res.km$cluster %>%
+  as.data.frame() %>%
+  rownames_to_column() %>%
+  rename(sample = "rowname", cluster = ".")
 
-############################ pca on pi_A, pi_B, pi_C, with kinetics as illustratif variable ##############################
+write.csv(cluster, "analysis/cluster_pca_selection.csv")
 
+######################## find the samples that have the effect of h k Xinf #########################
+
+# import the dataset of samples that have h k Xinf or residual significance
+
+library(readxl)
+
+df <- read_xlsx("data/amidon_avec_effet.xlsx") %>%
+  select(-"Table 1")
+
+# set the first row as colomn names 
+
+names(df) <- as.matrix(df[1, ])
+df <- df[-1, ]
+df[] <- lapply(df, function(x) type.convert(as.character(x)))
+df <- df %>%
+  as.data.frame()
+# we have 252 observations for now
+
+# remove the repeated lines (samples)
+
+dfr <- df %>%
+  unique() %>%
+  mutate(sample = as.character(sample))
+# we now reduced the dataset into 163 observations
+
+# let's find where these samples are positioned in the clusters of our PCA plot
+
+dft <- left_join(dfr, cluster)
+# we keep those 163 observations by this "left_join" 
+
+########################## randomly choose 10 samples for each cluster #########################
+
+# extract samples of cluster 1
+
+c1 <- dft %>%
+  filter(cluster == 1) %>%
+  select(sample) %>%
+  as.matrix() 
+# we have 44 samples in total
+
+# randomly choose 10 samples 
+
+sample(c1, 10)
+# we get "164" "46"  "117" "127" "56"  "123" "15"  "62"  "48"  "128"
+
+# extract samples of cluster 2
+
+c2 <- dft %>%
+  filter(cluster == 2) %>%
+  select(sample) %>%
+  as.matrix() 
+# we have 39 samples in total
+
+# randomly choose 10 samples 
+
+sample(c2, 10)
+# we get "110" "102" "175" "5"   "18"  "93"  "4"   "221" "141" "59" 
+
+# extract samples of cluster 3
+
+c3 <- dft %>%
+  filter(cluster == 3) %>%
+  select(sample) %>%
+  as.matrix() 
+# we have 15 samples in total
+
+# randomly choose 10 samples 
+
+sample(c3, 10)
+# we get "38"  "213" "223" "130" "143" "224" "214" "94"  "215" "72" 
+
+# extract samples of cluster 4
+
+c4 <- dft %>%
+  filter(cluster == 4) %>%
+  select(sample) %>%
+  as.matrix() 
+# we have 35 samples in total
+
+# randomly choose 10 samples 
+
+sample(c4, 10)
+# we get "217" "2"   "77"  "187" "206" "144" "188" "139" "78"  "168"
+
+# extract samples of cluster 5
+
+c5 <- dft %>%
+  filter(cluster == 5) %>%
+  select(sample) %>%
+  as.matrix() 
+# we have 17 samples in total
+
+# randomly choose 10 samples 
+
+sample(c5, 10)
+# we get "158" "20"  "203" "90"  "104" "32"  "98"  "176" "197" "154" 
