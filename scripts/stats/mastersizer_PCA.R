@@ -9,26 +9,44 @@ library(factoextra)
 
 ########################## 
 
-# import the dataset
+# import the dataset and calculate the mean values (the MasterSizer was on replicates)
 
 df <- read_xls("data/MastersizerMagic_forPCA.xls", sheet = "Total data") %>%
-  select(-(70:103)) # remove the aggregations (diameter > 100um)
+  select(-(70:103)) %>% # remove the aggregations (diameter > 100um)
+  select(-id, -"0.01") %>% # remove the colomn of 0.01 as its all NAs 
+  rename(sample = "Sample Name") %>%
+  group_by(sample) %>%
+  summarise_all(mean)
+
+# transpose the dataset 
+
+dft <- as.data.frame(t(df))
+  
+# set the first row as colomn names 
+
+names(dft) <- as.matrix(dft[1, ])
+dft <- dft[-1, ]
+dft[] <- lapply(dft, function(x) type.convert(as.character(x)))
+dft <- dft %>%
+  as.data.frame()
+  
 
 
-# remove the cav numbers
+# df1 <- df %>%
+#   select(-id) %>%
+#   rename(Sample = 'Sample Name') %>%
+#   filter(Sample != 1 & Sample != 3 & Sample != 7) %>%
+#   rownames_to_column() %>%
+#   unite("sample", rowname:Sample) %>% # I did this because duplicated rownames are not allowed 
+#   column_to_rownames(var = 'sample') %>%
+#   select(-(1:28)) %>% # these colonms are all NAs or 0  
+#   na.omit() %>% 
+#   scale()
 
-df1 <- df %>%
-  select(-id) %>%
-  rename(Sample = 'Sample Name') %>%
-  filter(Sample != 1 & Sample != 3 & Sample != 7) %>%
-  rownames_to_column() %>%
-  unite("sample", rowname:Sample) %>% # I did this because duplicated rownames are not allowed 
-  column_to_rownames(var = 'sample') %>%
-  select(-(1:28)) %>% # these colonms are all NAs or 0  
-  na.omit() %>% 
-  scale()
 
-res.pca <- PCA(df1, scale.unit = TRUE)
+# PCA
+
+res.pca <- PCA(dft, scale.unit = TRUE)
 
 eig.val <- get_eigenvalue(res.pca)
 
@@ -66,5 +84,9 @@ res.km <- kmeans(ind$coord, centers = 4)
 grp <- as.factor(res.km$cluster)
 
 fviz_pca_ind(res.pca, col.ind = grp, # color by coordinant
-             repel = FALSE # Avoid text overlapping (slow if many points)
+             repel = FALSE # Avoid text overlapping 
+)
+
+fviz_pca_ind(res.pca,
+             repel = TRUE # Avoid text overlapping
 )
