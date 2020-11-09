@@ -20,6 +20,10 @@ df1 <- left_join(df, df0) %>%
          H2 = '∆H2') %>%
   mutate(H2 = as.numeric(H2))
 
+# save the dataset
+
+write_csv(df1, "analysis/total_new_convert_DSC.csv")
+
 # correlation matrix
 
 # corrplot
