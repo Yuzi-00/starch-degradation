@@ -20,6 +20,11 @@ df1 <- left_join(df, df0) %>%
          H2 = '∆H2') %>%
   mutate(H2 = as.numeric(H2))
 
+# calculate the H(total)
+
+df1 <- df1 %>%
+  mutate(H = H1+ H2)
+
 # save the dataset
 
 write_csv(df1, "analysis/total_new_convert_DSC.csv")
@@ -31,7 +36,7 @@ write_csv(df1, "analysis/total_new_convert_DSC.csv")
 library(corrplot)
 
 my_subset <- df1 %>%
-  select(1:10, 15:24, 34:46)
+  select(1:10, 15:24, 34:47)
 
 cor_result <- cor(my_subset, use = "complete.obs")
 
@@ -169,3 +174,20 @@ p18 <- df1 %>%
   geom_point()
 
 p18
+
+
+# plot of To1, Tp1, Range1 and A/B ratio
+
+p19 <- df1 %>% 
+  ggplot(aes(x = To1, 
+             y = pi_AB_ratio)) +
+  geom_point()
+
+p19
+
+p20 <- df1 %>% 
+  ggplot(aes(x = Range1, 
+             y = mu_C)) +
+  geom_point()
+
+p20
