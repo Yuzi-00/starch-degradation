@@ -22,12 +22,14 @@ df1 <- left_join(df, df0) %>%
 
 # calculate the H(total)
 
-df1 <- df1 %>%
+df2 <- df1 %>%
   mutate(H = H1+ H2)
 
 # save the dataset
 
 write_csv(df1, "analysis/total_new_convert_DSC.csv")
+
+write_csv(df2, "analysis/total_new_convert_DSC_withH.csv")
 
 # correlation matrix
 
@@ -36,7 +38,7 @@ write_csv(df1, "analysis/total_new_convert_DSC.csv")
 library(corrplot)
 
 my_subset <- df1 %>%
-  select(1:10, 15:24, 34:47)
+  select(1:10, 15:24, 34:46)
 
 cor_result <- cor(my_subset, use = "complete.obs")
 
