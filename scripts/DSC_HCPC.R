@@ -35,7 +35,7 @@ df2 <- df %>%
 df_new <- full_join(df2, df1) %>%
   select(Sample, pi_A, pi_B, pi_C, pi_AB_ratio, mu_A, mu_B, mu_C,
          sigma_A, sigma_B, sigma_C, DP6_12, DP13_24, DP25_36, DP37_47, 
-         Amylose_Con, Amylase_Act, To1, Tp1, Tc1, Range1, H1, To2, Tp2, Tc2, Range2, H2, 
+         Amylose_Con, Amylase_Act, To1, Tp1, Tc1, Range1, H1, To2, Tp2, Tc2, Range2, H2,
          Peak_Vis, Trough_Vis, Final_Vis, Pasting_Temp, k, h, Xinf, residual) %>%
   remove_rownames() %>%
   column_to_rownames(var = 'Sample') %>%
@@ -554,7 +554,7 @@ hcpc23 <- do.call(rbind, lapply(hcpc23, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc23[is.na(hcpc23)] = 'sigma_B'
+hcpc23[is.na(hcpc23)] = "sigma_B"
 
 # save the results
 
@@ -669,7 +669,7 @@ hcpc28 <- do.call(rbind, lapply(hcpc28, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc28[is.na(hcpc28)] = c("Pasting_Temps","DP13_24", "sigma_B", "mu_B")
+hcpc28[is.na(hcpc28)] = c("Pasting_Temp", "DP13_24","sigma_B", "mu_B")
 
 # save the results
 
@@ -692,7 +692,7 @@ hcpc29 <- do.call(rbind, lapply(hcpc29, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc29[is.na(hcpc29)] = c("Pasting_Temp","DP13_24", "mu_B")
+hcpc29[is.na(hcpc29)] = c("Pasting_Temp", "DP13_24","mu_B")
 
 # save the results
 
@@ -715,7 +715,7 @@ hcpc30 <- do.call(rbind, lapply(hcpc30, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc30[is.na(hcpc30)] = c("Pasting_Temp","DP13_24", "mu_B")
+hcpc30[is.na(hcpc30)] = c("Pasting_Temp", "DP13_24","mu_B")
 
 # save the results
 
