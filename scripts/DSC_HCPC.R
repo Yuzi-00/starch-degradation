@@ -53,6 +53,28 @@ res.pca <- PCA(df_new,
 
 summary(res.pca)
 
+# Contributions (variable) to the PCs 
+
+res.var <- get_pca_var(res.pca)
+
+df3 <- res.var$contrib %>%
+  as.data.frame()
+
+# save the contributions
+
+write_csv(df3, "analysis/DSC_ncp17/contributions_variable.csv")
+
+# Contributions (individual) to the PCs 
+
+res.ind <- get_pca_ind(res.pca)
+
+df4 <- res.ind$contrib %>%
+  as.data.frame()
+
+# save the contributions
+
+write_csv(df4, "analysis/DSC_ncp17/contributions_ind.csv")
+
 # Extract eigenvalues/variances
 
 eig <- get_eig(res.pca) %>%
