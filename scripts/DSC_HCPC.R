@@ -41,7 +41,7 @@ df_new <- full_join(df2, df1) %>%
   column_to_rownames(var = 'Sample') %>%
   scale()
 
-#### ncp=11 #### 
+#### ncp=17 #### 
 
 # compute PCA
 
