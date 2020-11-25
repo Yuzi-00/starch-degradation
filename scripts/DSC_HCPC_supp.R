@@ -79,6 +79,43 @@ df4
 
 write_csv(df4, "analysis/DSC_ncp11_supp/contributions_ind_supp.csv")
 
+# corrdinates (individual) to the PCs
+
+df5 <- res.ind$coord %>%
+  as.data.frame() %>%
+  rownames_to_column()
+
+df5
+
+# save the coordinates
+
+write_csv(df5, "analysis/DSC_ncp11_supp/coordinates_ind.csv")
+
+# extract the scaled values for h k Xinf 
+
+df6 <- df_new %>%
+  as.data.frame() %>%
+  select(h, k, Xinf, residual) %>%
+  rownames_to_column()
+
+df6 
+
+# combine the coordinates of individual for each PC with the kinetics 
+
+df7 <- left_join(df5, df6)
+
+# corrplot 
+
+library(corrplot)
+
+my_subset <- df7 %>%
+  select(2:16)
+
+cor_result <- cor(my_subset, use = "complete.obs")
+
+correlation <- corrplot(cor_result, method = "number", type = "lower",
+                        tl.cex = 0.5, number.cex = 0.5) 
+
 # Extract eigenvalues/variances
 
 eig <- get_eig(res.pca) %>%
