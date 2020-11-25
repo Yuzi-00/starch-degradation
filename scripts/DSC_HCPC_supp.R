@@ -1,4 +1,6 @@
 
+##### HCPC after adding the DSC results as active variables ####
+
 library(tidyverse)
 
 library(FactoMineR)
