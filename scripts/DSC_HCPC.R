@@ -1,4 +1,6 @@
 
+##### HCPC after adding the DSC results as active variables ####
+
 library(tidyverse)
 
 library(FactoMineR)
@@ -74,6 +76,43 @@ df4 <- res.ind$contrib %>%
 # save the contributions
 
 write_csv(df4, "analysis/DSC_ncp17/contributions_ind.csv")
+
+# corrdinates (individual) to the PCs
+
+df5 <- res.ind$coord %>%
+  as.data.frame() %>%
+  rownames_to_column()
+
+df5
+
+# save the coordinates
+
+write_csv(df5, "analysis/DSC_ncp17/coordinates_ind.csv")
+
+# extract the scaled values for h k Xinf 
+
+df6 <- df_new %>%
+  as.data.frame() %>%
+  select(h, k, Xinf, residual) %>%
+  rownames_to_column()
+
+df6
+
+# combine the coordinates of individual for each PC with the kinetics 
+
+df7 <- left_join(df5, df6)
+
+# corrplot 
+
+library(corrplot)
+
+my_subset <- df7 %>%
+  select(2:22)
+
+cor_result <- cor(my_subset, use = "complete.obs")
+
+correlation <- corrplot(cor_result, method = "number", type = "lower",
+                        tl.cex = 0.5, number.cex = 0.5) 
 
 # Extract eigenvalues/variances
 
@@ -599,7 +638,7 @@ hcpc24 <- do.call(rbind, lapply(hcpc24, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc24[is.na(hcpc24)] = c("Pasting_Temp","sigma_B")
+hcpc24[is.na(hcpc24)] = c("Pasting_Temp", "DP37_47", "sigma_B")
 
 # save the results
 
@@ -622,7 +661,7 @@ hcpc25 <- do.call(rbind, lapply(hcpc25, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc25[is.na(hcpc25)] = c("Pasting_Temp","sigma_B")
+hcpc25[is.na(hcpc25)] = c("Pasting_Temp", "DP37_47", "sigma_B")
 
 # save the results
 
@@ -645,7 +684,7 @@ hcpc26 <- do.call(rbind, lapply(hcpc26, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc26[is.na(hcpc26)] = c("Pasting_Temp","sigma_B")
+hcpc26[is.na(hcpc26)] = c("Pasting_Temp", "DP37_47", "sigma_B", "sigma_B", "residual", "H2")
 
 # save the results
 
@@ -668,7 +707,7 @@ hcpc27 <- do.call(rbind, lapply(hcpc27, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc27[is.na(hcpc27)] = c("Pasting_Temp","sigma_B", "mu_B")
+hcpc27[is.na(hcpc27)] = c("Pasting_Temp", "DP37_47", "sigma_B", "sigma_B", "residual", "H2")
 
 # save the results
 
@@ -691,7 +730,7 @@ hcpc28 <- do.call(rbind, lapply(hcpc28, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc28[is.na(hcpc28)] = c("Pasting_Temp", "DP13_24","sigma_B", "mu_B")
+hcpc28[is.na(hcpc28)] = c("Pasting_Temp", "DP37_47", "sigma_B", "sigma_B", "residual", "H2")
 
 # save the results
 
@@ -714,7 +753,7 @@ hcpc29 <- do.call(rbind, lapply(hcpc29, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc29[is.na(hcpc29)] = c("Pasting_Temp", "DP13_24","mu_B")
+hcpc29[is.na(hcpc29)] = c("Pasting_Temp", "DP13_24", "DP37_47", "sigma_B", "sigma_B", "residual", "H2")
 
 # save the results
 
@@ -737,7 +776,7 @@ hcpc30 <- do.call(rbind, lapply(hcpc30, as.data.frame)) %>%
 
 # replace the NAs 
 
-hcpc30[is.na(hcpc30)] = c("Pasting_Temp", "DP13_24","mu_B")
+hcpc30[is.na(hcpc30)] = c("Pasting_Temp", "DP13_24", "DP37_47", "sigma_B", "sigma_B", "residual", "H2")
 
 # save the results
 
