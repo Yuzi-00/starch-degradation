@@ -1,11 +1,15 @@
 
+######### this script is to combine the DSC data with the other structural data #########
+
+######### and to see if there are any correlations in between #########
+
 library(tidyverse)
 
 library(readxl)
 
 # import the DSC dataset
 
-df <- read_xlsx("data/DSC_total.xlsx", sheet = "table_R") %>%
+df <- read_xlsx("data/DSC_total.xlsx", sheet = "tableau_R") %>%
   mutate(Sample = as.character(sample)) %>%
   select(-sample)
 
