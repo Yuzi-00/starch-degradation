@@ -41,10 +41,17 @@ df_new <- full_join(df2, df1) %>%
 
 res.pca <- PCA(df_new, 
                scale.unit = TRUE,
-               # quanti.sup = 11:14, # the kinetics were not very well represented
+               quanti.sup = 11:14, 
                graph = FALSE)
 
 summary(res.pca)
+
+# Contributions (variable) to the PCs 
+
+res.var <- get_pca_var(res.pca)
+
+df3 <- res.var$contrib %>%
+  as.data.frame()
 
 # plot PCA
 
@@ -67,3 +74,4 @@ fviz_pca_biplot(res.pca, repel = FALSE,
                 col.var = "#2E9FDF", # Variables color
                 col.ind = "coord"  # Individuals color
 )
+
