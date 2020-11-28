@@ -1,5 +1,5 @@
 
-##### HCPC after adding the DSC results as active variables ####
+##### HCPC after adding the DSC results as supplementary variables ####
 
 library(tidyverse)
 
