@@ -1789,7 +1789,7 @@ mean_8c <- r_hcpc_s_all %>%
 # creat two subsets for means and std errors
 
 mean_8c_m <- mean_8c %>%
-  select(1:24) %>%
+  select(1:25) %>%
   gather("factor", "mean", -cluster8) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
 
@@ -1807,8 +1807,8 @@ mean_8c_full <- full_join(mean_8c_m, mean_8c_s)
 mean_8c_full <- mean_8c_full %>%
   mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
                                         "Trough_Vis", "Final_Vis", "Pasting_Temp",
-                                        "residual") ~ "supplementary_variable",
-                          TRUE ~ "active_variable"))
+                                        "residual") ~ "supplementary variable",
+                          TRUE ~ "active variable"))
 
 # histogram (scaled values)
 
@@ -1846,7 +1846,21 @@ ncp9_c8_3 <- mean_8c_full %>%
                 color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
-        legend.position="none")
+        legend.position="bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15),
+        legend.spacing.x = unit(0.5, 'cm')) +
+  theme(axis.text.x = element_text(color="black", size=11), 
+        axis.text.y = element_text(color="black", size=11)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
+  scale_x_discrete(labels = c("Amylase activity", "Amylose content", "DP13-24", "DP25-36",
+                              "DP37-47", "DP6-12", "FV", "h", "k", "mu_A", "mu_B", "mu_C", "PT",
+                              "PV", "pi_A", "pi_AB_ratio", "pi_B", "pi_C", "Residual", "Sigma_A",
+                              "Sigma_B", "Sigma_C", "TV", "Xinf")) +
+  scale_y_continuous(limits = c(-2, 2)) +
+  xlab("Factors") +
+  ylab("Variability around mean")
 
 ncp9_c8_3
 
@@ -2780,10 +2794,14 @@ mean_25c <- r_hcpc_s_all %>%
 
 # creat two subsets for means and std errors
 
+## subset for mean values 
+
 mean_25c_m <- mean_25c %>%
-  select(1:24) %>%
+  select(1:25) %>%
   gather("factor", "mean", -cluster25) %>%
   mutate(factor = str_replace(factor, "_mean", "")) # remove the string "_mean"
+
+## subset for std errors
 
 mean_25c_s <- mean_25c %>%
   select(1, 50:73) %>%
@@ -2799,8 +2817,8 @@ mean_25c_full <- full_join(mean_25c_m, mean_25c_s)
 mean_25c_full <- mean_25c_full %>%
   mutate(type = case_when(factor %in% c("h", "k", "Xinf", "Peak_Vis",
                                         "Trough_Vis", "Final_Vis", "Pasting_Temp",
-                                        "residual") ~ "supplementary_variable",
-                          TRUE ~ "active_variable"))
+                                        "residual") ~ "supplementary variable",
+                          TRUE ~ "active variable"))
 
 # histogram (scaled values)
 
@@ -2838,7 +2856,21 @@ ncp11_c25_21 <- mean_25c_full %>%
                 color = "dark grey") +
   geom_bar(stat = 'identity', width = 0.3) +
   theme(axis.text.x = element_text(angle=45, hjust=1),
-        legend.position="none")
+        legend.position="bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15),
+        legend.spacing.x = unit(0.5, 'cm')) +
+  theme(axis.text.x = element_text(color="black", size=11), 
+        axis.text.y = element_text(color="black", size=11)) +
+  theme(axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15)) +
+  scale_x_discrete(labels = c("Amylase activity", "Amylose content", "DP13-24", "DP25-36",
+                              "DP37-47", "DP6-12", "FV", "h", "k", "mu_A", "mu_B", "mu_C", "PT",
+                              "PV", "pi_A", "pi_AB_ratio", "pi_B", "pi_C", "Residual", "Sigma_A",
+                              "Sigma_B", "Sigma_C", "TV", "Xinf")) +
+  scale_y_continuous(limits = c(-2, 2)) +
+  xlab("Factors") +
+  ylab("Variability around mean")
 
 ncp11_c25_21
 
