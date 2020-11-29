@@ -1858,7 +1858,7 @@ ncp9_c8_3 <- mean_8c_full %>%
                               "DP37-47", "DP6-12", "FV", "h", "k", "mu_A", "mu_B", "mu_C", "PT",
                               "PV", "pi_A", "pi_AB_ratio", "pi_B", "pi_C", "Residual", "Sigma_A",
                               "Sigma_B", "Sigma_C", "TV", "Xinf")) +
-  scale_y_continuous(limits = c(-2, 2)) +
+  scale_y_continuous(limits = c(-2, 3)) +
   xlab("Factors") +
   ylab("Variability around mean")
 
@@ -2868,7 +2868,7 @@ ncp11_c25_21 <- mean_25c_full %>%
                               "DP37-47", "DP6-12", "FV", "h", "k", "mu_A", "mu_B", "mu_C", "PT",
                               "PV", "pi_A", "pi_AB_ratio", "pi_B", "pi_C", "Residual", "Sigma_A",
                               "Sigma_B", "Sigma_C", "TV", "Xinf")) +
-  scale_y_continuous(limits = c(-2, 2)) +
+  scale_y_continuous(limits = c(-2, 3)) +
   xlab("Factors") +
   ylab("Variability around mean")
 
